@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GNS AIOps Portal — Cognizant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6f9;--white:#fff;--surface:#f9fafb;--border:#e5e9f0;--border2:#d1d9e6;
+  --navy:#0d1f3c;--blue:#1d6ef5;--blue-lt:#e8f0fe;--blue-mid:#93b8fb;
+  --teal:#0ab39c;--teal-lt:#e0f5f1;--amber:#f59e0b;--amber-lt:#fef3c7;
+  --red:#e53e3e;--red-lt:#fff5f5;--green:#16a34a;--green-lt:#f0fdf4;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;
+  --text:#1a2332;--text2:#4a5568;--text3:#a0aec0;--text4:#cbd5e0;
+  --sh:0 1px 3px rgba(0,0,0,.08);--sh-md:0 4px 12px rgba(0,0,0,.08);--sh-lg:0 12px 40px rgba(0,0,0,.12);
+  --font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:8px;--r-lg:12px;--r-xl:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;min-height:100vh}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+
+/* Sidebar */
+.sb{background:var(--navy);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-mark{display:flex;align-items:center;gap:11px}
+.sb-icon{width:36px;height:36px;background:var(--blue);border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+.sb-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+.sb-name{font-size:14px;font-weight:700;color:#fff}
+.sb-sub{font-size:10px;color:rgba(255,255,255,.35);font-family:var(--mono);margin-top:1px}
+.sb-tag{display:inline-flex;align-items:center;gap:5px;margin-top:10px;background:rgba(29,110,245,.2);border:1px solid rgba(29,110,245,.35);border-radius:6px;padding:3px 9px;font-size:10px;font-family:var(--mono);color:rgba(255,255,255,.65)}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:bl 2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+.sb-nav{padding:12px 10px;flex:1}
+.sb-sec{font-size:9px;font-weight:700;letter-spacing:1.2px;color:rgba(255,255,255,.25);padding:14px 8px 5px;text-transform:uppercase}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);cursor:pointer;color:rgba(255,255,255,.5);font-size:12px;font-weight:500;transition:all .15s;border:none;background:none;width:100%;text-align:left;margin-bottom:1px;border-left:2px solid transparent}
+.sb-item svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2}
+.sb-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-item.on{background:rgba(29,110,245,.18);color:#fff;border-left-color:var(--blue)}
+.sb-badge{margin-left:auto;font-size:10px;font-weight:600;padding:1px 7px;border-radius:9999px;font-family:var(--mono)}
+.sb-badge.b{background:rgba(29,110,245,.25);color:rgba(255,255,255,.75)}
+.sb-badge.g{background:rgba(74,222,128,.18);color:#4ade80}
+.sb-badge.a{background:rgba(245,158,11,.18);color:#fbbf24}
+.sb-foot{padding:14px 18px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{display:flex;align-items:center;gap:9px}
+.sb-av{width:32px;height:32px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-fn{font-size:12px;font-weight:500;color:#fff}
+.sb-fr{font-size:10px;color:rgba(255,255,255,.35)}
+
+/* Main */
+.main{display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--sh)}
+.tb-l{display:flex;align-items:center;gap:5px}
+.tb-crumb{font-size:12px;color:var(--text3)}
+.tb-sep{color:var(--text4);margin:0 3px}
+.tb-title{font-size:15px;font-weight:600}
+.tb-r{display:flex;align-items:center;gap:8px}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;border:none;font-family:var(--font);white-space:nowrap}
+.btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
+.btn-p{background:var(--blue);color:#fff;box-shadow:0 1px 4px rgba(29,110,245,.25)}
+.btn-p:hover{background:#1558d6;transform:translateY(-1px)}
+.btn-o{background:var(--white);color:var(--text2);border:1px solid var(--border2)}
+.btn-o:hover{background:var(--surface);border-color:var(--blue);color:var(--blue)}
+.btn-d{background:var(--red-lt);color:var(--red);border:1px solid #fed7d7}
+.btn-d:hover{background:#fed7d7}
+.btn-sm{padding:6px 12px;font-size:11px}
+
+/* Content */
+.content{padding:24px 28px;flex:1}
+.page{display:none}
+.page.on{display:block}
+.sec-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.sec-title{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.sec-sub{font-size:12px;color:var(--text3);margin-top:2px}
+
+/* Metrics */
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px}
+.met{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--sh);position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.met:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+.met-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-lg) var(--r-lg) 0 0}
+.met-ico{width:36px;height:36px;border-radius:var(--r);display:grid;place-items:center;margin-bottom:12px}
+.met-ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.met-val{font-size:28px;font-weight:700;letter-spacing:-1px;font-family:var(--mono);line-height:1}
+.met-lbl{font-size:10px;color:var(--text3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+/* Charts */
+.charts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:22px}
+.ch-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--sh)}
+.ch-lbl{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.bar-lbl{font-size:11px;color:var(--text2);width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.bar-track{flex:1;background:var(--bg);border-radius:4px;height:8px;overflow:hidden;border:1px solid var(--border)}
+.bar-fill{height:100%;border-radius:4px}
+.bar-num{font-size:11px;font-weight:600;width:50px;text-align:right;font-family:var(--mono)}
+.leg{display:flex;flex-direction:column;gap:8px}
+.leg-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text2)}
+.leg-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+
+/* Card */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;margin-bottom:20px}
+.card-hd{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.card-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card-title svg{width:15px;height:15px;fill:none;stroke:var(--blue);stroke-width:2}
+.card-ct{font-size:11px;color:var(--text3);font-family:var(--mono)}
+
+/* Toolbar */
+.toolbar{display:flex;gap:8px;padding:13px 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.srch{position:relative;flex:1;min-width:180px;max-width:260px}
+.srch svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text3);fill:none;stroke-width:2;pointer-events:none}
+.srch-in{width:100%;padding:7px 10px 7px 30px;border:1px solid var(--border2);border-radius:var(--r);font-size:12px;font-family:var(--font);color:var(--text);background:var(--white);outline:none;transition:border-color .15s}
+.srch-in:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,110,245,.08)}
+.f-sel{padding:7px 11px;border:1px solid var(--border2);border-radius:var(--r);font-size:12px;font-family:var(--font);color:var(--text2);background:var(--white);cursor:pointer;outline:none}
+.f-sel:focus{border-color:var(--blue)}
+
+/* Table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:var(--surface);padding:10px 15px;text-align:left;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{color:var(--text2)}
+thead th.sa::after{content:' ↑';color:var(--blue)}
+thead th.sd::after{content:' ↓';color:var(--blue)}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f7f9ff}
+tbody td{padding:11px 15px;vertical-align:middle}
+.tbl-empty{padding:48px;text-align:center;color:var(--text3);font-size:13px}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.pill::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.pb{background:var(--blue-lt);color:#1558d6}.pb::before{background:var(--blue)}
+.pt{background:var(--teal-lt);color:#078f86}.pt::before{background:var(--teal)}
+.pa{background:var(--amber-lt);color:#b45309}.pa::before{background:var(--amber)}
+.pg{background:var(--green-lt);color:var(--green)}.pg::before{background:var(--green)}
+.pr{background:var(--red-lt);color:var(--red)}.pr::before{background:var(--red)}
+.pp{background:var(--purple-lt);color:var(--purple)}.pp::before{background:var(--purple)}
+.pz{background:#f1f5f9;color:#64748b}.pz::before{background:#94a3b8}
+
+/* Row actions */
+.ra{display:flex;gap:4px;opacity:0;transition:opacity .1s}
+tr:hover .ra{opacity:1}
+.ab{padding:4px 8px;border-radius:5px;border:none;cursor:pointer;font-size:11px;font-family:var(--font);font-weight:600;display:flex;align-items:center;gap:4px;transition:all .1s}
+.ab svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}
+.ae{background:var(--blue-lt);color:var(--blue)}.ae:hover{background:#d1e4fc}
+.ad{background:var(--red-lt);color:var(--red)}.ad:hover{background:#fed7d7}
+
+/* Inline editable */
+.ed{cursor:text;min-width:30px}
+.ed:focus{outline:2px solid var(--blue);outline-offset:1px;border-radius:4px;background:var(--white)}
+
+/* Modal */
+.mo{display:none;position:fixed;inset:0;background:rgba(13,31,60,.45);z-index:100;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
+.mo.open{display:flex}
+.mo-box{background:var(--white);border-radius:var(--r-xl);box-shadow:var(--sh-lg);width:100%;max-width:620px;max-height:90vh;overflow-y:auto;animation:su .2s ease}
+@keyframes su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.mo-hd{padding:22px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between}
+.mo-title{font-size:16px;font-weight:700}
+.mo-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.mo-cls{width:30px;height:30px;border-radius:var(--r);border:none;background:var(--surface);cursor:pointer;display:grid;place-items:center;color:var(--text3);transition:all .1s;flex-shrink:0}
+.mo-cls:hover{background:var(--red-lt);color:var(--red)}
+.mo-cls svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
+.mo-body{padding:22px 24px}
+.mo-foot{padding:14px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:10px;background:var(--surface)}
+
+/* Form */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.fgrp{display:flex;flex-direction:column;gap:5px}
+.fgrp.s2{grid-column:1/-1}
+.flbl{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.4px;text-transform:uppercase}
+.flbl .req{color:var(--red);margin-left:2px}
+.fin,.fsel,.fta{padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px;font-family:var(--font);color:var(--text);background:var(--white);outline:none;transition:all .15s;width:100%}
+.fin:focus,.fsel:focus,.fta:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,110,245,.08)}
+.fta{resize:vertical;min-height:76px;line-height:1.6}
+
+/* Delete modal */
+.del-body{padding:28px 24px;text-align:center}
+.del-ico{width:52px;height:52px;background:var(--red-lt);border-radius:50%;display:grid;place-items:center;margin:0 auto 14px}
+.del-ico svg{width:26px;height:26px;fill:none;stroke:var(--red);stroke-width:2}
+.del-nm{font-size:14px;font-weight:600;margin:0 0 6px}
+.del-ds{font-size:12px;color:var(--text3)}
+
+/* Toast */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:200;pointer-events:none}
+.toast{background:var(--navy);color:#fff;border-radius:10px;padding:11px 16px;font-size:12px;display:flex;align-items:center;gap:9px;box-shadow:var(--sh-lg);transform:translateX(120%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);max-width:280px}
+.toast.show{transform:translateX(0)}
+.t-ico{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.t-ico svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.5}
+
+/* Notice banner */
+.notice{background:var(--blue-lt);border:1px solid var(--blue-mid);border-radius:var(--r);padding:11px 16px;font-size:12px;color:#1558d6;display:flex;align-items:flex-start;gap:9px;margin-bottom:20px}
+.notice svg{width:15px;height:15px;flex-shrink:0;margin-top:1px;fill:none;stroke:currentColor;stroke-width:2}
+.notice.warn{background:var(--amber-lt);border-color:#fcd34d;color:#92400e}
+
+/* Activity */
+.act-row{border-bottom:1px solid var(--border)}
+.act-hd{padding:13px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .1s}
+.act-hd:hover{background:var(--surface)}
+.act-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px}
+.act-chv{width:16px;height:16px;fill:none;stroke:var(--text3);stroke-width:2;transition:transform .2s;flex-shrink:0}
+.act-body{background:var(--surface);padding:14px 20px;border-top:1px solid var(--border);font-size:12px;color:var(--text2);line-height:1.9;display:none}
+.act-body.open{display:block}
+
+/* Terminals */
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.term{background:var(--navy);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-md)}
+.term-bar{background:rgba(255,255,255,.05);padding:9px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid rgba(255,255,255,.07)}
+.term-dots{display:flex;gap:5px}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-title{font-size:11px;font-family:var(--mono);color:rgba(255,255,255,.35);margin-left:4px}
+.term-body{padding:14px 16px;font-family:var(--mono);font-size:11px;line-height:1.9;min-height:175px}
+.tc{color:rgba(255,255,255,.25)}
+.tk{color:#60a5fa}
+.tv{color:#f0f4ff}
+.tn{color:#fbbf24}
+.tg{color:#4ade80}
+.tw{color:#fb923c}
+.te{color:#f87171}
+.td{color:rgba(255,255,255,.22)}
+
+/* Rec cards */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.rec-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh);transition:all .2s}
+.rec-card:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+.rec-card.ft{border:2px solid var(--blue)}
+.rec-badge{display:inline-block;background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:9999px;margin-bottom:12px;letter-spacing:.3px}
+.rec-nm{font-size:15px;font-weight:700}
+.rec-sb{font-size:11px;color:var(--text3);margin-top:2px;margin-bottom:13px}
+.s-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px}
+.s-lbl{width:78px;color:var(--text2);flex-shrink:0}
+.s-trk{flex:1;background:var(--bg);border-radius:3px;height:5px;overflow:hidden}
+.s-fill{height:100%;border-radius:3px}
+.s-val{font-family:var(--mono);font-size:10px;font-weight:500;width:26px;text-align:right}
+.pros{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.pro{display:flex;align-items:flex-start;gap:6px;font-size:11px;color:var(--text2)}
+.pro .ok{color:var(--green);flex-shrink:0;margin-top:1px}
+.pro .nt{color:var(--amber);flex-shrink:0;margin-top:1px}
+
+/* File upload */
+.file-upload{border:2px dashed var(--border2);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:all .15s;background:var(--surface);display:flex;align-items:center;gap:10px}
+.file-upload:hover{border-color:var(--blue);background:var(--blue-lt)}
+.file-upload svg{width:18px;height:18px;fill:none;stroke:var(--text3);stroke-width:2;flex-shrink:0}
+.file-upload:hover svg{stroke:var(--blue)}
+.file-upload-txt{font-size:12px;color:var(--text3)}
+.file-upload:hover .file-upload-txt{color:var(--blue)}
+.file-upload input[type=file]{display:none}
+.file-attached{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--green-lt);border:1px solid #bbf7d0;border-radius:var(--r);font-size:11px;color:var(--green)}
+.file-attached svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;flex-shrink:0}
+.file-rm{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;line-height:1}
+.file-rm:hover{color:var(--red)}
+.sop-chip{display:inline-flex;align-items:center;gap:5px;background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue-mid);border-radius:5px;padding:2px 8px;font-size:10px;font-weight:600;cursor:pointer;text-decoration:none}
+.sop-chip:hover{background:#d1e4fc}
+.sop-chip svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* Print */
+@media print{.sb,.tb-r,.toolbar .btn,.ra,.mo,.toast-wrap{display:none!important}.app{grid-template-columns:1fr}}
+@media(max-width:860px){.app{grid-template-columns:1fr}.sb{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.charts,.terms,.rec-grid{grid-template-columns:1fr}.fg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-mark">
+      <div class="sb-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div><div class="sb-name">GNS AIOps</div><div class="sb-sub">COGNIZANT · INTEL AGENT</div></div>
+    </div>
+    <div class="sb-tag"><span class="sb-dot"></span>Phase 1 · Read-Only Intel</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Main</div>
+    <button class="sb-item on" onclick="nav('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Overview
+    </button>
+    <button class="sb-item" onclick="nav('usecases',this)">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Use Cases
+      <span class="sb-badge b" id="sb-ct">23</span>
+    </button>
+    <button class="sb-item" onclick="nav('volume',this)">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Volume Data
+    </button>
+    <button class="sb-item" onclick="nav('console',this)">
+      <svg viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+      Web Console
+      <span class="sb-badge g">Live</span>
+    </button>
+    <div class="sb-sec">Strategy</div>
+    <button class="sb-item" onclick="nav('tools',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+      Tool Recommendation
+    </button>
+    <button class="sb-item" onclick="nav('activity',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Activity List
+    </button>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-user">
+      <div class="sb-av">GN</div>
+      <div><div class="sb-fn">GNS Team</div><div class="sb-fr" id="sb-saved">All data loaded</div></div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-l">
+      <span class="tb-crumb">GNS AIOps</span>
+      <span class="tb-sep">›</span>
+      <span class="tb-title" id="pg-title">Overview</span>
+    </div>
+    <div class="tb-r">
+      <button class="btn btn-o btn-sm" onclick="jbLoad()" title="Refresh from cloud" style="gap:4px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        Refresh
+      </button>
+      <button class="btn btn-o btn-sm" onclick="exportCSV()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV
+      </button>
+      <button class="btn btn-o btn-sm" onclick="window.print()">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print / PDF
+      </button>
+      <button class="btn btn-p btn-sm" onclick="nav('usecases',document.querySelectorAll('.sb-item')[1]);openCreate()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Use Case
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div class="page on" id="page-dashboard">
+      <div class="sec-hd">
+        <div><div class="sec-title">Overview</div><div class="sec-sub">GNS · Global Network Services — AIOps Intelligence Dashboard</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span style="font-size:11px;background:var(--teal-lt);color:#078f86;border:1px solid #b2dfdb;padding:4px 12px;border-radius:6px;font-weight:600">Phase 1 Active</span>
+          <span style="font-size:11px;background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue-mid);padding:4px 12px;border-radius:6px;font-weight:600">Intel Agent</span>
+        </div>
+      </div>
+      <div class="metrics" id="met-strip"></div>
+      <div class="charts">
+        <div class="ch-card"><div class="ch-lbl">Volume by tower</div><div id="ch-tower"></div></div>
+        <div class="ch-card">
+          <div class="ch-lbl">Use case types</div>
+          <div style="display:flex;align-items:center;gap:16px;justify-content:center">
+            <canvas id="donut" width="120" height="120" style="flex-shrink:0"></canvas>
+            <div class="leg" id="donut-leg"></div>
+          </div>
+        </div>
+        <div class="ch-card"><div class="ch-lbl">SR automation vs manual</div><div id="ch-sr"></div></div>
+      </div>
+    </div>
+
+    <!-- USE CASES -->
+    <div class="page" id="page-usecases">
+      <div class="sec-hd">
+        <div><div class="sec-title">Use Case Registry</div><div class="sec-sub">Add, edit, or remove GNS AIOps use cases — all changes auto-saved</div></div>
+        <button class="btn btn-p" onclick="openCreate()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Use Case
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-title"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>All Use Cases</div>
+          <span class="card-ct" id="uc-ct">— records</span>
+        </div>
+        <div class="toolbar">
+          <div class="srch">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="srch-in" id="uc-q" placeholder="Search name, SOP, tower…" oninput="renderUC()">
+          </div>
+          <select class="f-sel" id="f-tw" onchange="updateSubTowerFilter();renderUC()">
+            <option value="">All towers</option>
+            <option>Campus Network Services</option>
+            <option>Network Security Services</option>
+            <option>Network Collaboration Services</option>
+            <option>Cloud Network Services</option>
+            <option>GNS</option>
+          </select>
+          <select class="f-sel" id="f-stw" onchange="renderUC()">
+            <option value="">All sub-towers</option>
+          </select>
+          <select class="f-sel" id="f-ty" onchange="renderUC()">
+            <option value="">All types</option>
+            <option>RBA Workflow (Automation)</option>
+            <option>Hybrid - SOP</option>
+            <option>Automation</option>
+            <option>Automation + RBA</option>
+            <option>SLM Model</option>
+          </select>
+          <select class="f-sel" id="f-st" onchange="renderUC()">
+            <option value="">All statuses</option>
+            <option>Live</option><option>In Dev</option><option>Planned</option><option>On Hold</option>
+          </select>
+          <button class="btn btn-o btn-sm" onclick="clearFilters()">Clear</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <colgroup><col style="width:36px"><col style="width:84px"><col style="width:185px"><col style="width:145px"><col style="width:110px"><col style="width:110px"><col style="width:60px"><col style="width:72px"><col style="width:72px"><col style="width:80px"><col style="width:90px"></colgroup>
+            <thead>
+              <tr>
+                <th onclick="srt('id')">#</th>
+                <th onclick="srt('sop')">SOP Ref</th>
+                <th onclick="srt('name')">Use Case Name</th>
+                <th onclick="srt('tower')">Tower</th>
+                <th onclick="srt('subtower')">Sub-tower</th>
+                <th onclick="srt('type')">Type</th>
+                <th onclick="srt('itil')">ITIL</th>
+                <th onclick="srt('volume')">Vol/mo</th>
+                <th onclick="srt('impact')">Impact</th>
+                <th onclick="srt('status')">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="uc-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOLUME -->
+    <div class="page" id="page-volume">
+      <div class="sec-hd">
+        <div><div class="sec-title">Volume Data</div><div class="sec-sub">Monthly incident and SR volumetrics — click any cell to edit inline</div></div>
+        <button class="btn btn-o btn-sm" onclick="addVol()">+ Add row</button>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Incident & SR volumes</div></div>
+        <div class="tbl-wrap">
+          <table>
+            <colgroup><col style="width:36px"><col style="width:175px"><col style="width:145px"><col style="width:78px"><col style="width:88px"><col style="width:78px"><col style="width:76px"><col style="width:76px"><col style="width:76px"><col style="width:42px"></colgroup>
+            <thead><tr><th>#</th><th>Category</th><th>Sub-type</th><th>Total</th><th>Automated</th><th>Manual</th><th>Jul '25</th><th>Aug '25</th><th>Sep '25</th><th></th></tr></thead>
+            <tbody id="vol-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSOLE -->
+    <div class="page" id="page-console">
+      <div class="sec-hd"><div><div class="sec-title">Web Console View</div><div class="sec-sub">System status snapshot — Phase 1 read-only, all write operations disabled</div></div></div>
+      <div class="notice warn" style="margin-bottom:20px">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Phase 1 — Intel Agent is advisory-only. Write operations are disabled and require Phase 2 approval.
+      </div>
+      <div class="terms">
+        <div class="term">
+          <div class="term-bar"><div class="term-dots"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#22c55e"></div></div><span class="term-title">Cisco DNAC — network health</span></div>
+          <div class="term-body">
+            <div><span class="tc">$ </span><span class="tk">GET</span> /dna/intent/api/v1/network-health</div>
+            <div class="td">→ 200 OK &nbsp;latency: 142ms</div><div>&nbsp;</div>
+            <div><span class="td">healthScore: </span><span class="tn">87</span></div>
+            <div><span class="td">totalDevices: </span><span class="tv">1,248</span></div>
+            <div><span class="td">goodHealth: </span><span class="tg">1,086</span></div>
+            <div><span class="td">fairHealth: </span><span class="tn">124</span></div>
+            <div><span class="td">poorHealth: </span><span class="te">38</span></div>
+            <div>&nbsp;</div><div class="td">Phase 1: read-only mode ✓</div>
+          </div>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="term-dots"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#22c55e"></div></div><span class="term-title">Cisco ISE — auth statistics</span></div>
+          <div class="term-body">
+            <div><span class="tc">$ </span><span class="tk">GET</span> /api/v1/config/authorizationprofile</div>
+            <div class="td">→ 200 OK &nbsp;latency: 89ms</div><div>&nbsp;</div>
+            <div><span class="td">totalAuthentications: </span><span class="tv">14,320</span></div>
+            <div><span class="td">passed: </span><span class="tg">13,891</span></div>
+            <div><span class="td">failed: </span><span class="te">429</span></div>
+            <div><span class="td">failRate: </span><span class="tw">2.99%</span></div>
+            <div>&nbsp;</div>
+            <div class="tw">⚠ Coimbatore: WAN latency spike</div>
+            <div class="td">&nbsp; Root cause: TCL MPLS instability</div>
+          </div>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="term-dots"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#22c55e"></div></div><span class="term-title">ServiceNow — open incidents</span></div>
+          <div class="term-body">
+            <div><span class="tc">$ </span><span class="tk">GET</span> /api/now/table/incident</div>
+            <div class="td">→ state=open &amp;category=network</div><div>&nbsp;</div>
+            <div><span class="td">P1: </span><span class="te">2</span> &nbsp;<span class="td">P2: </span><span class="tn">8</span> &nbsp;<span class="td">P3: </span><span class="tv">34</span></div><div>&nbsp;</div>
+            <div class="tg">INC0043221 — AP Down (auto-remediated)</div>
+            <div class="tn">INC0043198 — Zscaler CA cert expiry</div>
+            <div class="te">INC0043102 — ISE auth failure Kochi</div>
+            <div>&nbsp;</div><div class="td">SLM: 29 SOPs pushed to worknotes ✓</div>
+          </div>
+        </div>
+        <div class="term">
+          <div class="term-bar"><div class="term-dots"><div class="term-dot" style="background:#ef4444"></div><div class="term-dot" style="background:#f59e0b"></div><div class="term-dot" style="background:#22c55e"></div></div><span class="term-title">Intel Agent — LangGraph pipeline</span></div>
+          <div class="term-body">
+            <div><span class="tc">$ </span>agent status --pipeline intel-agent-v1</div><div>&nbsp;</div>
+            <div><span class="td">model: </span><span class="tv">claude-sonnet-4-6</span></div>
+            <div><span class="td">orchestrator: </span><span class="tg">LangGraph ✓</span></div>
+            <div><span class="td">RAG store: </span><span class="tg">pgvector · AKS ✓</span></div>
+            <div><span class="td">MCP server: </span><span class="tg">Cisco DNAC ✓</span></div>
+            <div><span class="td">write-ops: </span><span class="te">DISABLED (Phase 1)</span></div>
+            <div><span class="td">human-gate: </span><span class="tg">ENABLED ✓</span></div>
+            <div class="td">uptime: 99.3% &nbsp;last run: 4 min ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="page" id="page-tools">
+      <div class="sec-hd"><div><div class="sec-title">Tool Recommendation</div><div class="sec-sub">Web console evaluation — Dashboard + CLI + ITSM for GNS ops team</div></div></div>
+      <div class="rec-grid">
+        <div class="rec-card ft">
+          <div class="rec-badge">Best fit for GNS</div>
+          <div class="rec-nm">Grafana</div><div class="rec-sb">Open source · AKS Helm chart · Azure AD SSO</div>
+          <div class="s-row"><span class="s-lbl">Dashboard</span><span class="s-trk"><span class="s-fill" style="width:95%;background:var(--blue)"></span></span><span class="s-val">9/10</span></div>
+          <div class="s-row"><span class="s-lbl">CLI / ops</span><span class="s-trk"><span class="s-fill" style="width:70%;background:var(--blue)"></span></span><span class="s-val">7/10</span></div>
+          <div class="s-row"><span class="s-lbl">ITSM</span><span class="s-trk"><span class="s-fill" style="width:60%;background:var(--blue)"></span></span><span class="s-val">6/10</span></div>
+          <div class="s-row"><span class="s-lbl">Setup</span><span class="s-trk"><span class="s-fill" style="width:50%;background:var(--blue)"></span></span><span class="s-val">Med</span></div>
+          <div class="pros">
+            <div class="pro"><span class="ok">✓</span>Free — Helm chart on AKS in 1 day</div>
+            <div class="pro"><span class="ok">✓</span>DNAC & ISE REST datasource plugins</div>
+            <div class="pro"><span class="ok">✓</span>Alerting + Teams/PagerDuty routing</div>
+            <div class="pro"><span class="ok">✓</span>Azure AD SSO (SAML/OIDC)</div>
+            <div class="pro"><span class="nt">~</span>CLI via iframe embed only</div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--blue);padding:8px 10px;background:var(--blue-lt);border-radius:var(--r);border:1px solid var(--blue-mid)">Recommended for Phase 1 — deploy for Intel Agent visibility immediately</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-nm" style="margin-top:4px">Retool</div><div class="rec-sb">Low-code · self-host · SSH widget built-in</div>
+          <div class="s-row"><span class="s-lbl">Dashboard</span><span class="s-trk"><span class="s-fill" style="width:80%;background:var(--teal)"></span></span><span class="s-val">8/10</span></div>
+          <div class="s-row"><span class="s-lbl">CLI / ops</span><span class="s-trk"><span class="s-fill" style="width:85%;background:var(--teal)"></span></span><span class="s-val">8/10</span></div>
+          <div class="s-row"><span class="s-lbl">ITSM</span><span class="s-trk"><span class="s-fill" style="width:80%;background:var(--teal)"></span></span><span class="s-val">8/10</span></div>
+          <div class="s-row"><span class="s-lbl">Setup</span><span class="s-trk"><span class="s-fill" style="width:25%;background:var(--teal)"></span></span><span class="s-val">Low</span></div>
+          <div class="pros">
+            <div class="pro"><span class="ok">✓</span>Fastest to wire DNAC+ISE+ServiceNow</div>
+            <div class="pro"><span class="ok">✓</span>Dev console ready in 3–5 days</div>
+            <div class="pro"><span class="nt">~</span>~$10/user/month (cloud)</div>
+          </div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-nm" style="margin-top:4px">Custom FastAPI UI</div><div class="rec-sb">React + FastAPI · full AKS ownership</div>
+          <div class="s-row"><span class="s-lbl">Dashboard</span><span class="s-trk"><span class="s-fill" style="width:90%;background:var(--amber)"></span></span><span class="s-val">9/10</span></div>
+          <div class="s-row"><span class="s-lbl">CLI / ops</span><span class="s-trk"><span class="s-fill" style="width:90%;background:var(--amber)"></span></span><span class="s-val">9/10</span></div>
+          <div class="s-row"><span class="s-lbl">ITSM</span><span class="s-trk"><span class="s-fill" style="width:90%;background:var(--amber)"></span></span><span class="s-val">9/10</span></div>
+          <div class="s-row"><span class="s-lbl">Setup</span><span class="s-trk"><span class="s-fill" style="width:88%;background:var(--amber)"></span></span><span class="s-val">High</span></div>
+          <div class="pros">
+            <div class="pro"><span class="ok">✓</span>Native Intel Agent LangGraph embed</div>
+            <div class="pro"><span class="ok">✓</span>Zero licensing — full Cognizant ownership</div>
+            <div class="pro"><span class="nt">~</span>3–6 weeks dev effort minimum</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-title">Feature matrix</div></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Feature</th><th>Grafana</th><th>Retool</th><th>Custom FastAPI</th></tr></thead>
+            <tbody id="mat-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="page" id="page-activity">
+      <div class="sec-hd">
+        <div><div class="sec-title">Tower Activity List</div><div class="sec-sub">GNS sub-tower responsibilities — click to expand, click text to edit</div></div>
+        <button class="btn btn-o btn-sm" onclick="addAct()">+ Add tower</button>
+      </div>
+      <div class="card" style="overflow:visible">
+        <div class="card-hd"><div class="card-title">GNS tower activities</div><span class="card-ct" id="act-ct">— towers</span></div>
+        <div id="act-con"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- CREATE/EDIT MODAL -->
+<div class="mo" id="mo-uc">
+  <div class="mo-box">
+    <div class="mo-hd">
+      <div><div class="mo-title" id="mo-title">New Use Case</div><div class="mo-sub" id="mo-sub">Fill in the details to register a new use case</div></div>
+      <button class="mo-cls" onclick="closeMo('mo-uc')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="mo-body">
+      <div class="fg">
+        <div class="fgrp"><label class="flbl">SOP Reference</label><input type="text" class="fin" id="f-sop" placeholder="e.g. SOP 2.10v1"></div>
+        <div class="fgrp"><label class="flbl">ITIL Process</label>
+          <select class="fsel" id="f-itil"><option>IM</option><option>SR</option><option>SR/IM</option><option>Event Mgmt</option><option>Config Mgmt</option><option>Proactive</option></select>
+        </div>
+        <div class="fgrp s2"><label class="flbl">Use Case Name <span class="req">*</span></label><input type="text" class="fin" id="f-nm" placeholder="Describe the use case clearly…"></div>
+        <div class="fgrp"><label class="flbl">Tower</label>
+          <select class="fsel" id="f-tw2" onchange="updateModalSubTower()">
+            <option>Campus Network Services</option>
+            <option>Network Security Services</option>
+            <option>Network Collaboration Services</option>
+            <option>Cloud Network Services</option>
+            <option>GNS</option>
+          </select>
+        </div>
+        <div class="fgrp"><label class="flbl">Sub-tower</label>
+          <select class="fsel" id="f-stw2">
+            <option value="">— select sub-tower —</option>
+          </select>
+        </div>
+        <div class="fgrp"><label class="flbl">Type</label>
+          <select class="fsel" id="f-tp"><option>RBA Workflow (Automation)</option><option>Hybrid - SOP</option><option>Automation</option><option>Automation + RBA</option><option>SLM Model</option></select>
+        </div>
+        <div class="fgrp"><label class="flbl">Volume / Month</label><input type="text" class="fin" id="f-vol" placeholder="e.g. 200, ~600"></div>
+        <div class="fgrp"><label class="flbl">Impact %</label><input type="text" class="fin" id="f-imp" placeholder="e.g. 35%, Reduce downtime"></div>
+        <div class="fgrp"><label class="flbl">Status</label>
+          <select class="fsel" id="f-ss"><option>Live</option><option>In Dev</option><option>Planned</option><option>On Hold</option></select>
+        </div>
+        <div class="fgrp s2">
+          <label class="flbl">SOP Document</label>
+          <label class="file-upload" id="sop-upload-label" onclick="document.getElementById('sop-file-in').click()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <div>
+              <div class="file-upload-txt" id="sop-upload-txt">Click to attach SOP document (PDF, Word, Excel)</div>
+              <div style="font-size:10px;color:var(--text4);margin-top:2px">Supported: .pdf .docx .xlsx .pptx — max 10MB</div>
+            </div>
+          </label>
+          <input type="file" id="sop-file-in" accept=".pdf,.docx,.xlsx,.pptx,.doc,.xls" onchange="handleSopFile(this)">
+          <div id="sop-file-preview" style="display:none" class="file-attached">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span id="sop-file-name"></span>
+            <button class="file-rm" onclick="clearSopFile()" title="Remove file">✕</button>
+          </div>
+        </div>
+        <div class="fgrp s2"><label class="flbl">Benefits / Remarks</label><textarea class="fta" id="f-ben" placeholder="Key benefits and any notes…"></textarea></div>
+      </div>
+    </div>
+    <div class="mo-foot">
+      <button class="btn btn-o" onclick="closeMo('mo-uc')">Cancel</button>
+      <button class="btn btn-p" onclick="saveUC()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span id="mo-save-lbl">Save Use Case</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="mo" id="mo-del">
+  <div class="mo-box" style="max-width:420px">
+    <div class="del-body">
+      <div class="del-ico"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></div>
+      <div class="del-nm" id="del-nm">Delete use case?</div>
+      <div class="del-ds">This cannot be undone. The use case will be permanently removed from this session.</div>
+    </div>
+    <div class="mo-foot" style="justify-content:center">
+      <button class="btn btn-o" onclick="closeMo('mo-del')">Cancel</button>
+      <button class="btn btn-d" onclick="doDelete()">Delete permanently</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-wrap"><div class="toast" id="toast"><div class="t-ico" id="t-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span id="t-msg">Saved</span></div></div>
+
+<script>
+// ── JSONBin Config ──
+var JBIN_KEY='$2a$10$O6aRrzNIEEJ0BZDmzZ2zrOxs7nBT9IAiYeN/wSlRdr5vGT3AJvlcC';
+var JBIN_BIN='6a066dc2c0954111d825db8e';
+var JBIN_URL='https://api.jsonbin.io/v3/b/'+JBIN_BIN;
+var _syncing=false;
+
+// ── JSONBin sync functions ──
+async function jbLoad(){
+  try{
+    var r=await fetch(JBIN_URL+'/latest',{headers:{'X-Master-Key':JBIN_KEY,'X-Bin-Meta':'false'}});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    var d=await r.json();
+    if(d&&d.uc&&d.uc.length>0){
+      DATA.uc=d.uc;DATA.vol=d.vol||DATA.vol;DATA.act=d.act||DATA.act;
+      document.getElementById('sb-saved').textContent='Synced '+new Date().toLocaleTimeString();
+      document.getElementById('sb-saved').style.color='#4ade80';
+      renderDash();renderMetrics&&renderMetrics();
+      if(document.getElementById('page-usecases').classList.contains('on'))renderUC();
+      if(document.getElementById('page-volume').classList.contains('on'))renderVol();
+      if(document.getElementById('page-activity').classList.contains('on'))renderAct();
+    }else{
+      document.getElementById('sb-saved').textContent='Ready (new bin)';
+      document.getElementById('sb-saved').style.color='#4ade80';
+    }
+  }catch(e){
+    console.warn('JSONBin load failed:',e);
+    document.getElementById('sb-saved').textContent='Offline mode';
+    document.getElementById('sb-saved').style.color='#fbbf24';
+  }
+}
+
+async function jbSave(){
+  if(_syncing)return;_syncing=true;
+  document.getElementById('sb-saved').textContent='Saving...';
+  document.getElementById('sb-saved').style.color='#fbbf24';
+  try{
+    var r=await fetch(JBIN_URL,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':JBIN_KEY},
+      body:JSON.stringify({uc:DATA.uc,vol:DATA.vol,act:DATA.act,project:'GNS AIOps Portal',lastSaved:new Date().toISOString()})
+    });
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    document.getElementById('sb-saved').textContent='Synced '+new Date().toLocaleTimeString();
+    document.getElementById('sb-saved').style.color='#4ade80';
+    toast('Saved & synced to cloud','success');
+  }catch(e){
+    console.warn('JSONBin save failed:',e);
+    document.getElementById('sb-saved').textContent='Sync failed — offline';
+    document.getElementById('sb-saved').style.color='#f87171';
+    toast('Sync failed — check connection','err');
+  }finally{_syncing=false;}
+}
+
+// ── DATA — fully embedded as fallback ──
+var DATA = {
+uc:[
+  {id:1,sop:'SOP 2.10v1',name:'Unable to Access Internet via LAN / Wi-Fi',tower:'Campus Network Services',type:'Hybrid - SOP',itil:'IM',volume:'53',impact:'~10%',status:'Live',benefits:'MTTR reduction via ISE/DNAC path check and auto-remediation'},
+  {id:2,sop:'SOP 2.10v2',name:'Users Unable to Access Network from Wi-Fi (No Internet)',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'',impact:'',status:'Live',benefits:'Fully automatable; Tech Assist fallback for rare endpoint exceptions'},
+  {id:3,sop:'SOP 2.9v1',name:'Project Team Cannot Access Client Destination (LAN/Wi-Fi)',tower:'Campus Network Services',type:'Hybrid - SOP',itil:'IM',volume:'215',impact:'~25%',status:'Live',benefits:'RBA-led diagnostic with Tech Assist for client-specific remediation'},
+  {id:4,sop:'SOP 2.9v2',name:'Unable to Connect to Client Destination from LAN',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'',impact:'',status:'Live',benefits:'Relevance score ≥0.5 triggers auto SOP execution via MCP'},
+  {id:5,sop:'SOP 2.8v1',name:'Intermittent Connectivity Issues from LAN or Wi-Fi',tower:'Campus Network Services',type:'Hybrid - SOP',itil:'IM',volume:'53',impact:'~7%',status:'Live',benefits:'ISE + DNAC analysis + Nexthink telemetry correlation'},
+  {id:6,sop:'SOP 2.1',name:'Account & Credential Issue Resolution',tower:'Campus Network Services',type:'Hybrid - SOP',itil:'IM',volume:'8',impact:'0.55%',status:'Live',benefits:'Auto-detects lockouts, resolves via API, escalates when needed'},
+  {id:7,sop:'SOP 2.2',name:'User Guidance & Self-Service Resolution',tower:'Campus Network Services',type:'Hybrid - SOP',itil:'IM',volume:'21',impact:'1.47%',status:'Live',benefits:'Handoff when self-service fails; ticket pre-enriched with checks done'},
+  {id:8,sop:'SOP 2.3',name:'Client Profile & Configuration Repair',tower:'Campus Network Services',type:'Hybrid - SOP',itil:'IM',volume:'18',impact:'1.26%',status:'Live',benefits:'Validate → ISE → DNAC path → auto-fix → re-validate'},
+  {id:9,sop:'SOP 2.4',name:'Wi-Fi Performance & RF Health Analysis',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'23',impact:'1.6%',status:'Live',benefits:'End-to-end RF automation; Tech Assist only for physical RF issues'},
+  {id:10,sop:'SOP 2.5',name:'Network Services & Path Policy Troubleshooting',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'4',impact:'0.28%',status:'Live',benefits:''},
+  {id:11,sop:'SOP 2.6',name:'ISE Policy & Network Access Control',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'90',impact:'6.28%',status:'Live',benefits:''},
+  {id:12,sop:'SOP 2.7',name:'Investigating Self-Resolving Connectivity Issues',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'56',impact:'3.9%',status:'Live',benefits:'Detect recovery → validate → evidence-based auto-close in SNOW'},
+  {id:13,sop:'SOP 1.1',name:'AP Down Detection & Auto-Remediation',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'Event Mgmt',volume:'—',impact:'Reduce downtime',status:'Live',benefits:'Port/PoE reset via SSH; auto-resolve on AP recovery; zero human touch'},
+  {id:14,sop:'SOP 1.2',name:'NAC Configuration Compliance Validation',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'Config Mgmt',volume:'2000',impact:'Audit compliance',status:'Live',benefits:'Ingests audit findings; flags non-compliant ports; attaches evidence to SNOW'},
+  {id:15,sop:'SOP 3.0',name:'Incident Monitoring & No-Response Closure',tower:'Campus Network Services',type:'RBA Workflow (Automation)',itil:'IM',volume:'—',impact:'Accuracy',status:'Live',benefits:'Fully autonomous; monitors inactivity timeout; auto-closes with notes'},
+  {id:16,sop:'—',name:'Zscaler — CA Certificate Installation',tower:'Network Security Services',type:'Automation',itil:'IM',volume:'100',impact:'35%',status:'Live',benefits:'Automated by S/W packaging team; proactive cert lifecycle management'},
+  {id:17,sop:'—',name:'Low-Trust Error Zscaler Compliance',tower:'Network Security Services',type:'Automation',itil:'IM',volume:'100',impact:'35%',status:'In Dev',benefits:'Pending Nexthink team discussion for device-level compliance check'},
+  {id:18,sop:'—',name:'Security Exceptions — CS Exception',tower:'Network Security Services',type:'Automation',itil:'SR',volume:'—',impact:'—',status:'Live',benefits:''},
+  {id:19,sop:'—',name:'RICS AnyConnect Service Phase 1 / 2 / 3',tower:'Network Collaboration Services',type:'Automation',itil:'SR/IM',volume:'967',impact:'59%',status:'Live',benefits:'Provisioning, activation and deactivation of RICS user services'},
+  {id:20,sop:'—',name:'GPN SIP Circuit Health Check',tower:'Network Collaboration Services',type:'Automation',itil:'Proactive',volume:'—',impact:'—',status:'In Dev',benefits:'Proactive global helpdesk number validation via automated script'},
+  {id:21,sop:'—',name:'Video Endpoints Proactive Health Check',tower:'Network Collaboration Services',type:'Automation + RBA',itil:'Proactive',volume:'4250',impact:'Downtime avoidance',status:'Live',benefits:'Weekly health check; auto-logs SNOW ticket on issues before user reporting'},
+  {id:22,sop:'29 SOPs',name:'SLM — SOP Push to Worknotes on Incident',tower:'GNS',type:'SLM Model',itil:'IM',volume:'~600',impact:'0.4%',status:'Live',benefits:'Resolver SOP pushed to SNOW worknotes on incident creation across all towers'},
+  {id:23,sop:'—',name:'NetScaler System Events Troubleshooting',tower:'Cloud Network Services',type:'Automation',itil:'IM',volume:'100',impact:'—',status:'In Dev',benefits:''}
+],
+vol:[
+  {id:1,cat:'Campus — Wi-Fi',sub:'L2 Support SR',total:836,auto:363,manual:473,jul:363,aug:280,sep:193},
+  {id:2,cat:'Campus — Wi-Fi',sub:'L1 Support SR',total:41,auto:0,manual:41,jul:28,aug:8,sep:5},
+  {id:3,cat:'Campus — Wi-Fi',sub:'Guest Wi-Fi SR',total:6,auto:0,manual:6,jul:4,aug:2,sep:0},
+  {id:4,cat:'Campus — LAN',sub:'L2 Connectivity',total:582,auto:0,manual:582,jul:205,aug:204,sep:173},
+  {id:5,cat:'Campus — LAN',sub:'L1 Connectivity',total:146,auto:0,manual:146,jul:63,aug:55,sep:28},
+  {id:6,cat:'Network Security',sub:'Zscaler ZIA Proxy',total:2643,auto:0,manual:2643,jul:1132,aug:943,sep:568},
+  {id:7,cat:'Collaboration',sub:'RICS AnyConnect SR',total:365,auto:365,manual:0,jul:0,aug:0,sep:0},
+  {id:8,cat:'Collaboration',sub:'Video Health Check',total:26,auto:26,manual:0,jul:0,aug:0,sep:0},
+  {id:9,cat:'Cloud Network',sub:'SFTP Request',total:185,auto:120,manual:65,jul:0,aug:0,sep:0}
+],
+act:[
+  {id:1,tower:'Video',open:false,acts:'Cisco TAC/Orange coordination · Mobile Tandberg setup · VC Connectivity provisioning · VC Troubleshooting & RCA · AMC/PM activity · Phonebook administration · Monthly Event Dashboard · Townhall session support (live events) · Vendor coordination · UAT after activity completion · VC Standardization'},
+  {id:2,tower:'Voice',open:false,acts:'DR activities — CUCM, SBC, Avaya Session Manager · Patch Management · License Cleanup · Site Decommissioning · L2/L3 Support · RICS Support · VA Remediation · Build new SIP trunk connectivity · Handphone firmware upgrade · New CUCM/Jabber provisioning'},
+  {id:3,tower:'L3 Activities',open:false,acts:'Segment advertisement/Reservation · DR drill (Internet, MPLS, LAN, Metro) · Service provider maintenance · TTU and LAN migration · BCP activities · Infra expansion · Bulk IOS Upgrade (Firewall, Switches, Routers) · New device onboarding · Remediating CA/CSPC/CBC/TACACS failures'},
+  {id:4,tower:'NAC & Wireless',open:false,acts:'Wireless ODC setup · IOS Upgrade for WLCs · Failover test between WLCs · Daily health report for WLCs and APs · IT supporting activities · L3 Support for Tech IM Team · NAC implementation on new locations · Addressing NAC-related issues'},
+  {id:5,tower:'Core Infra',open:false,acts:'VA Remediation · MS Patch Installation · HA Testing · Capacity Reports · DR Activities · Decomm Server Access Cleanup · CS Requests · ASDM · RMA tracking under CI'},
+  {id:6,tower:'Central Ops',open:false,acts:'Supporting Audits · Slowness-related incidents · Site-to-Site VPN creation & maintenance · Technical/Business escalations · NGDC Changes · SDA requirements'},
+  {id:7,tower:'Change Team',open:false,acts:'Running changes in 3 windows during weekdays · Weekend changes with Pre/Post Implementation Reviews with CCB, GCCB'},
+  {id:8,tower:'ODCM',open:false,acts:'Commissioning, Movement, Expansion, Decommission & Migration of ODC networks · Tool Integration & Removal (CA, TACACS, QRADAR, Skybox) · Sustenance document updates · EOL Replacement · Training/KT for GNS OPS towers · Review and approval of sustenance documents'},
+  {id:9,tower:'Project & Compliance',open:false,acts:'Site/Facility Decommission · SNOW projects · Syslog Remediation · RMA Tracking · QRadar/Skybox failing devices · CMDB Reconciliation · SNMP V3 Migration · Zero-hit removal · CMDB SNMP/ICMP fixes'},
+  {id:10,tower:'RAVPN',open:false,acts:'New IP Segment Allocation & Advertisement · New VPN Profile Creation (primary & backup) · IP Pool Addition · Account lock resolution · DST application additions · Blocking internet for specific VPN profiles · New RAVPN connectivity setup · Quarterly Failover Test'}
+]
+};
+
+// ── Helpers ──
+var editId=null,delId=null,sfld='id',sdir=1;
+function esc(s){return(s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(msg,type){
+  var el=document.getElementById('toast');
+  document.getElementById('t-ico').style.background=type==='err'?'var(--red)':type==='warn'?'var(--amber)':'var(--green)';
+  document.getElementById('t-msg').textContent=msg;
+  el.classList.add('show');setTimeout(function(){el.classList.remove('show')},2600);
+}
+function closeMo(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.mo').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open')})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.mo.open').forEach(function(o){o.classList.remove('open')})});
+
+// ── Navigation ──
+function nav(page,btn){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('page-'+page).classList.add('on');
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  var titles={dashboard:'Overview',usecases:'Use Case Registry',volume:'Volume Data',console:'Web Console',tools:'Tool Recommendation',activity:'Activity List'};
+  document.getElementById('pg-title').textContent=titles[page]||page;
+  if(page==='dashboard')renderDash();
+  if(page==='usecases')renderUC();
+  if(page==='volume')renderVol();
+  if(page==='activity')renderAct();
+  if(page==='tools')renderMat();
+}
+
+// ── Dashboard ──
+function renderDash(){
+  var tv=DATA.vol.reduce(function(s,r){return s+Number(r.total||0)},0);
+  var av=DATA.vol.reduce(function(s,r){return s+Number(r.auto||0)},0);
+  var pct=tv>0?Math.round(av/tv*100):0;
+  var tws=[...new Set(DATA.uc.map(function(r){return r.tower}))].length;
+  var live=DATA.uc.filter(function(r){return r.status==='Live'}).length;
+  document.getElementById('sb-ct').textContent=DATA.uc.length;
+  document.getElementById('met-strip').innerHTML=
+    '<div class="met"><div class="met-bar" style="background:var(--blue)"></div><div class="met-ico" style="background:var(--blue-lt);color:var(--blue)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="met-val">'+DATA.uc.length+'</div><div class="met-lbl">Total use cases</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--teal)"></div><div class="met-ico" style="background:var(--teal-lt);color:var(--teal)"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="met-val">'+tv.toLocaleString()+'</div><div class="met-lbl">Monthly volume</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-ico" style="background:var(--green-lt);color:var(--green)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="met-val">'+pct+'%</div><div class="met-lbl">Automation rate</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--amber)"></div><div class="met-ico" style="background:var(--amber-lt);color:var(--amber)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></div><div class="met-val">'+tws+'</div><div class="met-lbl">Active towers</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-ico" style="background:var(--green-lt);color:var(--green)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="met-val">'+live+'</div><div class="met-lbl">Live use cases</div></div>';
+
+  var cm={};DATA.vol.forEach(function(r){cm[r.cat]=(cm[r.cat]||0)+Number(r.total||0)});
+  var cats=Object.entries(cm).sort(function(a,b){return b[1]-a[1]});
+  var mx=Math.max.apply(null,cats.map(function(c){return c[1]}));
+  var bc=['#1d6ef5','#0ab39c','#f59e0b','#7c3aed','#e53e3e','#16a34a'];
+  document.getElementById('ch-tower').innerHTML=cats.map(function(c,i){
+    return '<div class="bar-row"><span class="bar-lbl" title="'+c[0]+'">'+c[0]+'</span><span class="bar-track"><span class="bar-fill" style="width:'+Math.round(c[1]/mx*100)+'%;background:'+bc[i%bc.length]+'"></span></span><span class="bar-num">'+c[1].toLocaleString()+'</span></div>';
+  }).join('');
+
+  var tm={};DATA.uc.forEach(function(r){var t=r.type||'Other';tm[t]=(tm[t]||0)+1});
+  var types=Object.entries(tm).sort(function(a,b){return b[1]-a[1]});
+  var dc=['#1d6ef5','#0ab39c','#f59e0b','#7c3aed','#e53e3e'];
+  var tot=types.reduce(function(s,t){return s+t[1]},0);
+  var cv=document.getElementById('donut');
+  if(cv){
+    var ctx=cv.getContext('2d');ctx.clearRect(0,0,120,120);
+    var ang=-Math.PI/2;
+    types.forEach(function(t,i){var s=(t[1]/tot)*Math.PI*2;ctx.beginPath();ctx.moveTo(60,60);ctx.arc(60,60,48,ang,ang+s);ctx.closePath();ctx.fillStyle=dc[i%dc.length];ctx.fill();ang+=s});
+    ctx.beginPath();ctx.arc(60,60,28,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.fillStyle='#1a2332';ctx.font='700 14px JetBrains Mono,monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(tot,60,60);
+  }
+  document.getElementById('donut-leg').innerHTML=types.map(function(t,i){
+    return '<div class="leg-item"><span class="leg-dot" style="background:'+dc[i%dc.length]+'"></span>'+t[0]+' ('+t[1]+')</div>';
+  }).join('');
+
+  var sr=[{l:'Guest WiFi Account',a:363,m:89},{l:'RICS AnyConnect',a:365,m:0},{l:'SFTP Request',a:120,m:65},{l:'RAVPN Request',a:144,m:9},{l:'VLAN Change',a:0,m:123}];
+  var mxs=Math.max.apply(null,sr.map(function(r){return r.a+r.m}));
+  document.getElementById('ch-sr').innerHTML=sr.map(function(r){
+    return '<div class="bar-row"><span class="bar-lbl">'+r.l+'</span><span class="bar-track" style="position:relative;height:10px"><span class="bar-fill" style="position:absolute;width:'+Math.round((r.a+r.m)/mxs*100)+'%;background:#bfdbfe;height:100%"></span><span class="bar-fill" style="position:absolute;width:'+Math.round(r.a/mxs*100)+'%;background:var(--blue);height:100%"></span></span><span class="bar-num" style="color:var(--blue)">'+r.a+'<span style="color:var(--text3)"> /'+r.m+'</span></span></div>';
+  }).join('')+'<div style="display:flex;gap:12px;margin-top:8px;font-size:10px;color:var(--text3);font-weight:600"><span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--blue);margin-right:4px;vertical-align:-1px"></span>Automated</span><span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#bfdbfe;margin-right:4px;vertical-align:-1px"></span>Manual</span></div>';
+}
+
+// ── Use Cases ──
+function tpc(t){var m={'Hybrid - SOP':'pt','SLM Model':'pa','RBA Workflow (Automation)':'pb','Automation':'pb','Automation + RBA':'pp'};return m[t]||'pz'}
+function stc(s){var m={'Live':'pg','In Dev':'pa','Planned':'pz','On Hold':'pr'};return m[s]||'pz'}
+function srt(f){if(sfld===f)sdir*=-1;else{sfld=f;sdir=1;}renderUC()}
+function clearFilters(){document.getElementById('uc-q').value='';document.getElementById('f-tw').value='';document.getElementById('f-stw').innerHTML='<option value="">All sub-towers</option>';document.getElementById('f-ty').value='';document.getElementById('f-st').value='';renderUC()}
+
+function renderUC(){
+  var q=(document.getElementById('uc-q').value||'').toLowerCase();
+  var ft=document.getElementById('f-tw').value;
+  var fty=document.getElementById('f-ty').value;
+  var fst=document.getElementById('f-st').value;
+  var rows=DATA.uc.filter(function(r){
+    if(q&&JSON.stringify(r).toLowerCase().indexOf(q)<0)return false;
+    if(ft&&r.tower!==ft)return false;
+    if(fty&&r.type!==fty)return false;
+    if(fst&&r.status!==fst)return false;
+    return true;
+  });
+  rows.sort(function(a,b){
+    var va=a[sfld]||'',vb=b[sfld]||'';
+    if(!isNaN(va)&&!isNaN(vb)){va=Number(va);vb=Number(vb)}
+    return va<vb?-sdir:va>vb?sdir:0;
+  });
+  document.getElementById('sb-ct').textContent=DATA.uc.length;
+  document.getElementById('uc-ct').textContent=rows.length+' of '+DATA.uc.length+' records';
+  // sub-tower filter
+  var fstw=document.getElementById('f-stw').value;
+  if(fstw) rows=rows.filter(function(r){return (r.subtower||'')=== fstw});
+
+  var b=document.getElementById('uc-body');
+  if(!rows.length){b.innerHTML='<tr><td colspan="11" class="tbl-empty">No use cases match your filters. <a href="#" onclick="clearFilters();return false" style="color:var(--blue)">Clear filters</a></td></tr>';return}
+  b.innerHTML=rows.map(function(r,i){
+    var sopCell='<span style="font-family:var(--mono);font-size:11px;color:var(--text2)">'+esc(r.sop||'—')+'</span>';
+    if(r.sopFileName){sopCell+=' <a class="sop-chip" onclick="downloadSop('+r.id+')" title="Download '+esc(r.sopFileName)+'"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>SOP</a>'}
+    return(
+    '<tr>'+
+    '<td style="color:var(--text3);font-family:var(--mono);font-size:11px">'+(i+1)+'</td>'+
+    '<td>'+sopCell+'</td>'+
+    '<td style="font-weight:500;line-height:1.5">'+esc(r.name)+'</td>'+
+    '<td style="font-size:11px;color:var(--text2)">'+esc(r.tower)+'</td>'+
+    '<td style="font-size:11px;color:var(--text2)">'+esc(r.subtower||'—')+'</td>'+
+    '<td><span class="pill '+tpc(r.type)+'">'+esc(r.type)+'</span></td>'+
+    '<td><span class="pill pz">'+esc(r.itil)+'</span></td>'+
+    '<td style="font-family:var(--mono);font-size:12px">'+esc(r.volume||'—')+'</td>'+
+    '<td style="font-family:var(--mono);font-size:12px">'+esc(r.impact||'—')+'</td>'+
+    '<td><span class="pill '+stc(r.status)+'">'+esc(r.status)+'</span></td>'+
+    '<td><div class="ra">'+
+    '<button class="ab ae" onclick="openEdit('+r.id+')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>'+
+    '<button class="ab ad" onclick="openDel('+r.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>Delete</button>'+
+    '</div></td>'+
+    '</tr>'
+  )}).join('');
+}
+
+// ── CRUD ──
+function openCreate(){
+  editId=null;
+  document.getElementById('mo-title').textContent='New Use Case';
+  document.getElementById('mo-sub').textContent='Fill in the details to register a new use case';
+  document.getElementById('mo-save-lbl').textContent='Save Use Case';
+  ['f-sop','f-nm','f-vol','f-imp','f-ben'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('f-tw2').value='Campus Network Services';
+  updateModalSubTower();
+  document.getElementById('f-stw2').value='';
+  document.getElementById('f-tp').value='RBA Workflow (Automation)';
+  document.getElementById('f-itil').value='IM';
+  document.getElementById('f-ss').value='Planned';
+  clearSopFile();
+  document.getElementById('mo-uc').classList.add('open');
+  setTimeout(function(){document.getElementById('f-nm').focus()},120);
+}
+function openEdit(id){
+  var r=DATA.uc.find(function(x){return x.id===id});if(!r)return;
+  editId=id;
+  document.getElementById('mo-title').textContent='Edit Use Case';
+  document.getElementById('mo-sub').textContent='Update details for this use case';
+  document.getElementById('mo-save-lbl').textContent='Save Changes';
+  document.getElementById('f-sop').value=r.sop||'';
+  document.getElementById('f-nm').value=r.name||'';
+  document.getElementById('f-tw2').value=r.tower;
+  document.getElementById('f-tp').value=r.type;
+  document.getElementById('f-itil').value=r.itil;
+  document.getElementById('f-vol').value=r.volume||'';
+  document.getElementById('f-imp').value=r.impact||'';
+  document.getElementById('f-ss').value=r.status;
+  document.getElementById('f-ben').value=r.benefits||'';
+  updateModalSubTower();
+  setTimeout(function(){document.getElementById('f-stw2').value=r.subtower||''},10);
+  clearSopFile();
+  if(r.sopFileName){window._sopFileName=r.sopFileName;window._sopFileData=r.sopFileData||null;document.getElementById('sop-file-preview').style.display='flex';document.getElementById('sop-file-name').textContent=r.sopFileName;document.getElementById('sop-upload-label').style.display='none'}
+  document.getElementById('mo-uc').classList.add('open');
+}
+function saveUC(){
+  var nm=document.getElementById('f-nm').value.trim();
+  if(!nm){document.getElementById('f-nm').focus();toast('Use case name is required','err');return}
+  var stw=document.getElementById('f-stw2').value;var obj={sop:document.getElementById('f-sop').value.trim()||'—',name:nm,tower:document.getElementById('f-tw2').value,subtower:stw,type:document.getElementById('f-tp').value,itil:document.getElementById('f-itil').value,volume:document.getElementById('f-vol').value.trim(),impact:document.getElementById('f-imp').value.trim(),status:document.getElementById('f-ss').value,benefits:document.getElementById('f-ben').value.trim(),sopFileName:window._sopFileName||null,sopFileData:window._sopFileData||null};
+  if(editId){
+    var idx=DATA.uc.findIndex(function(r){return r.id===editId});
+    if(idx>-1)DATA.uc[idx]=Object.assign({},DATA.uc[idx],obj);
+    toast('Use case updated');
+  }else{
+    var mx=DATA.uc.reduce(function(m,r){return Math.max(m,r.id)},0);
+    DATA.uc.push(Object.assign({id:mx+1},obj));
+    toast('Use case created');
+  }
+  jbSave();closeMo('mo-uc');renderUC();renderDash();
+}
+function openDel(id){
+  var r=DATA.uc.find(function(x){return x.id===id});if(!r)return;
+  delId=id;document.getElementById('del-nm').textContent=r.name;
+  document.getElementById('mo-del').classList.add('open');
+}
+function doDelete(){
+  DATA.uc=DATA.uc.filter(function(r){return r.id!==delId});
+  jbSave();closeMo('mo-del');renderUC();renderDash();toast('Use case deleted','warn');
+}
+
+// ── Volume ──
+function renderVol(){
+  document.getElementById('vol-body').innerHTML=DATA.vol.map(function(r,i){return(
+    '<tr>'+
+    '<td style="color:var(--text3);font-family:var(--mono);font-size:11px">'+(i+1)+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'cat\',this)" style="font-weight:500">'+esc(r.cat)+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'sub\',this)" style="color:var(--text2)">'+esc(r.sub)+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'total\',this)" style="font-family:var(--mono);font-weight:600">'+r.total+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'auto\',this)" style="font-family:var(--mono);color:var(--green)">'+r.auto+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'manual\',this)" style="font-family:var(--mono);color:var(--amber)">'+r.manual+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'jul\',this)" style="font-family:var(--mono)">'+r.jul+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'aug\',this)" style="font-family:var(--mono)">'+r.aug+'</td>'+
+    '<td class="ed" contenteditable="true" onblur="ev('+r.id+',\'sep\',this)" style="font-family:var(--mono)">'+r.sep+'</td>'+
+    '<td><button class="ab ad btn-sm" onclick="dv('+r.id+')"><svg viewBox="0 0 24 24" width="12" height="12"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg></button></td>'+
+    '</tr>'
+  )}).join('');
+}
+function ev(id,f,el){var r=DATA.vol.find(function(x){return x.id===id});if(r){var v=el.innerText.trim();r[f]=isNaN(v)?v:Number(v);clearTimeout(window._evT);window._evT=setTimeout(jbSave,1500);}}
+function dv(id){if(confirm('Delete this volume record?')){DATA.vol=DATA.vol.filter(function(r){return r.id!==id});jbSave();renderVol();toast('Deleted','warn')}}
+function addVol(){var mx=DATA.vol.reduce(function(m,r){return Math.max(m,r.id)},0);DATA.vol.push({id:mx+1,cat:'New category',sub:'',total:0,auto:0,manual:0,jul:0,aug:0,sep:0});renderVol();toast('Row added')}
+
+// ── Activity ──
+function renderAct(){
+  document.getElementById('act-ct').textContent=DATA.act.length+' towers';
+  document.getElementById('act-con').innerHTML=DATA.act.map(function(r){return(
+    '<div class="act-row">'+
+    '<div class="act-hd" onclick="togAct('+r.id+')">'+
+    '<div class="act-name"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'+esc(r.tower)+'</div>'+
+    '<svg class="act-chv" id="chv-'+r.id+'" viewBox="0 0 24 24" style="'+(r.open?'transform:rotate(90deg)':'')+'"><polyline points="9 18 15 12 9 6"/></svg>'+
+    '</div>'+
+    '<div class="act-body '+(r.open?'open':'')+'" id="ab-'+r.id+'">'+
+    '<div contenteditable="true" style="outline:none" onblur="ea('+r.id+',this)" onfocus="this.style.outline=\'2px solid var(--blue)\'" onblur="this.style.outline=\'none\';ea('+r.id+',this)">'+esc(r.acts)+'</div>'+
+    '<div style="margin-top:10px"><button class="ab ad btn-sm" onclick="da('+r.id+')"><svg viewBox="0 0 24 24" width="12" height="12"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>Delete tower</button></div>'+
+    '</div>'+
+    '</div>'
+  )}).join('');
+}
+function togAct(id){var r=DATA.act.find(function(x){return x.id===id});if(!r)return;r.open=!r.open;document.getElementById('ab-'+id).classList.toggle('open',r.open);document.getElementById('chv-'+id).style.transform=r.open?'rotate(90deg)':''}
+function ea(id,el){var r=DATA.act.find(function(x){return x.id===id});if(r){r.acts=el.innerText.trim();clearTimeout(window._eaT);window._eaT=setTimeout(jbSave,1500);}}
+function da(id){if(confirm('Delete this tower?')){DATA.act=DATA.act.filter(function(r){return r.id!==id});jbSave();renderAct();toast('Tower deleted','warn')}}
+function addAct(){var mx=DATA.act.reduce(function(m,r){return Math.max(m,r.id)},0);DATA.act.push({id:mx+1,tower:'New tower',open:true,acts:'Enter activities here'});renderAct();toast('Tower added')}
+
+// ── Matrix ──
+function renderMat(){
+  var rows=[
+    ['DNAC REST datasource','✓ Plugin','✓ Native','✓ Native'],
+    ['ISE API integration','✓ Plugin','✓ Native','✓ Native'],
+    ['ServiceNow ticket view','~ Plugin only','✓ Built-in','✓ Native'],
+    ['CLI / command execution','~ iFrame embed','✓ SSH widget','✓ Full control'],
+    ['Intel Agent LangGraph embed','~ iFrame','✓ API call','✓ Native'],
+    ['Azure AD SSO','✓ SAML/OIDC','✓','✓ Build it'],
+    ['AKS deployment','✓ Helm chart','✓ Docker','✓ Native'],
+    ['Cost','Free','~$10/user/mo','Dev time only'],
+    ['Time to first dashboard','1–2 days','1 day','3–6 weeks']
+  ];
+  document.getElementById('mat-body').innerHTML=rows.map(function(r){
+    return '<tr><td style="color:var(--text2);font-weight:500">'+r[0]+'</td>'+
+    [r[1],r[2],r[3]].map(function(v){return '<td style="color:'+(v[0]==='✓'?'var(--green)':v[0]==='~'?'var(--amber)':'var(--text2)')+'">'+v+'</td>'}).join('')+
+    '</tr>';
+  }).join('');
+}
+
+// ── Export ──
+function exportCSV(){
+  var cols=['id','sop','name','tower','type','itil','volume','impact','status','benefits'];
+  var lines=[cols.join(',')].concat(DATA.uc.map(function(r){return cols.map(function(c){return'"'+(r[c]||'').toString().replace(/"/g,'""')+'"'}).join(',')}));
+  var blob=new Blob([lines.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GNS_UseCases_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  toast('CSV exported');
+}
+
+
+// ── Sub-tower map ──
+var SUBTOWERS={
+  'Campus Network Services':['Wireless','LAN'],
+  'Network Security Services':['RAVPN','Site-to-Site Tunnel','Zscaler'],
+  'Network Collaboration Services':['Voice','Video'],
+  'Cloud Network Services':['Data Center','WAN'],
+  'GNS':['All Towers']
+};
+
+function updateModalSubTower(){
+  var tw=document.getElementById('f-tw2').value;
+  var sel=document.getElementById('f-stw2');
+  var subs=SUBTOWERS[tw]||[];
+  sel.innerHTML='<option value="">— select sub-tower —</option>'+subs.map(function(s){return'<option>'+s+'</option>'}).join('');
+}
+
+function updateSubTowerFilter(){
+  var tw=document.getElementById('f-tw').value;
+  var sel=document.getElementById('f-stw');
+  var subs=tw?(SUBTOWERS[tw]||[]):[];
+  sel.innerHTML='<option value="">All sub-towers</option>'+subs.map(function(s){return'<option>'+s+'</option>'}).join('');
+}
+
+// ── SOP file handling ──
+window._sopFileName=null;
+window._sopFileData=null;
+
+function handleSopFile(inp){
+  var file=inp.files[0];
+  if(!file)return;
+  if(file.size>10*1024*1024){toast('File too large — max 10MB','err');inp.value='';return}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    window._sopFileName=file.name;
+    window._sopFileData=e.target.result;
+    document.getElementById('sop-upload-label').style.display='none';
+    document.getElementById('sop-file-preview').style.display='flex';
+    document.getElementById('sop-file-name').textContent=file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearSopFile(){
+  window._sopFileName=null;
+  window._sopFileData=null;
+  document.getElementById('sop-file-in').value='';
+  document.getElementById('sop-file-preview').style.display='none';
+  document.getElementById('sop-upload-label').style.display='flex';
+  document.getElementById('sop-upload-txt').textContent='Click to attach SOP document (PDF, Word, Excel)';
+}
+
+function downloadSop(id){
+  var r=DATA.uc.find(function(x){return x.id===id});
+  if(!r||!r.sopFileData){toast('No file attached','err');return}
+  var a=document.createElement('a');a.href=r.sopFileData;a.download=r.sopFileName;a.click();
+  toast('Downloading '+r.sopFileName);
+}
+
+// ── Init ──
+renderDash();
+// Load live data from JSONBin on startup
+jbLoad();
+</script>
+</body>
+</html>
