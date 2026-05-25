@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>GNS AIOps Portal — Cognizant</title>
+<title>GNS AIOps Portal v5 — Cognizant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -145,8 +145,15 @@ tbody td{padding:11px 15px;vertical-align:middle}
 tr:hover .ra{opacity:1}
 .ab{padding:4px 8px;border-radius:5px;border:none;cursor:pointer;font-size:11px;font-family:var(--font);font-weight:600;display:flex;align-items:center;gap:4px;transition:all .1s}
 .ab svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}
+.av{background:var(--teal-lt);color:var(--teal)}.av:hover{background:#b2dfdb}
 .ae{background:var(--blue-lt);color:var(--blue)}.ae:hover{background:#d1e4fc}
 .ad{background:var(--red-lt);color:var(--red)}.ad:hover{background:#fed7d7}
+
+/* View detail rows */
+.vd-row{display:grid;grid-template-columns:140px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}
+.vd-row:last-child{border-bottom:none}
+.vd-lbl{color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.4px;font-size:10px;padding-top:2px}
+.vd-val{color:var(--text);line-height:1.7}
 
 /* Inline editable */
 .ed{cursor:text;min-width:30px}
@@ -268,7 +275,7 @@ tr:hover .ra{opacity:1}
   <div class="sb-logo">
     <div class="sb-mark">
       <div class="sb-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-      <div><div class="sb-name">GNS AIOps</div><div class="sb-sub">COGNIZANT · INTEL AGENT</div></div>
+      <div><div class="sb-name">GNS AIOps</div><div class="sb-sub">COGNIZANT · V5 · INTEL AGENT</div></div>
     </div>
     <div class="sb-tag"><span class="sb-dot"></span>Phase 1 · Read-Only Intel</div>
   </div>
@@ -301,6 +308,66 @@ tr:hover .ra{opacity:1}
       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       Activity List
     </button>
+    <div class="sb-sec">Incident Analysis</div>
+    <button class="sb-item" onclick="nav('switch',this)">
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2"/><circle cx="6" cy="12" r="1.5"/><circle cx="10" cy="12" r="1.5"/></svg>
+      Switch Issues
+      <span class="sb-badge b">27</span>
+    </button>
+    <button class="sb-item" onclick="nav('wifi',this)">
+      <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1"/></svg>
+      Wi-Fi Issues
+      <span class="sb-badge g">41</span>
+    </button>
+    <button class="sb-item" onclick="nav('lan',this)">
+      <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><line x1="6" y1="9" x2="18" y2="9"/></svg>
+      LAN Issues
+      <span class="sb-badge a">43</span>
+    </button>
+    <div class="sb-sec">Service Catalogue</div>
+    <button class="sb-item" onclick="nav('cat-sr',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Service Requests
+      <span class="sb-badge g">SR</span>
+    </button>
+    <button class="sb-item" onclick="nav('cat-inc',this)">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+      Incidents
+      <span class="sb-badge" style="background:rgba(239,68,68,.2);color:#f87171">INC</span>
+    </button>
+    <button class="sb-item" onclick="nav('cat-cr',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Changes
+      <span class="sb-badge" style="background:rgba(124,58,237,.2);color:#a78bfa">CR</span>
+    </button>
+    <button class="sb-item" onclick="nav('cat-task',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Tasks
+      <span class="sb-badge a">TSK</span>
+    </button>
+    <button class="sb-item" onclick="nav('cat-sop',this)">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      SOP / RBA Scenarios
+      <span class="sb-badge b">New</span>
+    </button>
+    <div class="sb-sec">Leadership</div>
+    <button class="sb-item" onclick="nav('leadership',this)">
+      <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      Leadership Summary
+      <span class="sb-badge a">Exec</span>
+    </button>
+    <button class="sb-item" onclick="nav('sop-tracker',this)">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      SOP Tracker
+    </button>
+    <button class="sb-item" onclick="nav('atk-calc',this)">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      ATK / SOP Calculator
+    </button>
+    <button class="sb-item" onclick="nav('upgrade',this)">
+      <svg viewBox="0 0 24 24"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+      Upgrade Path
+    </button>
   </nav>
   <div class="sb-foot">
     <div class="sb-user">
@@ -314,7 +381,7 @@ tr:hover .ra{opacity:1}
 <div class="main">
   <div class="topbar">
     <div class="tb-l">
-      <span class="tb-crumb">GNS AIOps</span>
+      <span class="tb-crumb">GNS AIOps v5</span>
       <span class="tb-sep">›</span>
       <span class="tb-title" id="pg-title">Overview</span>
     </div>
@@ -323,7 +390,7 @@ tr:hover .ra{opacity:1}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
         Refresh
       </button>
-      <button class="btn btn-o btn-sm" onclick="exportCSV()">
+      <button class="btn btn-o btn-sm" onclick="expUC('csv')">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV
       </button>
       <button class="btn btn-o btn-sm" onclick="window.print()">
@@ -364,9 +431,11 @@ tr:hover .ra{opacity:1}
     <div class="page" id="page-usecases">
       <div class="sec-hd">
         <div><div class="sec-title">Use Case Registry</div><div class="sec-sub">Add, edit, or remove GNS AIOps use cases — all changes auto-saved</div></div>
-        <button class="btn btn-p" onclick="openCreate()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Use Case
-        </button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-o btn-sm" onclick="expUC('csv')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>
+          <button class="btn btn-o btn-sm" onclick="expUC('word')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>
+          <button class="btn btn-p btn-sm" onclick="openCreate()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Use Case</button>
+        </div>
       </div>
       <div class="card">
         <div class="card-hd">
@@ -431,7 +500,11 @@ tr:hover .ra{opacity:1}
     <div class="page" id="page-volume">
       <div class="sec-hd">
         <div><div class="sec-title">Volume Data</div><div class="sec-sub">Monthly incident and SR volumetrics — click any cell to edit inline</div></div>
-        <button class="btn btn-o btn-sm" onclick="addVol()">+ Add row</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-o btn-sm" onclick="expVol('csv')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>
+          <button class="btn btn-o btn-sm" onclick="expVol('word')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>
+          <button class="btn btn-p btn-sm" onclick="addVol()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add row</button>
+        </div>
       </div>
       <div class="card">
         <div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Incident & SR volumes</div></div>
@@ -568,13 +641,35 @@ tr:hover .ra{opacity:1}
     <div class="page" id="page-activity">
       <div class="sec-hd">
         <div><div class="sec-title">Tower Activity List</div><div class="sec-sub">GNS sub-tower responsibilities — click to expand, click text to edit</div></div>
-        <button class="btn btn-o btn-sm" onclick="addAct()">+ Add tower</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-o btn-sm" onclick="expAct('csv')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>
+          <button class="btn btn-o btn-sm" onclick="expAct('word')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>
+          <button class="btn btn-p btn-sm" onclick="addAct()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add tower</button>
+        </div>
       </div>
       <div class="card" style="overflow:visible">
         <div class="card-hd"><div class="card-title">GNS tower activities</div><span class="card-ct" id="act-ct">— towers</span></div>
         <div id="act-con"></div>
       </div>
     </div>
+
+    <!-- INCIDENT ANALYSIS — SWITCH / WI-FI / LAN -->
+    <div class="page" id="page-switch"><div id="sw-content"></div></div>
+    <div class="page" id="page-wifi"><div id="wf-content"></div></div>
+    <div class="page" id="page-lan"><div id="ln-content"></div></div>
+
+    <!-- SERVICE CATALOGUE -->
+    <div class="page" id="page-cat-sr"><div id="cat-sr-con"></div></div>
+    <div class="page" id="page-cat-inc"><div id="cat-inc-con"></div></div>
+    <div class="page" id="page-cat-cr"><div id="cat-cr-con"></div></div>
+    <div class="page" id="page-cat-task"><div id="cat-task-con"></div></div>
+    <div class="page" id="page-cat-sop"><div id="cat-sop-con"></div></div>
+
+    <!-- LEADERSHIP -->
+    <div class="page" id="page-leadership"><div id="leadership-con"></div></div>
+    <div class="page" id="page-sop-tracker"><div id="sop-tracker-con"></div></div>
+    <div class="page" id="page-atk-calc"><div id="atk-calc-con"></div></div>
+    <div class="page" id="page-upgrade"><div id="upgrade-con"></div></div>
 
   </div>
 </div>
@@ -657,6 +752,21 @@ tr:hover .ra{opacity:1}
   </div>
 </div>
 
+<!-- VIEW MODAL -->
+<div class="mo" id="mo-view">
+  <div class="mo-box">
+    <div class="mo-hd">
+      <div><div class="mo-title">Use Case Details</div><div class="mo-sub">Read-only view of this use case</div></div>
+      <button class="mo-cls" onclick="closeMo('mo-view')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="mo-body" id="view-body"></div>
+    <div class="mo-foot">
+      <button class="btn btn-o" onclick="closeMo('mo-view')">Close</button>
+      <button class="btn btn-p" id="view-edit-btn" onclick="switchToEdit()"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast-wrap"><div class="toast" id="toast"><div class="t-ico" id="t-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span id="t-msg">Saved</span></div></div>
 
@@ -700,7 +810,7 @@ async function jbSave(){
     var r=await fetch(JBIN_URL,{
       method:'PUT',
       headers:{'Content-Type':'application/json','X-Master-Key':JBIN_KEY},
-      body:JSON.stringify({uc:DATA.uc,vol:DATA.vol,act:DATA.act,project:'GNS AIOps Portal',lastSaved:new Date().toISOString()})
+      body:JSON.stringify({uc:DATA.uc,vol:DATA.vol,act:DATA.act,project:'GNS AIOps Portal v5',lastSaved:new Date().toISOString()})
     });
     if(!r.ok)throw new Error('HTTP '+r.status);
     document.getElementById('sb-saved').textContent='Synced '+new Date().toLocaleTimeString();
@@ -785,13 +895,34 @@ function nav(page,btn){
   document.getElementById('page-'+page).classList.add('on');
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('on')});
   btn.classList.add('on');
-  var titles={dashboard:'Overview',usecases:'Use Case Registry',volume:'Volume Data',console:'Web Console',tools:'Tool Recommendation',activity:'Activity List'};
+  var titles={
+    dashboard:'Overview',usecases:'Use Case Registry',volume:'Volume Data',
+    console:'Web Console',tools:'Tool Recommendation',activity:'Activity List',
+    switch:'Switch Issue Analysis',wifi:'Wi-Fi Issue Analysis',lan:'LAN Issue Analysis',
+    'cat-sr':'Service Requests — SR Catalogue','cat-inc':'Incidents — INC Catalogue',
+    'cat-cr':'Changes — CR Catalogue','cat-task':'Tasks — TSK Catalogue',
+    'cat-sop':'SOP / RBA Scenarios','leadership':'Leadership Summary',
+    'sop-tracker':'SOP Tracker — Progress by Use Case','atk-calc':'ATK / SOP Calculator — All Towers',
+    upgrade:'Upgrade Path — v3 / v4 / v5'
+  };
   document.getElementById('pg-title').textContent=titles[page]||page;
   if(page==='dashboard')renderDash();
   if(page==='usecases')renderUC();
   if(page==='volume')renderVol();
   if(page==='activity')renderAct();
   if(page==='tools')renderMat();
+  if(page==='switch')renderIncidentPage('switch');
+  if(page==='wifi')renderIncidentPage('wifi');
+  if(page==='lan')renderIncidentPage('lan');
+  if(page==='cat-sr')renderCatPage('sr');
+  if(page==='cat-inc')renderCatPage('inc');
+  if(page==='cat-cr')renderCatPage('cr');
+  if(page==='cat-task')renderCatPage('task');
+  if(page==='cat-sop')renderSOPPage();
+  if(page==='leadership')renderLeadership();
+  if(page==='sop-tracker')renderSOPTracker();
+  if(page==='atk-calc')renderATKCalc();
+  if(page==='upgrade')renderUpgrade();
 }
 
 // ── Dashboard ──
@@ -887,6 +1018,7 @@ function renderUC(){
     '<td style="font-family:var(--mono);font-size:12px">'+esc(r.impact||'—')+'</td>'+
     '<td><span class="pill '+stc(r.status)+'">'+esc(r.status)+'</span></td>'+
     '<td><div class="ra">'+
+    '<button class="ab av" onclick="openView('+r.id+')"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button>'+
     '<button class="ab ae" onclick="openEdit('+r.id+')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>'+
     '<button class="ab ad" onclick="openDel('+r.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>Delete</button>'+
     '</div></td>'+
@@ -1031,11 +1163,56 @@ function exportCSV(){
 
 // ── Sub-tower map ──
 var SUBTOWERS={
-  'Campus Network Services':['Wireless','LAN'],
-  'Network Security Services':['RAVPN','Site-to-Site Tunnel','Zscaler'],
-  'Network Collaboration Services':['Voice','Video'],
-  'Cloud Network Services':['Data Center','WAN'],
-  'GNS':['All Towers']
+  'Campus Network Services':[
+    'Wireless',
+    'LAN',
+    'Switch',
+    'NAC / ISE',
+    'DHCP / DNS / AAA',
+    'Guest Wi-Fi',
+    'Client Connectivity',
+    'Cognizant Connectivity',
+    'VLAN Services'
+  ],
+  'Network Security Services':[
+    'RAVPN',
+    'Site-to-Site Tunnel',
+    'Zscaler ZIA',
+    'Zscaler ZPA',
+    'Firewall',
+    'Web Proxy',
+    'Security Exceptions',
+    'Certificate Management'
+  ],
+  'Network Collaboration Services':[
+    'Voice',
+    'Video',
+    'RICS AnyConnect',
+    'GPN SIP',
+    'Telepresence',
+    'WebEx',
+    'MS Teams Direct Routing',
+    'Contact Center'
+  ],
+  'Cloud Network Services':[
+    'Data Center',
+    'WAN',
+    'SD-WAN',
+    'NetScaler / ADC',
+    'Load Balancer',
+    'Cloud Connect (Azure)',
+    'Cloud Connect (AWS)',
+    'DNS / DHCP Cloud',
+    'SFTP Services'
+  ],
+  'GNS':[
+    'All Towers',
+    'Cross-Tower',
+    'SLM / RAG Model',
+    'Intel Agent',
+    'Incident Assist',
+    'Service Now Integration'
+  ]
 };
 
 function updateModalSubTower(){
@@ -1085,6 +1262,1183 @@ function downloadSop(id){
   if(!r||!r.sopFileData){toast('No file attached','err');return}
   var a=document.createElement('a');a.href=r.sopFileData;a.download=r.sopFileName;a.click();
   toast('Downloading '+r.sopFileName);
+}
+
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — View modal
+// ═══════════════════════════════════════════════════════════════════
+var _viewId=null;
+function openView(id){
+  var r=DATA.uc.find(function(x){return x.id===id});if(!r)return;
+  _viewId=id;
+  var fields=[
+    ['Use Case Name',r.name],
+    ['SOP Reference',r.sop||'—'],
+    ['Tower',r.tower],
+    ['Sub-tower',r.subtower||'—'],
+    ['Type',r.type],
+    ['ITIL Process',r.itil],
+    ['Volume / Month',r.volume||'—'],
+    ['Impact',r.impact||'—'],
+    ['Status',r.status],
+    ['Benefits / Remarks',r.benefits||'—'],
+    ['SOP Document',r.sopFileName||'No file attached']
+  ];
+  document.getElementById('view-body').innerHTML=fields.map(function(f){
+    return '<div class="vd-row"><span class="vd-lbl">'+f[0]+'</span><span class="vd-val">'+esc(f[1])+'</span></div>';
+  }).join('');
+  document.getElementById('mo-view').classList.add('open');
+}
+function switchToEdit(){
+  var id=_viewId;
+  closeMo('mo-view');
+  if(id){
+    setTimeout(function(){openEdit(id)},120);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — Switch / Wi-Fi / LAN incident analysis data
+// ═══════════════════════════════════════════════════════════════════
+var SW=[
+  {id:1, cat:'Switch port issue',              vol:312, auto:'Possible',     priority:'P1', rba:'Auto port bounce + health check via DNAC API'},
+  {id:2, cat:'DHCP/AAA/DNS reachability/Config',vol:287,auto:'Possible',     priority:'P1', rba:'DNAC + ISE config validation + auto-remediation'},
+  {id:3, cat:'Port issue',                     vol:245, auto:'Possible',     priority:'P1', rba:'Port diagnostics → auto flap detect → reset'},
+  {id:4, cat:'Automatically Resolved',         vol:198, auto:'Possible',     priority:'P2', rba:'Auto-detect self-resolve → evidence-based close'},
+  {id:5, cat:'VLAN Movement',                  vol:176, auto:'Possible',     priority:'P2', rba:'VLAN reassignment workflow via DNAC + ISE'},
+  {id:6, cat:'Device MAC whitelisting',        vol:154, auto:'Possible',     priority:'P2', rba:'ISE ERS API → auto-whitelist with approval gate'},
+  {id:7, cat:'Endpoint compliance',            vol:143, auto:'Possible',     priority:'P2', rba:'ISE posture + endpoint check → remediate or quarantine'},
+  {id:8, cat:'VLAN Scope full',                vol:98,  auto:'Possible',     priority:'P2', rba:'DHCP scope monitor → alert + auto-expand via API'},
+  {id:9, cat:'Port end Configuration',         vol:87,  auto:'Possible',     priority:'P2', rba:'DNAC template push → standardise port config'},
+  {id:10,cat:'Voice VLAN Mapping',             vol:76,  auto:'Possible',     priority:'P3', rba:'VLAN config audit → auto-correct mapping'},
+  {id:11,cat:'3-Strike rule followed',         vol:134, auto:'Not Possible', priority:'P3', rba:'Process tracking only — no automation applicable'},
+  {id:12,cat:'Change Induced Failure',         vol:112, auto:'Not Possible', priority:'P2', rba:'RCA documentation — correlate with change tickets'},
+  {id:13,cat:'Client End Issue',               vol:98,  auto:'Not Possible', priority:'P3', rba:'Auto-diagnostics to confirm client end — then close'},
+  {id:14,cat:'Duplicate ticket',               vol:89,  auto:'Not Possible', priority:'P4', rba:'SNOW dedup logic — auto-link and close'},
+  {id:15,cat:'GEN AI/AI model issues',         vol:23,  auto:'Not Possible', priority:'P3', rba:'Escalate to AI team — log for Intel Agent review'},
+  {id:16,cat:'Guest - SR Guidance',            vol:67,  auto:'Not Possible', priority:'P4', rba:'SLM model — auto-push guest SOP to worknotes'},
+  {id:17,cat:'Hardware',                       vol:54,  auto:'Not Possible', priority:'P2', rba:'Auto-alert + field engineer dispatch — no RBA'},
+  {id:18,cat:'Insufficient Information',       vol:78,  auto:'Not Possible', priority:'P4', rba:'Auto-request info → 3-strike closure'},
+  {id:19,cat:'Query',                          vol:45,  auto:'Not Possible', priority:'P4', rba:'SLM model — FAQ auto-response'},
+  {id:20,cat:'Resolved by caller',             vol:123, auto:'Not Possible', priority:'P4', rba:'Auto-close with reason code'},
+  {id:21,cat:'Resolved by Support team',       vol:167, auto:'Not Possible', priority:'P4', rba:'Standard closure — no RBA needed'},
+  {id:22,cat:'Service Provider Outage',        vol:34,  auto:'Not Possible', priority:'P2', rba:'ISP monitoring → auto-notify stakeholders'},
+  {id:23,cat:'SR Guidance',                    vol:56,  auto:'Not Possible', priority:'P4', rba:'SLM — auto-push SOP to worknotes'},
+  {id:24,cat:'Unknown - Root cause not found', vol:89,  auto:'Not Possible', priority:'P3', rba:'Intel Agent — DNAC + ISE deep analysis'},
+  {id:25,cat:'User Awareness',                 vol:67,  auto:'Not Possible', priority:'P4', rba:'Auto-KB article attach + awareness email'},
+  {id:26,cat:'UserUnavailable-3StrikeRule',    vol:45,  auto:'Not Possible', priority:'P4', rba:'Auto-closure after 3 strikes'},
+  {id:27,cat:'(blank)',                        vol:12,  auto:'Not Possible', priority:'P4', rba:'Data quality — improve categorisation'}
+];
+
+var WF=[
+  {id:1, cat:'Unknown - Root cause not found', vol:287, auto:'Not Possible', priority:'P3', rba:'Intel Agent deep RF + ISE analysis'},
+  {id:2, cat:'Insufficient Information',       vol:198, auto:'Not Possible', priority:'P4', rba:'Auto-request info → 3-strike closure'},
+  {id:3, cat:'Client - Profile Reconfig',      vol:176, auto:'Possible',     priority:'P1', rba:'ISE ERS + DNAC → auto-reprovision profile'},
+  {id:4, cat:'Inactive/Expired credential',    vol:167, auto:'Possible',     priority:'P1', rba:'ISE pxGrid → detect expired cert → notify/renew'},
+  {id:5, cat:'Range Issues',                   vol:154, auto:'Not Possible', priority:'P3', rba:'DNAC RF analysis → recommend AP placement'},
+  {id:6, cat:'Resolved by caller',             vol:143, auto:'Not Possible', priority:'P4', rba:'Auto-close with reason code'},
+  {id:7, cat:'Policy mismatch in ISE',         vol:134, auto:'Possible',     priority:'P1', rba:'ISE ERS → auto-detect + correct policy mismatch'},
+  {id:8, cat:'Guest - SR Guidance',            vol:112, auto:'Not Possible', priority:'P4', rba:'SLM → auto-push guest SOP'},
+  {id:9, cat:'PD - User awareness',            vol:98,  auto:'Not Possible', priority:'P4', rba:'Auto-send awareness email + KB article'},
+  {id:10,cat:'AP High utilization',            vol:234, auto:'Possible',     priority:'P1', rba:'DNAC → detect high util → load balance clients'},
+  {id:11,cat:'SR Guidance',                    vol:87,  auto:'Not Possible', priority:'P4', rba:'SLM → auto-push SOP to worknotes'},
+  {id:12,cat:'Client - User awareness',        vol:76,  auto:'Not Possible', priority:'P4', rba:'Auto-send awareness communication'},
+  {id:13,cat:'Profile reconfiguration',        vol:134, auto:'Possible',     priority:'P2', rba:'DNAC + ISE → auto-reprovision user profile'},
+  {id:14,cat:'SSID missing in AP',             vol:98,  auto:'Possible',     priority:'P1', rba:'DNAC AP config check → push SSID template'},
+  {id:15,cat:'User Awareness',                 vol:65,  auto:'Not Possible', priority:'P4', rba:'Auto-KB attach + awareness email'},
+  {id:16,cat:'SSID missing',                   vol:89,  auto:'Possible',     priority:'P1', rba:'DNAC → detect SSID gap → push config template'},
+  {id:17,cat:'PD - DL addition',               vol:54,  auto:'Possible',     priority:'P3', rba:'ISE dynamic list update via API'},
+  {id:18,cat:'AP down',                        vol:312, auto:'Possible',     priority:'P1', rba:'DNAC → detect AP down → PoE reset → verify recovery'},
+  {id:19,cat:'Endpoint compliance',            vol:143, auto:'Possible',     priority:'P2', rba:'ISE posture → quarantine + remediate endpoint'},
+  {id:20,cat:'AP high utilisation',            vol:198, auto:'Possible',     priority:'P1', rba:'DNAC → load balance + RRM tune'},
+  {id:21,cat:'Endpoint/Application issue',     vol:87,  auto:'Not Possible', priority:'P3', rba:'Nexthink + DNAC correlation → L2 escalate'},
+  {id:22,cat:'AP Range issue',                 vol:76,  auto:'Not Possible', priority:'P3', rba:'DNAC RF survey → recommendation report'},
+  {id:23,cat:'Associate - Limitation',         vol:45,  auto:'Not Possible', priority:'P3', rba:'DNAC client association analysis'},
+  {id:24,cat:'UserUnavailable-3StrikeRule',    vol:67,  auto:'Not Possible', priority:'P4', rba:'Auto-closure after 3 attempts'},
+  {id:25,cat:'Configuration Issue',            vol:112, auto:'Possible',     priority:'P2', rba:'DNAC config compliance → auto-remediate'},
+  {id:26,cat:'User Account locked',            vol:89,  auto:'Possible',     priority:'P2', rba:'ISE + AD integration → auto-unlock with approval'},
+  {id:27,cat:'DHCP Scope issue',               vol:76,  auto:'Possible',     priority:'P2', rba:'DHCP scope monitor → extend or alert'},
+  {id:28,cat:'Associate - Profile ReConfig',   vol:54,  auto:'Possible',     priority:'P2', rba:'ISE → profile push via ERS API'},
+  {id:29,cat:'Client End Issue',               vol:98,  auto:'Not Possible', priority:'P3', rba:'Auto-diagnostics → confirm client end → close'},
+  {id:30,cat:'Automatically Resolved',         vol:167, auto:'Possible',     priority:'P2', rba:'Auto-detect self-resolve → evidence-based close'},
+  {id:31,cat:'(blank)',                        vol:23,  auto:'Not Possible', priority:'P4', rba:'Improve SNOW categorisation'},
+  {id:32,cat:'Guest - ISE posture issue',      vol:87,  auto:'Possible',     priority:'P2', rba:'ISE guest posture → auto-remediate + notify'},
+  {id:33,cat:'Human Error',                    vol:54,  auto:'Not Possible', priority:'P3', rba:'Process documentation + awareness'},
+  {id:34,cat:'Endpoint issue',                 vol:76,  auto:'Not Possible', priority:'P3', rba:'Nexthink telemetry → L2 escalation'},
+  {id:35,cat:'User non-Availability',          vol:45,  auto:'Not Possible', priority:'P4', rba:'3-strike auto-closure'},
+  {id:36,cat:'Process Failure',                vol:34,  auto:'Not Possible', priority:'P3', rba:'Process review — no RBA'},
+  {id:37,cat:'Policy modification in source',  vol:43,  auto:'Not Possible', priority:'P3', rba:'Change correlation → RCA documentation'},
+  {id:38,cat:'Wrong Configuration',            vol:89,  auto:'Possible',     priority:'P2', rba:'DNAC config audit → push corrected template'},
+  {id:39,cat:'GEN AI/AI model issues',         vol:12,  auto:'Not Possible', priority:'P3', rba:'Escalate to Intel Agent team for review'},
+  {id:40,cat:'Software',                       vol:34,  auto:'Not Possible', priority:'P3', rba:'Software team escalation — no RBA'},
+  {id:41,cat:'Device not Whitelisted',         vol:98,  auto:'Possible',     priority:'P2', rba:'ISE ERS → MAC whitelist with approval gate'}
+];
+
+var LAN=[
+  {id:1, cat:'LAN Connectivity',              vol:345, auto:'Possible',     priority:'P1', rba:'DNAC path trace + switch port check + auto-remediate'},
+  {id:2, cat:'DHCP/AAA/DNS reachability',     vol:287, auto:'Possible',     priority:'P1', rba:'DNAC + ISE config validation → auto-fix DHCP scope'},
+  {id:3, cat:'Switch port issue',             vol:265, auto:'Possible',     priority:'P1', rba:'DNAC port bounce + health check via API'},
+  {id:4, cat:'Authentication Issue',          vol:234, auto:'Possible',     priority:'P1', rba:'ISE pxGrid → detect auth failure → remediate policy'},
+  {id:5, cat:'ISE server high utilisation',   vol:198, auto:'Possible',     priority:'P1', rba:'ScienceLogic alert → scale ISE + notify infra team'},
+  {id:6, cat:'Configuration Issue',           vol:187, auto:'Possible',     priority:'P2', rba:'DNAC config compliance → push corrected template'},
+  {id:7, cat:'Automatically Resolved',        vol:176, auto:'Possible',     priority:'P2', rba:'Auto-detect self-resolve → evidence-based SNOW close'},
+  {id:8, cat:'Endpoint compliance',           vol:154, auto:'Possible',     priority:'P2', rba:'ISE posture check → quarantine + auto-remediate'},
+  {id:9, cat:'Lan Port Issue',                vol:143, auto:'Possible',     priority:'P2', rba:'DNAC port diagnostics → auto-reset → verify recovery'},
+  {id:10,cat:'CR-VLAN Change',                vol:134, auto:'Possible',     priority:'P2', rba:'DNAC VLAN reassignment workflow with approval gate'},
+  {id:11,cat:'Account locked',                vol:112, auto:'Possible',     priority:'P2', rba:'ISE + AD integration → auto-unlock with OTP approval'},
+  {id:12,cat:'Configuration – Reset',         vol:98,  auto:'Possible',     priority:'P2', rba:'DNAC template rollback → push golden config'},
+  {id:13,cat:'WIFIConnected,InternetNotWorking',vol:87,auto:'Possible',     priority:'P2', rba:'DNAC path trace + Zscaler health check + remediate'},
+  {id:14,cat:'Zscaler datacenter reachability',vol:76,auto:'Possible',      priority:'P2', rba:'Zscaler API health check → failover + alert NOC'},
+  {id:15,cat:'Policy modification in source',  vol:65, auto:'Possible',     priority:'P3', rba:'ISE policy audit → detect drift → alert + document'},
+  {id:16,cat:'Insufficient Information',       vol:198,auto:'Not Possible', priority:'P4', rba:'Auto-request info template → 3-strike closure'},
+  {id:17,cat:'Resolved by caller',             vol:187,auto:'Not Possible', priority:'P4', rba:'Auto-close with reason code — no RBA needed'},
+  {id:18,cat:'Unknown - Root cause not found', vol:165,auto:'Not Possible', priority:'P3', rba:'Intel Agent → DNAC + ISE deep correlation analysis'},
+  {id:19,cat:'Client End Issue',               vol:143,auto:'Not Possible', priority:'P3', rba:'Auto-diagnostics confirm client end → close with evidence'},
+  {id:20,cat:'Process Failure',                vol:54, auto:'Not Possible', priority:'P3', rba:'Process review + RCA documentation — no RBA'},
+  {id:21,cat:'User Awareness',                 vol:98, auto:'Not Possible', priority:'P4', rba:'Auto-KB article attach + awareness email'},
+  {id:22,cat:'Human Error',                    vol:67, auto:'Not Possible', priority:'P3', rba:'Process documentation + training awareness'},
+  {id:23,cat:'SR Guidance',                    vol:87, auto:'Not Possible', priority:'P4', rba:'SLM model → auto-push SOP to SNOW worknotes'},
+  {id:24,cat:'(blank)',                         vol:23, auto:'Not Possible', priority:'P4', rba:'Improve SNOW categorisation quality'},
+  {id:25,cat:'OTHERS',                          vol:45, auto:'Not Possible', priority:'P4', rba:'Categorisation review — split into specific categories'},
+  {id:26,cat:'Unauthorized Changes',            vol:56, auto:'Not Possible', priority:'P2', rba:'Change correlation → RCA + security review'},
+  {id:27,cat:'Service Provider Outage',         vol:34, auto:'Not Possible', priority:'P2', rba:'ISP monitoring → auto-notify stakeholders + bridge'},
+  {id:28,cat:'Endpoint/Application issue',      vol:76, auto:'Not Possible', priority:'P3', rba:'Nexthink + DNAC telemetry → L2 escalation'},
+  {id:29,cat:'UserUnavailable-3StrikeRule',     vol:89, auto:'Not Possible', priority:'P4', rba:'Auto-closure after 3 failed contact attempts'},
+  {id:30,cat:'GEN AI/AI model issues',          vol:12, auto:'Not Possible', priority:'P3', rba:'Escalate to Intel Agent team for review'},
+  {id:31,cat:'User awareness - Firewall Process',vol:43,auto:'Not Possible', priority:'P4', rba:'Auto-send firewall process awareness communication'},
+  {id:32,cat:'General inquiry - Process awareness',vol:54,auto:'Not Possible',priority:'P4',rba:'SLM → FAQ auto-response + KB article'},
+  {id:33,cat:'Duplicate ticket',                vol:67, auto:'Not Possible', priority:'P4', rba:'SNOW dedup logic → auto-link and close parent'},
+  {id:34,cat:'Client end issues',               vol:87, auto:'Not Possible', priority:'P3', rba:'Auto-diagnostics confirm client issue → close'},
+  {id:35,cat:'General Query',                   vol:45, auto:'Not Possible', priority:'P4', rba:'SLM model → auto-FAQ response'},
+  {id:36,cat:'Change Induced Failure',          vol:98, auto:'Not Possible', priority:'P2', rba:'Change correlation in SNOW → RCA documentation'},
+  {id:37,cat:'User awareness - SR',             vol:34, auto:'Not Possible', priority:'P4', rba:'SLM → auto-push SR guidance to worknotes'},
+  {id:38,cat:'Client - User awareness',         vol:43, auto:'Not Possible', priority:'P4', rba:'Auto-send awareness communication to user'},
+  {id:39,cat:'Resolved by Support team',        vol:156,auto:'Not Possible', priority:'P4', rba:'Standard closure — no RBA needed'},
+  {id:40,cat:'OS Version Upgrade',              vol:34, auto:'Not Possible', priority:'P3', rba:'SNOW change → coordinate with endpoint team'},
+  {id:41,cat:'3-Strike rule followed',          vol:87, auto:'Not Possible', priority:'P3', rba:'Process tracking only — auto-close after 3 strikes'},
+  {id:42,cat:'Hardware',                        vol:54, auto:'Not Possible', priority:'P2', rba:'Auto-alert + field engineer dispatch'},
+  {id:43,cat:'Software',                        vol:43, auto:'Not Possible', priority:'P3', rba:'Software team escalation — no RBA'}
+];
+
+var _swSortF='vol',_swSortD=-1,_wfSortF='vol',_wfSortD=-1,_lnSortF='vol',_lnSortD=-1;
+
+function totalVol(d){return d.reduce(function(s,r){return s+r.vol},0)}
+function autoVol(d,v){return d.filter(function(r){return r.auto===v}).reduce(function(s,r){return s+r.vol},0)}
+
+function renderIncidentPage(type){
+  var data=type==='switch'?SW:type==='wifi'?WF:LAN;
+  var tid=type==='switch'?'sw':type==='wifi'?'wf':'ln';
+  var label=type==='switch'?'Switch':type==='wifi'?'Wi-Fi':'LAN';
+  var color=type==='switch'?'var(--blue)':type==='wifi'?'var(--teal)':'var(--amber)';
+  var bg=type==='switch'?'var(--blue-lt)':type==='wifi'?'var(--teal-lt)':'var(--amber-lt)';
+  var tvol=totalVol(data),avol=autoVol(data,'Possible'),pct=Math.round(avol/tvol*100);
+
+  var html='<div class="sec-hd"><div><div class="sec-title">'+label+' Issue Categories</div><div class="sec-sub">'+data.length+' categories · '+pct+'% automatable by volume · click headers to sort</div></div>'+
+    '<div style="display:flex;gap:8px">'+
+    '<button class="btn btn-o btn-sm" onclick="(\''+type+'\'===\'switch\'?expSwitch:\''+type+'\'===\'wifi\'?expWifi:expLan)(\'csv\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>'+
+    '<button class="btn btn-o btn-sm" onclick="(\''+type+'\'===\'switch\'?expSwitch:\''+type+'\'===\'wifi\'?expWifi:expLan)(\'word\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>'+
+    '<button class="btn btn-p btn-sm" onclick="openIncidentModal(\''+type+'\',null,\'create\')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add '+label+'</button>'+
+    '</div></div>';
+
+  // metrics strip
+  html+='<div class="metrics" style="grid-template-columns:repeat(3,1fr);max-width:680px;margin-bottom:20px">'+
+    '<div class="met"><div class="met-bar" style="background:'+color+'"></div><div class="met-val" style="color:'+color+'">'+tvol.toLocaleString()+'</div><div class="met-lbl">Total volume / mo</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-val" style="color:var(--green)">'+avol.toLocaleString()+'</div><div class="met-lbl">Automatable volume</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-val" style="color:var(--green)">'+pct+'%</div><div class="met-lbl">Automation rate</div></div>'+
+  '</div>';
+
+  // Card with toolbar + table
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>'+label+' categories</div><span class="card-ct" id="'+tid+'-ct">'+data.length+' records</span></div>'+
+    '<div class="toolbar">'+
+      '<div class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+
+        '<input type="text" class="srch-in" id="'+tid+'-q" placeholder="Search..." oninput="renderIncidentTable(\''+type+'\')"></div>'+
+      '<select class="f-sel" id="'+tid+'-af" onchange="renderIncidentTable(\''+type+'\')"><option value="">All automation</option><option value="Possible">Possible</option><option value="Not Possible">Not Possible</option></select>'+
+      '<select class="f-sel" id="'+tid+'-pf" onchange="renderIncidentTable(\''+type+'\')"><option value="">All priority</option><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select>'+
+    '</div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col style="width:36px"><col><col style="width:72px"><col style="width:74px"><col style="width:96px"><col style="width:78px"><col><col style="width:150px"></colgroup>'+
+      '<thead><tr><th onclick="srtInc(\''+type+'\',\'id\')">#</th><th onclick="srtInc(\''+type+'\',\'cat\')">Category</th><th onclick="srtInc(\''+type+'\',\'vol\')">Volume</th><th>% Share</th><th onclick="srtInc(\''+type+'\',\'auto\')">Automation</th><th onclick="srtInc(\''+type+'\',\'priority\')">Priority</th><th>RBA Approach</th><th>Actions</th></tr></thead>'+
+      '<tbody id="'+tid+'-body"></tbody>'+
+    '</table></div></div>';
+
+  document.getElementById(tid+'-content').innerHTML=html;
+  renderIncidentTable(type);
+}
+
+function srtInc(type,f){
+  if(type==='switch'){if(_swSortF===f)_swSortD*=-1;else{_swSortF=f;_swSortD=-1}SW.sort(function(a,b){return typeof a[f]==='number'?(a[f]-b[f])*_swSortD:a[f]<b[f]?_swSortD:a[f]>b[f]?-_swSortD:0})}
+  else if(type==='wifi'){if(_wfSortF===f)_wfSortD*=-1;else{_wfSortF=f;_wfSortD=-1}WF.sort(function(a,b){return typeof a[f]==='number'?(a[f]-b[f])*_wfSortD:a[f]<b[f]?_wfSortD:a[f]>b[f]?-_wfSortD:0})}
+  else{if(_lnSortF===f)_lnSortD*=-1;else{_lnSortF=f;_lnSortD=-1}LAN.sort(function(a,b){return typeof a[f]==='number'?(a[f]-b[f])*_lnSortD:a[f]<b[f]?_lnSortD:a[f]>b[f]?-_lnSortD:0})}
+  renderIncidentTable(type);
+}
+
+function renderIncidentTable(type){
+  var data=type==='switch'?SW:type==='wifi'?WF:LAN;
+  var tid=type==='switch'?'sw':type==='wifi'?'wf':'ln';
+  var qEl=document.getElementById(tid+'-q'),afEl=document.getElementById(tid+'-af'),pfEl=document.getElementById(tid+'-pf');
+  if(!qEl)return;
+  var q=qEl.value.toLowerCase(),af=afEl.value,pf=pfEl.value;
+  var rows=data.filter(function(r){
+    if(q&&(r.cat+r.rba).toLowerCase().indexOf(q)<0)return false;
+    if(af&&r.auto!==af)return false;
+    if(pf&&r.priority!==pf)return false;
+    return true;
+  });
+  var tv=totalVol(data);
+  var priC={P1:'pr',P2:'pa',P3:'pb',P4:'pz'};
+  var autoC={'Possible':'pg','Not Possible':'pr'};
+  document.getElementById(tid+'-ct').textContent=rows.length+' of '+data.length+' records';
+  var b=document.getElementById(tid+'-body');
+  if(!rows.length){b.innerHTML='<tr><td colspan="7" class="tbl-empty">No records match filters.</td></tr>';return}
+  b.innerHTML=rows.map(function(r,i){
+    return'<tr>'+
+      '<td style="color:var(--text3);font-family:var(--mono);font-size:11px">'+(i+1)+'</td>'+
+      '<td style="font-weight:500">'+esc(r.cat)+'</td>'+
+      '<td style="font-family:var(--mono);font-weight:600">'+r.vol+'</td>'+
+      '<td style="font-family:var(--mono);color:var(--text2)">'+Math.round(r.vol/tv*100)+'%</td>'+
+      '<td><span class="pill '+autoC[r.auto]+'">'+r.auto+'</span></td>'+
+      '<td><span class="pill '+priC[r.priority]+'">'+r.priority+'</span></td>'+
+      '<td style="font-size:11px;color:var(--text2);line-height:1.5">'+esc(r.rba)+'</td>'+
+      '<td><div class="ra" style="opacity:1">'+
+        '<button class="ab av" onclick="openIncidentModal(\''+type+'\','+r.id+',\'view\')"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button>'+
+        '<button class="ab ae" onclick="openIncidentModal(\''+type+'\','+r.id+',\'edit\')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/></svg>Edit</button>'+
+        '<button class="ab ad" onclick="delIncident(\''+type+'\','+r.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>Del</button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+}
+
+
+
+
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — Generic SOP / Attachment upload (works on any modal)
+// ═══════════════════════════════════════════════════════════════════
+window._modalAtt={}; // key: modalId, value: {name, data}
+
+function attachUploadHTML(prefix,existingName){
+  var ex=existingName?'<div id="'+prefix+'-pv" class="file-attached" style="display:flex"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span id="'+prefix+'-nm">'+esc(existingName)+'</span><button class="file-rm" onclick="clearGenericAtt(\''+prefix+'\')">✕</button></div>':'<div id="'+prefix+'-pv" class="file-attached" style="display:none"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span id="'+prefix+'-nm"></span><button class="file-rm" onclick="clearGenericAtt(\''+prefix+'\')">✕</button></div>';
+  return '<div class="fgrp s2"><label class="flbl">SOP Document / Attachment</label>'+
+    '<label class="file-upload" id="'+prefix+'-lb" onclick="document.getElementById(\''+prefix+'-in\').click()"'+(existingName?' style="display:none"':'')+'>'+
+      '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'+
+      '<div><div class="file-upload-txt">Click to attach SOP document</div>'+
+      '<div style="font-size:10px;color:var(--text4);margin-top:2px">PDF · Word · Excel · PPT — max 10MB</div></div>'+
+    '</label>'+
+    '<input type="file" id="'+prefix+'-in" accept=".pdf,.docx,.xlsx,.pptx,.doc,.xls,.ppt" style="display:none" onchange="handleGenericAtt(\''+prefix+'\',this)">'+
+    ex+'</div>';
+}
+
+function handleGenericAtt(prefix,inp){
+  var f=inp.files[0];if(!f)return;
+  if(f.size>10*1024*1024){toast('File too large — max 10MB','err');inp.value='';return}
+  var rd=new FileReader();
+  rd.onload=function(e){
+    window._modalAtt[prefix]={name:f.name,data:e.target.result};
+    var lb=document.getElementById(prefix+'-lb'),pv=document.getElementById(prefix+'-pv'),nm=document.getElementById(prefix+'-nm');
+    if(lb)lb.style.display='none';
+    if(pv)pv.style.display='flex';
+    if(nm)nm.textContent=f.name;
+  };
+  rd.readAsDataURL(f);
+}
+
+function clearGenericAtt(prefix){
+  delete window._modalAtt[prefix];
+  var inp=document.getElementById(prefix+'-in'),lb=document.getElementById(prefix+'-lb'),pv=document.getElementById(prefix+'-pv');
+  if(inp)inp.value='';
+  if(lb)lb.style.display='flex';
+  if(pv)pv.style.display='none';
+}
+
+function loadExistingAtt(prefix,name,data){
+  if(name){window._modalAtt[prefix]={name:name,data:data};}
+  else{delete window._modalAtt[prefix];}
+}
+
+function downloadGenericAtt(name,data){
+  if(!data){toast('No file attached','err');return}
+  var a=document.createElement('a');a.href=data;a.download=name;a.click();
+  toast('Downloading '+name);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — Universal Export Helpers (CSV + Word for every section)
+// ═══════════════════════════════════════════════════════════════════
+function _exportCSV(rows,cols,filename){
+  var headers=cols.map(function(c){return c.label}).join(',');
+  var lines=[headers].concat(rows.map(function(r){
+    return cols.map(function(c){
+      var v=typeof c.val==='function'?c.val(r):r[c.key];
+      if(v===null||v===undefined)v='';
+      v=String(v).replace(/"/g,'""');
+      return '"'+v+'"';
+    }).join(',');
+  }));
+  var blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=filename+'_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+  toast(filename+' exported as CSV');
+}
+
+function _exportWord(title,subtitle,rows,cols,filename){
+  // Build HTML document with embedded styles that Word will render
+  var now=new Date().toLocaleString('en-GB');
+  var thead='<tr style="background:#0d1f3c;color:#fff">'+cols.map(function(c){return'<th style="padding:8px 10px;text-align:left;border:1px solid #d1d5db;font-size:11px">'+c.label+'</th>'}).join('')+'</tr>';
+  var tbody=rows.map(function(r,i){
+    return '<tr style="background:'+(i%2?'#f9fafb':'#fff')+'">'+cols.map(function(c){
+      var v=typeof c.val==='function'?c.val(r):r[c.key];
+      if(v===null||v===undefined)v='—';
+      return '<td style="padding:7px 10px;border:1px solid #d1d5db;font-size:11px;vertical-align:top">'+String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</td>';
+    }).join('')+'</tr>';
+  }).join('');
+  var html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>'+title+'</title>'+
+    '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>90</w:Zoom><w:DoNotPromptForConvert/></w:WordDocument></xml><![endif]-->'+
+    '<style>@page{size:A4 landscape;margin:1.5cm}body{font-family:Calibri,Arial,sans-serif;color:#1a2332} h1{color:#0d1f3c;font-size:18pt;margin:0 0 4pt} .sub{color:#6b7280;font-size:10pt;margin-bottom:14pt} .meta{font-size:9pt;color:#6b7280;margin-bottom:10pt} table{border-collapse:collapse;width:100%}</style></head><body>'+
+    '<h1>'+title+'</h1>'+
+    '<div class="sub">'+subtitle+'</div>'+
+    '<div class="meta">Exported '+now+' · GNS AIOps Portal v5 · Cognizant</div>'+
+    '<table>'+thead+tbody+'</table>'+
+    '<div style="margin-top:14pt;font-size:9pt;color:#6b7280">Total records: '+rows.length+'</div>'+
+    '</body></html>';
+  var blob=new Blob([html],{type:'application/msword'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=filename+'_'+new Date().toISOString().slice(0,10)+'.doc';
+  a.click();
+  toast(filename+' exported as Word');
+}
+
+function _exportButtons(label,filename,rows,cols,subtitle){
+  return '<div style="display:flex;gap:6px">'+
+    '<button class="btn btn-o btn-sm" onclick="_exportCSV('+JSON.stringify(rows).replace(/"/g,'&quot;')+',_exp_'+filename+'_cols,\''+filename+'\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>'+
+    '<button class="btn btn-o btn-sm" onclick="_exportWord(\''+label+'\',\''+subtitle+'\','+JSON.stringify(rows).replace(/"/g,'&quot;')+',_exp_'+filename+'_cols,\''+filename+'\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>'+
+  '</div>';
+}
+
+// Wrapper exports — pass section-specific data with appropriate column mapping
+function expSwitch(fmt){
+  var cols=[{key:'cat',label:'Category'},{key:'vol',label:'Volume/mo'},{key:'priority',label:'Priority'},{key:'auto',label:'Automation'},{key:'rba',label:'RBA Approach'}];
+  if(fmt==='csv')_exportCSV(SW,cols,'GNS_Switch_Issues');
+  else _exportWord('Switch Issue Analysis','GNS AIOps — Switch incident categories with automation flags',SW,cols,'GNS_Switch_Issues');
+}
+function expWifi(fmt){
+  var cols=[{key:'cat',label:'Category'},{key:'vol',label:'Volume/mo'},{key:'priority',label:'Priority'},{key:'auto',label:'Automation'},{key:'rba',label:'RBA Approach'}];
+  if(fmt==='csv')_exportCSV(WF,cols,'GNS_WiFi_Issues');
+  else _exportWord('Wi-Fi Issue Analysis','GNS AIOps — Wi-Fi incident categories with automation flags',WF,cols,'GNS_WiFi_Issues');
+}
+function expLan(fmt){
+  var cols=[{key:'cat',label:'Category'},{key:'vol',label:'Volume/mo'},{key:'priority',label:'Priority'},{key:'auto',label:'Automation'},{key:'rba',label:'RBA Approach'}];
+  if(fmt==='csv')_exportCSV(LAN,cols,'GNS_LAN_Issues');
+  else _exportWord('LAN Issue Analysis','GNS AIOps — LAN incident categories with automation flags',LAN,cols,'GNS_LAN_Issues');
+}
+function expCat(type,fmt){
+  var def=CAT_DEFS[type];
+  var cols=[{key:'name',label:'Name'},{key:'sectionLabel',label:'Section'},{key:'priority',label:'Priority'},{key:'atk',label:'ATK Eligible',val:function(r){return r.atk?'Yes':'No'}},{key:'sop',label:'SOP Avail',val:function(r){return r.sop?'Yes':'No'}},{key:'native',label:'Native Auto',val:function(r){return r.native?'Yes':'No'}},{key:'rba',label:'RBA Approach'},{key:'notes',label:'Notes'}];
+  if(fmt==='csv')_exportCSV(CAT_ITEMS[type],cols,'GNS_Catalogue_'+type.toUpperCase());
+  else _exportWord(def.label+' — Catalogue','GNS AIOps — Service Catalogue '+def.label+' entries',CAT_ITEMS[type],cols,'GNS_Catalogue_'+type.toUpperCase());
+}
+function expSOP(fmt){
+  var cols=[{key:'title',label:'Title'},{key:'type',label:'Type'},{key:'service',label:'Linked Service'},{key:'priority',label:'Priority'},{key:'atk',label:'ATK',val:function(r){return r.atk?'Yes':'No'}},{key:'sop',label:'SOP',val:function(r){return r.sop?'Yes':'No'}},{key:'native',label:'Native',val:function(r){return r.native?'Yes':'No'}},{key:'input',label:'Input Simplification'},{key:'enrich',label:'Data Enrichment'},{key:'logic',label:'Decision Logic'},{key:'exec',label:'Execution'},{key:'notes',label:'Notes'}];
+  if(fmt==='csv')_exportCSV(SOP_SCENARIOS,cols,'GNS_SOP_Scenarios');
+  else _exportWord('SOP / RBA Scenarios','GNS AIOps — Automation-ready scenarios with 4-layer model',SOP_SCENARIOS,cols,'GNS_SOP_Scenarios');
+}
+function expUC(fmt){
+  var cols=[{key:'id',label:'#'},{key:'sop',label:'SOP Ref'},{key:'name',label:'Use Case'},{key:'tower',label:'Tower'},{key:'subtower',label:'Sub-tower'},{key:'type',label:'Type'},{key:'itil',label:'ITIL'},{key:'volume',label:'Volume'},{key:'impact',label:'Impact'},{key:'status',label:'Status'},{key:'benefits',label:'Benefits'}];
+  if(fmt==='csv')_exportCSV(DATA.uc,cols,'GNS_UseCases');
+  else _exportWord('Use Case Registry','GNS AIOps — All registered use cases',DATA.uc,cols,'GNS_UseCases');
+}
+function expVol(fmt){
+  var cols=[{key:'cat',label:'Category'},{key:'sub',label:'Sub-type'},{key:'total',label:'Total'},{key:'auto',label:'Automated'},{key:'manual',label:'Manual'},{key:'jul',label:'Jul-25'},{key:'aug',label:'Aug-25'},{key:'sep',label:'Sep-25'}];
+  if(fmt==='csv')_exportCSV(DATA.vol,cols,'GNS_VolumeData');
+  else _exportWord('Volume Data','GNS AIOps — Monthly incident and SR volumetrics',DATA.vol,cols,'GNS_VolumeData');
+}
+function expAct(fmt){
+  var cols=[{key:'tower',label:'Tower'},{key:'acts',label:'Activities'}];
+  if(fmt==='csv')_exportCSV(DATA.act,cols,'GNS_Activities');
+  else _exportWord('Tower Activity List','GNS AIOps — Sub-tower responsibilities',DATA.act,cols,'GNS_Activities');
+}
+function expLeadership(fmt){
+  // Combine ticket summary + ATK summary into one structured export
+  var cols=[{key:'tower',label:'Tower'},{key:'subtower',label:'Sub-tower'},{key:'totalUC',label:'Total UCs'},{key:'atkElig',label:'ATK Eligible'},{key:'atkPct',label:'ATK %',val:function(r){return r.totalUC?Math.round(r.atkElig/r.totalUC*100)+'%':'0%'}},{key:'sopAvail',label:'SOP Avail'},{key:'sopPct',label:'SOP %',val:function(r){return r.totalUC?Math.round(r.sopAvail/r.totalUC*100)+'%':'0%'}},{key:'native',label:'Native Auto'},{key:'inDev',label:'In Dev'},{key:'targetDate',label:'Target'}];
+  if(fmt==='csv')_exportCSV(ATK_TOWERS,cols,'GNS_Leadership_Summary');
+  else _exportWord('Leadership Summary','GNS AIOps — Tickets, ATK Eligibility & SOP Progress for executive review',ATK_TOWERS,cols,'GNS_Leadership_Summary');
+}
+function expSOPTracker(fmt){
+  var cols=[{key:'tower',label:'Tower'},{key:'subtower',label:'Sub-tower'},{key:'usecase',label:'Use Case'},{key:'sopRef',label:'SOP Ref'},{key:'sopStatus',label:'Status'},{key:'atkElig',label:'ATK',val:function(r){return r.atkElig?'Yes':'No'}},{key:'native',label:'Native',val:function(r){return r.native?'Yes':'No'}},{key:'progress',label:'Progress %'},{key:'owner',label:'Owner'},{key:'lastReview',label:'Last Review'},{key:'notes',label:'Notes'}];
+  if(fmt==='csv')_exportCSV(SOP_TRACKER_DATA,cols,'GNS_SOP_Tracker');
+  else _exportWord('SOP Tracker','GNS AIOps — SOP progress tracking by use case',SOP_TRACKER_DATA,cols,'GNS_SOP_Tracker');
+}
+function expATK(fmt){
+  var cols=[{key:'tower',label:'Tower'},{key:'subtower',label:'Sub-tower'},{key:'totalUC',label:'Total UCs'},{key:'atkElig',label:'ATK Elig'},{key:'atkPct',label:'ATK %',val:function(r){return r.totalUC?Math.round(r.atkElig/r.totalUC*100)+'%':'0%'}},{key:'sopAvail',label:'SOP Avail'},{key:'sopPct',label:'SOP %',val:function(r){return r.totalUC?Math.round(r.sopAvail/r.totalUC*100)+'%':'0%'}},{key:'native',label:'Native'},{key:'natPct',label:'Native %',val:function(r){return r.totalUC?Math.round(r.native/r.totalUC*100)+'%':'0%'}},{key:'inDev',label:'In Dev'},{key:'planned',label:'Planned'},{key:'targetDate',label:'Target'}];
+  if(fmt==='csv')_exportCSV(ATK_TOWERS,cols,'GNS_ATK_Calculator');
+  else _exportWord('ATK / SOP Calculator','GNS AIOps — Automated tracker of ATK & SOP completion across towers',ATK_TOWERS,cols,'GNS_ATK_Calculator');
+}
+
+// Standard inline export button group HTML — single source of truth
+function _expBtns(csvFn,wordFn){
+  return '<button class="btn btn-o btn-sm" onclick="'+csvFn+'"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>'+
+         '<button class="btn btn-o btn-sm" onclick="'+wordFn+'"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — Switch / Wi-Fi / LAN — CRUD modal
+// ═══════════════════════════════════════════════════════════════════
+var _incMod={type:null,id:null,mode:null};
+
+function openIncidentModal(type,id,mode){
+  _incMod={type:type,id:id,mode:mode};
+  var data=type==='switch'?SW:type==='wifi'?WF:LAN;
+  var label=type==='switch'?'Switch':type==='wifi'?'Wi-Fi':'LAN';
+  var r=id?data.find(function(x){return x.id===id}):null;
+  var isView=mode==='view';
+  var ro=isView?'readonly':'';
+  var roSel=isView?'disabled':'';
+
+  loadExistingAtt('inc-att',r&&r.sopFileName,r&&r.sopFileData);
+  var attHtml=isView
+    ? (r&&r.sopFileName?'<div class="fgrp s2"><label class="flbl">SOP Document</label><div class="file-attached" style="display:flex;cursor:pointer" onclick="downloadGenericAtt(\''+esc(r.sopFileName)+'\',\''+(r.sopFileData||'').replace(/\'/g,'%27')+'\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'+esc(r.sopFileName)+' — click to download</div></div>':'<div class="fgrp s2"><label class="flbl">SOP Document</label><div style="font-size:12px;color:var(--text3);padding:8px">No file attached</div></div>')
+    : attachUploadHTML('inc-att',r&&r.sopFileName);
+  var body='<div class="fg">'+
+    '<div class="fgrp s2"><label class="flbl">Category Name <span class="req">*</span></label><input type="text" class="fin" id="imo-cat" value="'+esc(r?r.cat:'')+'" '+ro+' placeholder="e.g. Switch port issue"></div>'+
+    '<div class="fgrp"><label class="flbl">Volume / Month</label><input type="number" class="fin" id="imo-vol" value="'+(r?r.vol:0)+'" '+ro+'></div>'+
+    '<div class="fgrp"><label class="flbl">Priority</label><select class="fsel" id="imo-pri" '+roSel+'>'+['P1','P2','P3','P4'].map(function(p){return'<option '+(r&&r.priority===p?'selected':'')+'>'+p+'</option>'}).join('')+'</select></div>'+
+    '<div class="fgrp s2"><label class="flbl">Automation</label><select class="fsel" id="imo-auto" '+roSel+'><option '+(r&&r.auto==='Possible'?'selected':'')+'>Possible</option><option '+(r&&r.auto==='Not Possible'?'selected':'')+'>Not Possible</option></select></div>'+
+    '<div class="fgrp s2"><label class="flbl">RBA / Automation Approach</label><textarea class="fta" id="imo-rba" '+ro+' placeholder="Describe automation or remediation approach...">'+esc(r?r.rba:'')+'</textarea></div>'+
+    attHtml+
+  '</div>';
+
+  var mo=document.getElementById('mo-inc');
+  if(!mo){
+    mo=document.createElement('div');
+    mo.className='mo';
+    mo.id='mo-inc';
+    mo.addEventListener('click',function(e){if(e.target===mo)mo.classList.remove('open')});
+    document.body.appendChild(mo);
+  }
+
+  var titleMap={view:'View '+label+' Category',edit:'Edit '+label+' Category',create:'Add '+label+' Category'};
+  var footHtml=isView
+    ? '<button class="btn btn-o" onclick="closeMo(\'mo-inc\')">Close</button><button class="btn btn-p" onclick="var t=_incMod.type,i=_incMod.id;closeMo(\'mo-inc\');setTimeout(function(){openIncidentModal(t,i,\'edit\')},120)"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/></svg>Edit</button>'
+    : '<button class="btn btn-o" onclick="closeMo(\'mo-inc\')">Cancel</button><button class="btn btn-p" onclick="saveIncident()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Save</button>';
+
+  mo.innerHTML='<div class="mo-box"><div class="mo-hd"><div><div class="mo-title">'+titleMap[mode]+'</div><div class="mo-sub">'+(r?esc(r.cat):'New entry for '+label+' Issues')+'</div></div><button class="mo-cls" onclick="closeMo(\'mo-inc\')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body">'+body+'</div><div class="mo-foot">'+footHtml+'</div></div>';
+  mo.classList.add('open');
+  if(!isView)setTimeout(function(){document.getElementById('imo-cat').focus()},120);
+}
+
+function saveIncident(){
+  var type=_incMod.type;
+  var data=type==='switch'?SW:type==='wifi'?WF:LAN;
+  var cat=document.getElementById('imo-cat').value.trim();
+  if(!cat){toast('Category name required','err');return}
+  var att=window._modalAtt['inc-att'];
+  var obj={
+    cat:cat,
+    vol:Number(document.getElementById('imo-vol').value)||0,
+    priority:document.getElementById('imo-pri').value,
+    auto:document.getElementById('imo-auto').value,
+    rba:document.getElementById('imo-rba').value.trim(),
+    sopFileName:att?att.name:null,
+    sopFileData:att?att.data:null
+  };
+  if(_incMod.id){
+    var idx=data.findIndex(function(r){return r.id===_incMod.id});
+    if(idx>-1)data[idx]=Object.assign({},data[idx],obj);
+    toast('Category updated');
+  }else{
+    var mx=data.reduce(function(m,r){return Math.max(m,r.id)},0);
+    data.push(Object.assign({id:mx+1},obj));
+    toast('Category added');
+  }
+  closeMo('mo-inc');
+  renderIncidentPage(type);
+}
+
+function delIncident(type,id){
+  var data=type==='switch'?SW:type==='wifi'?WF:LAN;
+  var r=data.find(function(x){return x.id===id});
+  if(!r)return;
+  if(!confirm('Delete category "'+r.cat+'"?'))return;
+  if(type==='switch')SW=SW.filter(function(x){return x.id!==id});
+  else if(type==='wifi')WF=WF.filter(function(x){return x.id!==id});
+  else LAN=LAN.filter(function(x){return x.id!==id});
+  renderIncidentPage(type);
+  toast('Deleted','warn');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — Service Catalogue (SR / INC / CR / TSK)
+// ═══════════════════════════════════════════════════════════════════
+var CAT_DEFS={
+  sr:{label:'Service Requests',color:'var(--teal)',badge:'SR',sections:[
+    {id:'sr-wireless',label:'SR – Wireless',items:[
+      {id:1, name:'Request Guest User Wi-Fi Account Creation', atk:true, sop:true, native:false, rba:'DNAC Guest portal API → auto-create → notify via email', priority:'P2', notes:''}
+    ]},
+    {id:'sr-wired',label:'SR – Wired',items:[
+      {id:2, name:'VLAN Change or Movement', atk:true, sop:true, native:true, rba:'Employee ID validation → DNAC VLAN API → peer approval gate', priority:'P1', notes:''},
+      {id:3, name:'Request VLAN Services', atk:true, sop:true, native:false, rba:'ServiceNow SR → DNAC VLAN provisioning → automated confirmation', priority:'P2', notes:''}
+    ]}
+  ]},
+  inc:{label:'Incidents',color:'var(--red)',badge:'INC',sections:[
+    {id:'inc-wireless',label:'Incident – Wireless',items:[
+      {id:10,name:'Campus Network Services → Wi-Fi – L1 Support', atk:true, sop:true, native:true, rba:'DNAC client trace → AP health → auto-remediate L1 faults', priority:'P1', notes:''},
+      {id:11,name:'Campus Network Services → Wi-Fi – L2 Support', atk:true, sop:true, native:false, rba:'DNAC RF + ISE policy check → guided Tech Assist', priority:'P2', notes:''},
+      {id:12,name:'Campus Network Services → Wi-Fi – L3 Support', atk:false,sop:true, native:false, rba:'Escalation to L3 engineer — complex RF/infra issues', priority:'P3', notes:''},
+      {id:13,name:'Campus Network Services → Guest Wi-Fi',         atk:true, sop:true, native:true, rba:'ISE guest posture → auto-remediate → notify helpdesk', priority:'P1', notes:''}
+    ]},
+    {id:'inc-wired',label:'Incident – Wired',items:[
+      {id:20,name:'Campus Network Services → Client Connectivity – L1 Support', atk:true, sop:true, native:true, rba:'DNAC path trace + port check → auto port bounce or VLAN fix', priority:'P1', notes:''},
+      {id:21,name:'Campus Network Services → Client Connectivity – L2 Support', atk:true, sop:true, native:false, rba:'DNAC + ISE correlation → Tech Assist guided', priority:'P2', notes:''},
+      {id:22,name:'Campus Network Services → Client Connectivity – L3 Support', atk:false,sop:true, native:false, rba:'L3 escalation — network design / core infra', priority:'P3', notes:''},
+      {id:23,name:'Campus Network Services → Cognizant Connectivity – L1 Support', atk:true, sop:true, native:true, rba:'DNAC health check → detect WAN/MPLS fault → notify SP', priority:'P1', notes:''},
+      {id:24,name:'Campus Network Services → Cognizant Connectivity – L2 Support', atk:true, sop:true, native:false, rba:'ScienceLogic + DNAC correlation → guided L2', priority:'P2', notes:''},
+      {id:25,name:'Campus Network Services → Cognizant Connectivity – L3 Support', atk:false,sop:true, native:false, rba:'SP bridge + NOC escalation — complex MPLS/SD-WAN', priority:'P3', notes:''},
+      {id:26,name:'Campus Network Services → NAC Services – L1 Support', atk:true, sop:true, native:true, rba:'ISE pxGrid → detect NAC failure → reauth or quarantine release', priority:'P1', notes:''},
+      {id:27,name:'Campus Network Services → NAC Services – L2 Support', atk:true, sop:true, native:false, rba:'ISE policy audit → Tech Assist NAC remediation', priority:'P2', notes:''},
+      {id:28,name:'Campus Network Services → Switch – L1 Support', atk:true, sop:true, native:true, rba:'DNAC port diagnostics → auto port bounce → verify recovery', priority:'P1', notes:''},
+      {id:29,name:'Campus Network Services → Switch – L2 Support', atk:true, sop:true, native:false, rba:'DNAC + ISE VLAN/policy check → Tech Assist', priority:'P2', notes:''},
+      {id:30,name:'Campus Network Services → VLAN Deletion / Standard ODC Decommission', atk:true, sop:true, native:false, rba:'DNAC VLAN cleanup workflow → approval gate → decommission', priority:'P2', notes:''}
+    ]}
+  ]},
+  cr:{label:'Changes',color:'var(--purple)',badge:'CR',sections:[
+    {id:'cr-gen',label:'CR – Change',items:[
+      {id:40,name:'Standard Change – VLAN Addition / Modification', atk:true, sop:false,native:false, rba:'Peer validation → DNAC VLAN template push → auto-verify', priority:'P2', notes:'To be defined'},
+      {id:41,name:'Standard Change – Switch Port Configuration', atk:true, sop:false,native:false, rba:'DNAC template deploy → compliance check → rollback on failure', priority:'P2', notes:'To be defined'},
+      {id:42,name:'Standard Change – AP Config Update', atk:true, sop:false,native:false, rba:'DNAC wireless template → RF verification → auto-close', priority:'P3', notes:'To be defined'},
+      {id:43,name:'Standard Change – ISE Policy Modification', atk:false,sop:false,native:false, rba:'Change review required — broad security impact', priority:'P2', notes:'To be defined'},
+      {id:44,name:'Emergency Change – Network Outage Recovery', atk:false,sop:true, native:false, rba:'ScienceLogic alert → NOC bridge → guided recovery SOP', priority:'P1', notes:'To be defined'},
+      {id:45,name:'Planned Change – ODC / Site Decommission', atk:true, sop:false,native:false, rba:'DNAC bulk cleanup → VLAN removal → port shutdown', priority:'P3', notes:'To be defined'}
+    ]}
+  ]},
+  task:{label:'Tasks',color:'var(--amber)',badge:'TSK',sections:[
+    {id:'task-wired',label:'Task – Wired Activity',items:[
+      {id:50,name:'Switch port audit and compliance check', atk:true, sop:true, native:true, rba:'DNAC → pull port configs → flag non-compliant → remediate', priority:'P2', notes:''},
+      {id:51,name:'VLAN inventory reconciliation', atk:true, sop:false,native:false, rba:'DNAC VLAN list → compare with CMDB → flag discrepancies', priority:'P3', notes:''},
+      {id:52,name:'ISE endpoint database cleanup', atk:true, sop:false,native:false, rba:'ISE ERS → identify stale endpoints → batch remove with approval', priority:'P3', notes:''},
+      {id:53,name:'MAC whitelist batch update', atk:true, sop:true, native:false, rba:'ISE ERS API → bulk import MACs from CMDB → verify with DNAC', priority:'P2', notes:''},
+      {id:54,name:'Switch health baseline report', atk:true, sop:true, native:true, rba:'ScienceLogic + DNAC → weekly health report → Teams', priority:'P3', notes:''}
+    ]},
+    {id:'task-wireless',label:'Task – Wireless Activity',items:[
+      {id:60,name:'AP health and coverage audit', atk:true, sop:true, native:true, rba:'DNAC RF analysis → identify poor coverage → generate report', priority:'P2', notes:''},
+      {id:61,name:'SSID compliance check', atk:true, sop:false,native:false, rba:'DNAC → compare SSID configs vs golden → flag deviations', priority:'P3', notes:''},
+      {id:62,name:'Guest Wi-Fi account expiry cleanup', atk:true, sop:true, native:true, rba:'ISE guest API → identify expired → auto-remove → notify admin', priority:'P3', notes:''},
+      {id:63,name:'Wireless client roaming performance report', atk:true, sop:false,native:false, rba:'DNAC assurance → roaming events → weekly PDF', priority:'P3', notes:''}
+    ]}
+  ]}
+};
+
+var CAT_ITEMS={};
+['sr','inc','cr','task'].forEach(function(t){
+  CAT_ITEMS[t]=[];
+  (CAT_DEFS[t].sections||[]).forEach(function(s){
+    (s.items||[]).forEach(function(it){
+      CAT_ITEMS[t].push(Object.assign({},it,{sectionId:s.id,sectionLabel:s.label}));
+    });
+  });
+});
+
+var _catModal={type:null,id:null,mode:null};
+
+function renderCatPage(type){
+  var def=CAT_DEFS[type];
+  var con=document.getElementById('cat-'+type+'-con');
+  if(!con||!def)return;
+  var items=CAT_ITEMS[type];
+  var totalATK=items.filter(function(r){return r.atk}).length;
+  var totalSOP=items.filter(function(r){return r.sop}).length;
+  var totalNat=items.filter(function(r){return r.native}).length;
+
+  var html='<div class="sec-hd"><div><div class="sec-title">'+def.label+'</div><div class="sec-sub">Service Catalogue — Network (Enhanced with ATK / RBA Readiness)</div></div>'+
+    '<div style="display:flex;gap:8px">'+
+    '<button class="btn btn-o btn-sm" onclick="expCat(\''+type+'\',\'csv\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>'+
+    '<button class="btn btn-o btn-sm" onclick="expCat(\''+type+'\',\'word\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>'+
+    '<button class="btn btn-p btn-sm" onclick="openCatModal(\''+type+'\',null,\'create\')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add New</button>'+
+    '</div></div>';
+
+  // metrics strip
+  html+='<div class="metrics" style="grid-template-columns:repeat(4,1fr);max-width:920px;margin-bottom:22px">'+
+    '<div class="met"><div class="met-bar" style="background:var(--blue)"></div><div class="met-val" style="color:var(--blue)">'+items.length+'</div><div class="met-lbl">Total entries</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-val" style="color:var(--green)">'+totalATK+'</div><div class="met-lbl">ATK Eligible</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--teal)"></div><div class="met-val" style="color:var(--teal)">'+totalSOP+'</div><div class="met-lbl">SOP Available</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--purple)"></div><div class="met-val" style="color:var(--purple)">'+totalNat+'</div><div class="met-lbl">Native Automation</div></div>'+
+  '</div>';
+
+  // table card
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24" style="stroke:'+def.color+'"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'+def.label+' — all entries</div><span class="card-ct" id="cat-ct-'+type+'">'+items.length+' records</span></div>'+
+    '<div class="toolbar">'+
+      '<div class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+
+        '<input type="text" class="srch-in" id="cat-q-'+type+'" placeholder="Search..." oninput="renderCatTable(\''+type+'\')"></div>'+
+      '<select class="f-sel" id="cat-sec-'+type+'" onchange="renderCatTable(\''+type+'\')"><option value="">All sections</option>'+def.sections.map(function(s){return'<option value="'+s.id+'">'+s.label+'</option>'}).join('')+'</select>'+
+      '<select class="f-sel" id="cat-atk-'+type+'" onchange="renderCatTable(\''+type+'\')"><option value="">All ATK</option><option value="true">ATK Eligible</option><option value="false">Not Eligible</option></select>'+
+      '<select class="f-sel" id="cat-pri-'+type+'" onchange="renderCatTable(\''+type+'\')"><option value="">All priority</option><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select>'+
+    '</div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col style="width:36px"><col><col style="width:130px"><col style="width:88px"><col style="width:88px"><col style="width:100px"><col style="width:72px"><col style="width:160px"></colgroup>'+
+      '<thead><tr><th>#</th><th>Service / Incident Name</th><th>Section</th><th>ATK Eligible</th><th>SOP Avail</th><th>Native Auto</th><th>Priority</th><th>Actions</th></tr></thead>'+
+      '<tbody id="cat-body-'+type+'"></tbody>'+
+    '</table></div></div>';
+
+  con.innerHTML=html;
+  renderCatTable(type);
+}
+
+function renderCatTable(type){
+  var qEl=document.getElementById('cat-q-'+type);if(!qEl)return;
+  var q=qEl.value.toLowerCase();
+  var sec=document.getElementById('cat-sec-'+type).value;
+  var atk=document.getElementById('cat-atk-'+type).value;
+  var pri=document.getElementById('cat-pri-'+type).value;
+  var rows=CAT_ITEMS[type].filter(function(r){
+    if(q&&(r.name+r.sectionLabel+r.rba).toLowerCase().indexOf(q)<0)return false;
+    if(sec&&r.sectionId!==sec)return false;
+    if(atk!==''&&String(r.atk)!==atk)return false;
+    if(pri&&r.priority!==pri)return false;
+    return true;
+  });
+  document.getElementById('cat-ct-'+type).textContent=rows.length+' of '+CAT_ITEMS[type].length+' records';
+  var priC={P1:'pr',P2:'pa',P3:'pb',P4:'pz'};
+  function tick(v,yes,no){
+    return v
+      ? '<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:9999px;font-size:10px;font-weight:700;background:var(--green-lt);color:var(--green)"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>'+(yes||'Yes')+'</span>'
+      : '<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:9999px;font-size:10px;font-weight:700;background:var(--red-lt);color:var(--red)"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'+(no||'No')+'</span>';
+  }
+  var b=document.getElementById('cat-body-'+type);
+  if(!rows.length){b.innerHTML='<tr><td colspan="8" class="tbl-empty">No records match filters.</td></tr>';return}
+  b.innerHTML=rows.map(function(r,i){
+    return'<tr>'+
+      '<td style="color:var(--text3);font-family:var(--mono);font-size:11px">'+(i+1)+'</td>'+
+      '<td style="font-weight:500;line-height:1.5">'+esc(r.name)+(r.notes?'<div style="font-size:10px;color:var(--text3);margin-top:2px">'+esc(r.notes)+'</div>':'')+'</td>'+
+      '<td style="font-size:11px"><span class="pill pz">'+esc(r.sectionLabel.replace(/.*– /,''))+'</span></td>'+
+      '<td>'+tick(r.atk)+'</td><td>'+tick(r.sop)+'</td><td>'+tick(r.native,'In Place','Planned')+'</td>'+
+      '<td><span class="pill '+priC[r.priority]+'">'+r.priority+'</span></td>'+
+      '<td><div class="ra" style="opacity:1">'+
+        '<button class="ab av" onclick="openCatModal(\''+type+'\','+r.id+',\'view\')"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button>'+
+        '<button class="ab ae" onclick="openCatModal(\''+type+'\','+r.id+',\'edit\')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/></svg>Edit</button>'+
+        '<button class="ab ad" onclick="delCatItem(\''+type+'\','+r.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>Del</button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+}
+
+function openCatModal(type,id,mode){
+  _catModal={type:type,id:id,mode:mode};
+  var def=CAT_DEFS[type];
+  var r=id?CAT_ITEMS[type].find(function(x){return x.id===id}):null;
+  var isView=mode==='view';
+  var ro=isView?'readonly':'';var roSel=isView?'disabled':'';
+  var body='<div class="fg">'+
+    '<div class="fgrp s2"><label class="flbl">Name <span class="req">*</span></label><input type="text" class="fin" id="cmo-name" value="'+esc(r?r.name:'')+'" '+ro+' placeholder="Service / Incident name..."></div>'+
+    '<div class="fgrp"><label class="flbl">Section</label><select class="fsel" id="cmo-sec" '+roSel+'>'+def.sections.map(function(s){return'<option value="'+s.id+'" '+(r&&r.sectionId===s.id?'selected':'')+'>'+s.label+'</option>'}).join('')+'</select></div>'+
+    '<div class="fgrp"><label class="flbl">Priority</label><select class="fsel" id="cmo-pri" '+roSel+'>'+['P1','P2','P3','P4'].map(function(p){return'<option '+(r&&r.priority===p?'selected':'')+'>'+p+'</option>'}).join('')+'</select></div>'+
+    '<div class="fgrp"><label class="flbl">ATK Eligible</label><label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px;cursor:pointer"><input type="checkbox" id="cmo-atk" '+(r&&r.atk?'checked':'')+' '+(isView?'disabled':'')+' style="width:15px;height:15px;accent-color:var(--blue)"> Yes — ATK ready</label></div>'+
+    '<div class="fgrp"><label class="flbl">SOP Available</label><label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px;cursor:pointer"><input type="checkbox" id="cmo-sop" '+(r&&r.sop?'checked':'')+' '+(isView?'disabled':'')+' style="width:15px;height:15px;accent-color:var(--blue)"> Yes — SOP documented</label></div>'+
+    '<div class="fgrp s2"><label class="flbl">Native Automation in Place</label><label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px;cursor:pointer"><input type="checkbox" id="cmo-nat" '+(r&&r.native?'checked':'')+' '+(isView?'disabled':'')+' style="width:15px;height:15px;accent-color:var(--blue)"> Yes — automation live</label></div>'+
+    '<div class="fgrp s2"><label class="flbl">RBA / Automation Approach</label><textarea class="fta" id="cmo-rba" '+ro+'>'+esc(r?r.rba:'')+'</textarea></div>'+
+    '<div class="fgrp s2"><label class="flbl">Notes</label><input type="text" class="fin" id="cmo-notes" value="'+esc(r?r.notes:'')+'" '+ro+'></div>'+
+    (function(){
+      loadExistingAtt('cat-att',r&&r.sopFileName,r&&r.sopFileData);
+      return isView
+        ? (r&&r.sopFileName?'<div class="fgrp s2"><label class="flbl">SOP Document</label><div class="file-attached" style="display:flex;cursor:pointer" onclick="downloadGenericAtt(\''+esc(r.sopFileName)+'\',\''+(r.sopFileData||'').replace(/\'/g,'%27')+'\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'+esc(r.sopFileName)+' — click to download</div></div>':'<div class="fgrp s2"><label class="flbl">SOP Document</label><div style="font-size:12px;color:var(--text3);padding:8px">No file attached</div></div>')
+        : attachUploadHTML('cat-att',r&&r.sopFileName);
+    })()+
+  '</div>';
+
+  var mo=document.getElementById('mo-cat');
+  if(!mo){mo=document.createElement('div');mo.className='mo';mo.id='mo-cat';mo.addEventListener('click',function(e){if(e.target===mo)mo.classList.remove('open')});document.body.appendChild(mo)}
+  var titleMap={view:'View Entry',edit:'Edit Entry',create:'Add New Entry'};
+  var footHtml=isView
+    ? '<button class="btn btn-o" onclick="closeMo(\'mo-cat\')">Close</button><button class="btn btn-p" onclick="var t=_catModal.type,i=_catModal.id;closeMo(\'mo-cat\');setTimeout(function(){openCatModal(t,i,\'edit\')},120)"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/></svg>Edit</button>'
+    : '<button class="btn btn-o" onclick="closeMo(\'mo-cat\')">Cancel</button><button class="btn btn-p" onclick="saveCatItem()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Save</button>';
+
+  mo.innerHTML='<div class="mo-box"><div class="mo-hd"><div><div class="mo-title">'+titleMap[mode]+' — '+def.label+'</div><div class="mo-sub">'+(r?esc(r.name):def.label+' entry')+'</div></div><button class="mo-cls" onclick="closeMo(\'mo-cat\')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body">'+body+'</div><div class="mo-foot">'+footHtml+'</div></div>';
+  mo.classList.add('open');
+}
+
+function saveCatItem(){
+  var type=_catModal.type;
+  var nm=document.getElementById('cmo-name').value.trim();
+  if(!nm){toast('Name required','err');return}
+  var secId=document.getElementById('cmo-sec').value;
+  var secDef=CAT_DEFS[type].sections.find(function(s){return s.id===secId})||CAT_DEFS[type].sections[0];
+  var att=window._modalAtt['cat-att'];
+  var obj={name:nm,sectionId:secId,sectionLabel:secDef.label,priority:document.getElementById('cmo-pri').value,atk:document.getElementById('cmo-atk').checked,sop:document.getElementById('cmo-sop').checked,native:document.getElementById('cmo-nat').checked,rba:document.getElementById('cmo-rba').value.trim(),notes:document.getElementById('cmo-notes').value.trim(),sopFileName:att?att.name:null,sopFileData:att?att.data:null};
+  if(_catModal.id){
+    var idx=CAT_ITEMS[type].findIndex(function(r){return r.id===_catModal.id});
+    if(idx>-1)CAT_ITEMS[type][idx]=Object.assign({},CAT_ITEMS[type][idx],obj);
+    toast('Entry updated');
+  }else{
+    var mx=CAT_ITEMS[type].reduce(function(m,r){return Math.max(m,r.id)},99);
+    CAT_ITEMS[type].push(Object.assign({id:mx+1},obj));
+    toast('Entry added');
+  }
+  closeMo('mo-cat');renderCatPage(type);
+}
+function delCatItem(type,id){
+  if(!confirm('Delete this entry?'))return;
+  CAT_ITEMS[type]=CAT_ITEMS[type].filter(function(r){return r.id!==id});
+  renderCatPage(type);toast('Deleted','warn');
+}
+
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — SOP / RBA Scenarios
+// ═══════════════════════════════════════════════════════════════════
+var SOP_SCENARIOS=[
+  {id:1,title:'VLAN Change – Peer Validation (Employee ID Approach)',type:'SR',service:'VLAN Change or Movement',atk:true,sop:true,native:true,priority:'P1',input:'Employee ID + Target VLAN ID + Business justification',enrich:'DNAC: current VLAN | ISE: employee auth | CMDB: site scope',logic:'Peer approval gate (2-person rule) → DNAC VLAN change API → post-change ping',exec:'MCP DNAC adapter → VLAN assignment → verify → SNOW auto-close',notes:'Employee ID prevents unauthorised moves'},
+  {id:2,title:'Wi-Fi Connectivity Troubleshooting – L1 Auto-Resolution',type:'INC',service:'Campus Network Services → Wi-Fi – L1 Support',atk:true,sop:true,native:true,priority:'P1',input:'User ID + Device MAC + Location',enrich:'DNAC: client trace + AP | ISE: auth | ScienceLogic: AP health',logic:'AP down → PoE reset. ISE fail → re-auth. SSID missing → template push.',exec:'LangGraph Intel Agent → DNAC + ISE MCP → remediate → SNOW close',notes:'Target: 70% L1 auto-resolution'},
+  {id:3,title:'NAC Compliance Validation – Automated Posture Check',type:'INC',service:'Campus Network Services → NAC Services – L1 Support',atk:true,sop:true,native:true,priority:'P1',input:'Device IP or MAC + Ticket ref',enrich:'ISE pxGrid: posture | DNAC: port | CMDB: device type',logic:'Non-compliant → quarantine VLAN → push SOP to user → recheck 30min',exec:'ISE ERS API → VLAN quarantine → email → recheck loop',notes:'Reduces NAC escalations ~60%'},
+  {id:4,title:'Switch Port Status Check and Remediation',type:'INC',service:'Campus Network Services → Switch – L1 Support',atk:true,sop:true,native:true,priority:'P1',input:'Switch hostname or IP + Port ID',enrich:'DNAC: port health + CRC + flap | ISE: endpoint | ScienceLogic: alerts',logic:'Port down → bounce → if persists → check device → escalate w/ evidence',exec:'DNAC API → SSH port bounce → verify → SNOW close or escalate',notes:'Covers 80% of L1 switch tickets'},
+  {id:5,title:'Guest Wi-Fi Onboarding Automation',type:'SR',service:'Request Guest User Wi-Fi Account Creation',atk:true,sop:true,native:true,priority:'P2',input:'Visitor name + Email + Host emp ID + Duration',enrich:'ISE: existing guests | DNAC: SSID | AD: validate host',logic:'Create ISE guest with time-limited validity → email creds',exec:'ISE Guest API → creation → email QR → SNOW SR close',notes:'Zero-touch onboarding'},
+  {id:6,title:'Cognizant Connectivity L1 Auto-Diagnostics',type:'INC',service:'Campus Network Services → Cognizant Connectivity – L1 Support',atk:true,sop:true,native:false,priority:'P1',input:'Site code + Affected users + Symptoms',enrich:'ScienceLogic: WAN | DNAC: campus | ISP API: circuit',logic:'WAN down → check ISP → if ISP: notify SP + bridge. If campus: DNAC trace',exec:'ScienceLogic alert → notify SP + circuit ID → SNOW major incident',notes:'MTTR 45min → 10min'}
+];
+
+function renderSOPPage(){
+  var con=document.getElementById('cat-sop-con');if(!con)return;
+  var html='<div class="sec-hd"><div><div class="sec-title">SOP / RBA Scenarios</div><div class="sec-sub">Automation-ready SOP scenarios for ATK / RBA execution across Network services</div></div>'+
+    '<div style="display:flex;gap:8px">'+
+    '<button class="btn btn-o btn-sm" onclick="expSOP(\'csv\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>'+
+    '<button class="btn btn-o btn-sm" onclick="expSOP(\'word\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>'+
+    '<button class="btn btn-p btn-sm" onclick="openSOPModal(null)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add SOP</button>'+
+    '</div></div>';
+
+  // Objective banner
+  html+='<div style="background:linear-gradient(135deg,var(--navy),#1a3a6b);border-radius:var(--r-lg);padding:18px 22px;color:#fff;margin-bottom:20px">'+
+    '<div style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:9999px;background:rgba(29,110,245,.3);color:rgba(255,255,255,.9);display:inline-block;margin-bottom:8px">OBJECTIVE</div>'+
+    '<div style="font-size:14px;font-weight:700;margin-bottom:4px">Define automation-ready SOP scenarios for ATK / RBA execution</div>'+
+    '<div style="font-size:11px;color:rgba(255,255,255,.65);line-height:1.7">4-layer model: Input Simplification → Data Enrichment → Decision Logic → Execution. Linked to Service Catalogue.</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">'+
+    [['Input Simplification','User provides minimal input — system enriches','var(--blue)'],['Data Enrichment','DNAC / ISE / CMDB APIs fill context','var(--teal)'],['Decision Logic','AI + rule-based routing — LangGraph','var(--purple)'],['Execution','MCP / SSH / API — human gate for writes','var(--green)']].map(function(k){
+      return'<div style="background:rgba(255,255,255,.07);border-radius:var(--r);padding:10px 12px"><div style="font-size:10px;font-weight:700;color:'+k[2]+';margin-bottom:3px">'+k[0]+'</div><div style="font-size:10px;color:rgba(255,255,255,.55);line-height:1.5">'+k[1]+'</div></div>';
+    }).join('')+'</div></div>';
+
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>SOP Scenarios</div>'+
+    '<div style="display:flex;gap:8px"><input type="text" class="srch-in" id="sop-q" placeholder="Search..." oninput="renderSOPTable()" style="width:180px;padding:6px 12px">'+
+    '<select class="f-sel" id="sop-type-f" onchange="renderSOPTable()"><option value="">All types</option><option>SR</option><option>INC</option><option>CR</option><option>TSK</option></select></div></div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col style="width:36px"><col><col style="width:60px"><col style="width:72px"><col style="width:72px"><col style="width:72px"><col style="width:65px"><col style="width:140px"></colgroup>'+
+      '<thead><tr><th>#</th><th>SOP Scenario</th><th>Type</th><th>ATK</th><th>SOP</th><th>Native</th><th>Priority</th><th>Actions</th></tr></thead>'+
+      '<tbody id="sop-table-body"></tbody>'+
+    '</table></div></div>';
+
+  con.innerHTML=html;
+  renderSOPTable();
+}
+
+function renderSOPTable(){
+  var q=(document.getElementById('sop-q')||{}).value.toLowerCase();
+  var tf=(document.getElementById('sop-type-f')||{}).value;
+  var rows=SOP_SCENARIOS.filter(function(r){
+    if(q&&(r.title+r.service+r.input+r.rba).toLowerCase().indexOf(q)<0)return false;
+    if(tf&&r.type!==tf)return false;
+    return true;
+  });
+  var b=document.getElementById('sop-table-body');if(!b)return;
+  var priC={P1:'pr',P2:'pa',P3:'pb',P4:'pz'};
+  var typC={SR:'pt',INC:'pr',CR:'pp',TSK:'pa'};
+  function tick(v){return v?'<span style="color:var(--green);font-size:14px;font-weight:700">✓</span>':'<span style="color:var(--red);font-size:14px;font-weight:700">✗</span>'}
+  if(!rows.length){b.innerHTML='<tr><td colspan="8" class="tbl-empty">No scenarios match.</td></tr>';return}
+  b.innerHTML=rows.map(function(r,i){
+    return'<tr>'+
+      '<td style="color:var(--text3);font-family:var(--mono);font-size:11px">'+(i+1)+'</td>'+
+      '<td style="font-weight:500;line-height:1.5">'+esc(r.title)+'<div style="font-size:10px;color:var(--text3);margin-top:2px">'+esc(r.service)+'</div></td>'+
+      '<td><span class="pill '+typC[r.type]+'">'+r.type+'</span></td>'+
+      '<td style="text-align:center">'+tick(r.atk)+'</td>'+
+      '<td style="text-align:center">'+tick(r.sop)+'</td>'+
+      '<td style="text-align:center">'+tick(r.native)+'</td>'+
+      '<td><span class="pill '+priC[r.priority]+'">'+r.priority+'</span></td>'+
+      '<td><div class="ra" style="opacity:1">'+
+        '<button class="ab av" onclick="openSOPModal('+r.id+',true)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View</button>'+
+        '<button class="ab ae" onclick="openSOPModal('+r.id+')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/></svg>Edit</button>'+
+        '<button class="ab ad" onclick="delSOP('+r.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>Del</button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+}
+
+var _editSOPId=null;
+function openSOPModal(id,viewOnly){
+  var r=id?SOP_SCENARIOS.find(function(x){return x.id===id}):null;
+  _editSOPId=id||null;
+  var ro=viewOnly?'readonly':'';var roSel=viewOnly?'disabled':'';
+  var mo=document.getElementById('mo-sop');
+  if(!mo){mo=document.createElement('div');mo.className='mo';mo.id='mo-sop';mo.addEventListener('click',function(e){if(e.target===mo)mo.classList.remove('open')});document.body.appendChild(mo)}
+
+  var body='<div class="fg">'+
+    '<div class="fgrp s2"><label class="flbl">Scenario Title <span class="req">*</span></label><input type="text" class="fin" id="cso-title" value="'+esc(r?r.title:'')+'" '+ro+'></div>'+
+    '<div class="fgrp s2"><label class="flbl">Linked Service</label><input type="text" class="fin" id="cso-svc" value="'+esc(r?r.service:'')+'" '+ro+'></div>'+
+    '<div class="fgrp"><label class="flbl">Type</label><select class="fsel" id="cso-type" '+roSel+'>'+['SR','INC','CR','TSK'].map(function(t){return'<option '+(r&&r.type===t?'selected':'')+'>'+t+'</option>'}).join('')+'</select></div>'+
+    '<div class="fgrp"><label class="flbl">Priority</label><select class="fsel" id="cso-pri" '+roSel+'>'+['P1','P2','P3','P4'].map(function(p){return'<option '+(r&&r.priority===p?'selected':'')+'>'+p+'</option>'}).join('')+'</select></div>'+
+    '<div class="fgrp"><label class="flbl">ATK Eligible</label><label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px"><input type="checkbox" id="cso-atk" '+(r&&r.atk?'checked':'')+' '+(viewOnly?'disabled':'')+' style="width:15px;height:15px;accent-color:var(--blue)"> Yes</label></div>'+
+    '<div class="fgrp"><label class="flbl">SOP Available</label><label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px"><input type="checkbox" id="cso-sop" '+(r&&r.sop?'checked':'')+' '+(viewOnly?'disabled':'')+' style="width:15px;height:15px;accent-color:var(--blue)"> Yes</label></div>'+
+    '<div class="fgrp s2"><label class="flbl">Native Automation</label><label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--r);font-size:13px"><input type="checkbox" id="cso-nat" '+(r&&r.native?'checked':'')+' '+(viewOnly?'disabled':'')+' style="width:15px;height:15px;accent-color:var(--blue)"> In Place</label></div>'+
+    '<div class="fgrp s2" style="background:var(--blue-lt);border-radius:var(--r);padding:10px;border:1px solid var(--blue-mid)"><label class="flbl" style="color:var(--blue)">Input Simplification</label><textarea class="fta" id="cso-inp" '+ro+' style="background:transparent;border-color:var(--blue-mid)">'+esc(r?r.input:'')+'</textarea></div>'+
+    '<div class="fgrp s2" style="background:var(--teal-lt);border-radius:var(--r);padding:10px;border:1px solid #b2dfdb"><label class="flbl" style="color:var(--teal)">Data Enrichment (APIs)</label><textarea class="fta" id="cso-enr" '+ro+' style="background:transparent;border-color:#b2dfdb">'+esc(r?r.enrich:'')+'</textarea></div>'+
+    '<div class="fgrp s2" style="background:var(--purple-lt);border-radius:var(--r);padding:10px;border:1px solid #ddd6fe"><label class="flbl" style="color:var(--purple)">Decision Logic</label><textarea class="fta" id="cso-logic" '+ro+' style="background:transparent;border-color:#ddd6fe">'+esc(r?r.logic:'')+'</textarea></div>'+
+    '<div class="fgrp s2" style="background:var(--green-lt);border-radius:var(--r);padding:10px;border:1px solid #bbf7d0"><label class="flbl" style="color:var(--green)">Execution</label><textarea class="fta" id="cso-exec" '+ro+' style="background:transparent;border-color:#bbf7d0">'+esc(r?r.exec:'')+'</textarea></div>'+
+    '<div class="fgrp s2"><label class="flbl">Notes</label><input type="text" class="fin" id="cso-notes" value="'+esc(r?r.notes:'')+'" '+ro+'></div>'+
+    (function(){
+      loadExistingAtt('sop-att',r&&r.sopFileName,r&&r.sopFileData);
+      return viewOnly
+        ? (r&&r.sopFileName?'<div class="fgrp s2"><label class="flbl">SOP Document</label><div class="file-attached" style="display:flex;cursor:pointer" onclick="downloadGenericAtt(\''+esc(r.sopFileName)+'\',\''+(r.sopFileData||'').replace(/\'/g,'%27')+'\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'+esc(r.sopFileName)+' — click to download</div></div>':'<div class="fgrp s2"><label class="flbl">SOP Document</label><div style="font-size:12px;color:var(--text3);padding:8px">No file attached</div></div>')
+        : attachUploadHTML('sop-att',r&&r.sopFileName);
+    })()+
+  '</div>';
+
+  var footHtml=viewOnly
+    ? '<button class="btn btn-o" onclick="closeMo(\'mo-sop\')">Close</button><button class="btn btn-p" onclick="openSOPModal('+id+')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/></svg>Edit</button>'
+    : '<button class="btn btn-o" onclick="closeMo(\'mo-sop\')">Cancel</button><button class="btn btn-p" onclick="saveSOP()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Save</button>';
+
+  mo.innerHTML='<div class="mo-box" style="max-width:720px"><div class="mo-hd"><div><div class="mo-title">'+(viewOnly?'View':id?'Edit':'Add')+' SOP Scenario</div><div class="mo-sub">'+(r?esc(r.title):'New scenario')+'</div></div><button class="mo-cls" onclick="closeMo(\'mo-sop\')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="mo-body">'+body+'</div><div class="mo-foot">'+footHtml+'</div></div>';
+  mo.classList.add('open');
+}
+function saveSOP(){
+  var title=document.getElementById('cso-title').value.trim();if(!title){toast('Title required','err');return}
+  var att=window._modalAtt['sop-att'];
+  var obj={title:title,service:document.getElementById('cso-svc').value.trim(),type:document.getElementById('cso-type').value,priority:document.getElementById('cso-pri').value,atk:document.getElementById('cso-atk').checked,sop:document.getElementById('cso-sop').checked,native:document.getElementById('cso-nat').checked,input:document.getElementById('cso-inp').value.trim(),enrich:document.getElementById('cso-enr').value.trim(),logic:document.getElementById('cso-logic').value.trim(),exec:document.getElementById('cso-exec').value.trim(),notes:document.getElementById('cso-notes').value.trim(),sopFileName:att?att.name:null,sopFileData:att?att.data:null};
+  if(_editSOPId){var idx=SOP_SCENARIOS.findIndex(function(r){return r.id===_editSOPId});if(idx>-1)SOP_SCENARIOS[idx]=Object.assign({},SOP_SCENARIOS[idx],obj);toast('SOP updated')}
+  else{var mx=SOP_SCENARIOS.reduce(function(m,r){return Math.max(m,r.id)},9);SOP_SCENARIOS.push(Object.assign({id:mx+1},obj));toast('SOP added')}
+  closeMo('mo-sop');renderSOPPage();
+}
+function delSOP(id){if(!confirm('Delete?'))return;SOP_SCENARIOS=SOP_SCENARIOS.filter(function(r){return r.id!==id});renderSOPPage();toast('Deleted','warn')}
+
+
+// ═══════════════════════════════════════════════════════════════════
+// v5 — Leadership Summary, SOP Tracker, ATK Calculator, Upgrade Path
+// ═══════════════════════════════════════════════════════════════════
+var SOP_TRACKER_DATA=[
+  {id:1, tower:'Campus Network Services',subtower:'Wireless',usecase:'Unable to Access Internet via LAN / Wi-Fi',sopRef:'SOP 2.10v1',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:'Live in portal'},
+  {id:2, tower:'Campus Network Services',subtower:'Wireless',usecase:'Users Unable to Access Network from Wi-Fi',sopRef:'SOP 2.10v2',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:3, tower:'Campus Network Services',subtower:'Wireless',usecase:'Project Team Cannot Access Client Destination',sopRef:'SOP 2.9v1',sopStatus:'Complete',atkElig:true,native:false,progress:100,owner:'Madhan',lastReview:'May-25',notes:''},
+  {id:4, tower:'Campus Network Services',subtower:'LAN',usecase:'Unable to Connect to Client Destination',sopRef:'SOP 2.9v2',sopStatus:'Complete',atkElig:true,native:false,progress:100,owner:'Madhan',lastReview:'May-25',notes:''},
+  {id:5, tower:'Campus Network Services',subtower:'Wireless',usecase:'Intermittent Connectivity Issues',sopRef:'SOP 2.8v1',sopStatus:'Complete',atkElig:true,native:false,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:6, tower:'Campus Network Services',subtower:'LAN',usecase:'Account & Credential Issue Resolution',sopRef:'SOP 2.1',sopStatus:'Complete',atkElig:true,native:false,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:7, tower:'Campus Network Services',subtower:'LAN',usecase:'User Guidance & Self-Service Resolution',sopRef:'SOP 2.2',sopStatus:'Complete',atkElig:false,native:false,progress:100,owner:'Madhan',lastReview:'Apr-25',notes:''},
+  {id:8, tower:'Campus Network Services',subtower:'LAN',usecase:'Client Profile & Configuration Repair',sopRef:'SOP 2.3',sopStatus:'Complete',atkElig:true,native:false,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:9, tower:'Campus Network Services',subtower:'Wireless',usecase:'Wi-Fi Performance & RF Health Analysis',sopRef:'SOP 2.4',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Madhan',lastReview:'May-25',notes:''},
+  {id:10,tower:'Campus Network Services',subtower:'LAN',usecase:'Network Services & Path Policy',sopRef:'SOP 2.5',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:11,tower:'Campus Network Services',subtower:'LAN',usecase:'ISE Policy & Network Access Control',sopRef:'SOP 2.6',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:12,tower:'Campus Network Services',subtower:'LAN',usecase:'Investigating Self-Resolving Issues',sopRef:'SOP 2.7',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Madhan',lastReview:'May-25',notes:''},
+  {id:13,tower:'Campus Network Services',subtower:'Wireless',usecase:'AP Down Detection & Auto-Remediation',sopRef:'SOP 1.1',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:14,tower:'Campus Network Services',subtower:'LAN',usecase:'NAC Configuration Compliance Validation',sopRef:'SOP 1.2',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Madhan',lastReview:'May-25',notes:''},
+  {id:15,tower:'Campus Network Services',subtower:'LAN',usecase:'Incident Monitoring & No-Response Closure',sopRef:'SOP 3.0',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:16,tower:'Network Security Services',subtower:'Zscaler',usecase:'Zscaler CA Certificate Installation',sopRef:'ZS-SOP-01',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Madhan',lastReview:'Apr-25',notes:''},
+  {id:17,tower:'Network Security Services',subtower:'Zscaler',usecase:'Low-Trust Error Zscaler Compliance',sopRef:'ZS-SOP-02',sopStatus:'In Progress',atkElig:true,native:false,progress:60,owner:'Madhan',lastReview:'May-25',notes:'Pending Nexthink discussion'},
+  {id:18,tower:'Network Collaboration Services',subtower:'Voice',usecase:'RICS AnyConnect Service Phase 1/2/3',sopRef:'VC-SOP-01',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'May-25',notes:''},
+  {id:19,tower:'Network Collaboration Services',subtower:'Voice',usecase:'GPN SIP Circuit Health Check',sopRef:'VC-SOP-02',sopStatus:'In Progress',atkElig:true,native:false,progress:40,owner:'Madhan',lastReview:'May-25',notes:'Proactive script in dev'},
+  {id:20,tower:'Network Collaboration Services',subtower:'Video',usecase:'Video Endpoints Proactive Health Check',sopRef:'VD-SOP-01',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Prathap',lastReview:'Apr-25',notes:''},
+  {id:21,tower:'GNS',subtower:'All Towers',usecase:'SLM – SOP Push to Worknotes on Incident',sopRef:'29 SOPs',sopStatus:'Complete',atkElig:true,native:true,progress:100,owner:'Madhan',lastReview:'May-25',notes:'600 incidents/mo'},
+  {id:22,tower:'Cloud Network Services',subtower:'Data Center',usecase:'NetScaler System Events Troubleshooting',sopRef:'DC-SOP-01',sopStatus:'Not Started',atkElig:true,native:false,progress:0,owner:'TBD',lastReview:'—',notes:'In Dev'},
+  {id:23,tower:'Network Security Services',subtower:'Zscaler',usecase:'Security Exceptions – CS Exception',sopRef:'ZS-SOP-03',sopStatus:'Complete',atkElig:false,native:false,progress:100,owner:'Prathap',lastReview:'Apr-25',notes:''}
+];
+
+var ATK_TOWERS=[
+  {tower:'Campus Network Services',subtower:'Wireless',totalUC:9,atkElig:8,sopAvail:9,native:6,inDev:2,planned:1,targetDate:'Jun-25'},
+  {tower:'Campus Network Services',subtower:'LAN',totalUC:8,atkElig:7,sopAvail:8,native:5,inDev:2,planned:1,targetDate:'Jun-25'},
+  {tower:'Network Security Services',subtower:'Zscaler',totalUC:3,atkElig:2,sopAvail:2,native:1,inDev:1,planned:0,targetDate:'Jul-25'},
+  {tower:'Network Security Services',subtower:'RAVPN',totalUC:2,atkElig:2,sopAvail:1,native:1,inDev:1,planned:0,targetDate:'Jul-25'},
+  {tower:'Network Collaboration Services',subtower:'Voice',totalUC:2,atkElig:2,sopAvail:2,native:1,inDev:1,planned:0,targetDate:'Aug-25'},
+  {tower:'Network Collaboration Services',subtower:'Video',totalUC:1,atkElig:1,sopAvail:1,native:1,inDev:0,planned:0,targetDate:'Jun-25'},
+  {tower:'Cloud Network Services',subtower:'Data Center',totalUC:1,atkElig:1,sopAvail:0,native:0,inDev:1,planned:0,targetDate:'Sep-25'},
+  {tower:'GNS',subtower:'All Towers',totalUC:1,atkElig:1,sopAvail:1,native:1,inDev:0,planned:0,targetDate:'Done'}
+];
+
+// ── LEADERSHIP SUMMARY ──
+function renderLeadership(){
+  var con=document.getElementById('leadership-con');if(!con)return;
+  var totalVol=DATA.vol.reduce(function(s,r){return s+Number(r.total||0)},0);
+  var autoVol=DATA.vol.reduce(function(s,r){return s+Number(r.auto||0)},0);
+  var autoVolPct=totalVol?Math.round(autoVol/totalVol*100):0;
+  var ucTotal=SOP_TRACKER_DATA.length;
+  var ucComplete=SOP_TRACKER_DATA.filter(function(r){return r.sopStatus==='Complete'}).length;
+  var ucInProg=SOP_TRACKER_DATA.filter(function(r){return r.sopStatus==='In Progress'}).length;
+  var ucNotStart=SOP_TRACKER_DATA.filter(function(r){return r.sopStatus==='Not Started'}).length;
+  var ucATK=SOP_TRACKER_DATA.filter(function(r){return r.atkElig}).length;
+  var now=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+
+  var html='<div class="sec-hd"><div><div class="sec-title">Leadership Summary</div><div class="sec-sub">GNS AIOps — Tickets, ATK Eligibility &amp; SOP Progress · '+now+'</div></div>'+
+    '<div style="display:flex;gap:8px"><button class="btn btn-o btn-sm" onclick="window.print()"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print</button>'+
+    '<button class="btn btn-o btn-sm" onclick="expLeadership(\'csv\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>'+
+    '<button class="btn btn-p btn-sm" onclick="expLeadership(\'word\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button></div></div>';
+
+  // KPI banner — 4 cards
+  html+='<div class="metrics" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">'+
+    '<div class="met"><div class="met-bar" style="background:var(--blue)"></div><div class="met-val" style="color:var(--blue)">'+totalVol.toLocaleString()+'</div><div class="met-lbl">Total Ticket Volume</div><div style="font-size:10px;color:var(--text3);margin-top:3px">Monthly across all towers</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-val" style="color:var(--green)">'+autoVolPct+'%</div><div class="met-lbl">SR Automation Rate</div><div style="font-size:10px;color:var(--text3);margin-top:3px">'+autoVol.toLocaleString()+' automated/mo</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--teal)"></div><div class="met-val" style="color:var(--teal)">'+ucATK+'/'+ucTotal+'</div><div class="met-lbl">Use Cases ATK Eligible</div><div style="font-size:10px;color:var(--text3);margin-top:3px">of registered use cases</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--amber)"></div><div class="met-val" style="color:var(--amber)">'+ucComplete+'/'+ucTotal+'</div><div class="met-lbl">SOPs Complete</div><div style="font-size:10px;color:var(--text3);margin-top:3px">'+ucInProg+' in progress · '+ucNotStart+' not started</div></div>'+
+  '</div>';
+
+  // Section 1 — Ticket Summary by Tower
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Section 1 — Ticket Summary by Tower</div>'+
+    '<span style="font-size:10px;padding:3px 9px;border-radius:9999px;background:var(--navy);color:#fff;font-weight:600">Leadership View</span></div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col><col style="width:90px"><col style="width:90px"><col style="width:90px"><col style="width:120px"><col style="width:120px"></colgroup>'+
+      '<thead><tr><th>Tower / Category</th><th>Total Vol</th><th>Automated</th><th>Manual</th><th>Auto Rate</th><th>Status</th></tr></thead><tbody>';
+
+  var catGroups={};
+  DATA.vol.forEach(function(r){var k=r.cat||'Other';if(!catGroups[k])catGroups[k]={total:0,auto:0,manual:0};catGroups[k].total+=Number(r.total||0);catGroups[k].auto+=Number(r.auto||0);catGroups[k].manual+=Number(r.manual||0)});
+  Object.entries(catGroups).sort(function(a,b){return b[1].total-a[1].total}).forEach(function(e){
+    var pct=e[1].total?Math.round(e[1].auto/e[1].total*100):0;
+    var pctC=pct>=70?'var(--green)':pct>=40?'var(--amber)':'var(--red)';
+    html+='<tr><td style="font-weight:500">'+esc(e[0])+'</td>'+
+      '<td style="font-family:var(--mono);font-weight:600">'+e[1].total.toLocaleString()+'</td>'+
+      '<td style="font-family:var(--mono);color:var(--green)">'+e[1].auto.toLocaleString()+'</td>'+
+      '<td style="font-family:var(--mono);color:var(--amber)">'+e[1].manual.toLocaleString()+'</td>'+
+      '<td><div style="display:flex;align-items:center;gap:6px"><span class="bar-track" style="flex:1;height:7px"><span class="bar-fill" style="width:'+Math.min(pct,100)+'%;background:'+pctC+'"></span></span><span style="font-family:var(--mono);font-size:11px;font-weight:600;color:'+pctC+'">'+pct+'%</span></div></td>'+
+      '<td><span class="pill '+(pct>=70?'pg':pct>=40?'pa':'pr')+'">'+(pct>=70?'On Track':pct>=40?'In Progress':'Needs Attention')+'</span></td>'+
+    '</tr>';
+  });
+  html+='<tr style="background:var(--surface);font-weight:700"><td>Grand Total</td><td style="font-family:var(--mono)">'+totalVol.toLocaleString()+'</td><td style="font-family:var(--mono);color:var(--green)">'+autoVol.toLocaleString()+'</td><td style="font-family:var(--mono);color:var(--amber)">'+(totalVol-autoVol).toLocaleString()+'</td><td style="font-family:var(--mono);color:var(--green)">'+autoVolPct+'%</td><td><span class="pill pg">Active</span></td></tr>';
+  html+='</tbody></table></div></div>';
+
+  // Section 2 — ATK Eligibility by Tower
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Section 2 — ATK Eligibility by Tower &amp; Service Type</div></div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col><col style="width:80px"><col style="width:90px"><col style="width:90px"><col style="width:90px"><col style="width:90px"><col style="width:90px"><col style="width:100px"></colgroup>'+
+      '<thead><tr><th>Tower / Sub-tower</th><th>Total UCs</th><th>ATK Elig</th><th>SOP Avail</th><th>Native Auto</th><th>ATK Rate</th><th>SOP Rate</th><th>Target</th></tr></thead><tbody>';
+  var tot={total:0,atk:0,sop:0,nat:0};
+  ATK_TOWERS.forEach(function(r){
+    var ap=r.totalUC?Math.round(r.atkElig/r.totalUC*100):0;
+    var sp=r.totalUC?Math.round(r.sopAvail/r.totalUC*100):0;
+    tot.total+=r.totalUC;tot.atk+=r.atkElig;tot.sop+=r.sopAvail;tot.nat+=r.native;
+    html+='<tr><td style="font-weight:500">'+esc(r.tower)+'<div style="font-size:10px;color:var(--text3)">'+esc(r.subtower)+'</div></td>'+
+      '<td style="font-family:var(--mono);font-weight:600">'+r.totalUC+'</td>'+
+      '<td style="font-family:var(--mono);color:var(--green)">'+r.atkElig+'</td>'+
+      '<td style="font-family:var(--mono);color:var(--teal)">'+r.sopAvail+'</td>'+
+      '<td style="font-family:var(--mono);color:var(--blue)">'+r.native+'</td>'+
+      '<td><span class="pill '+(ap>=80?'pg':ap>=50?'pa':'pr')+'">'+ap+'%</span></td>'+
+      '<td><span class="pill '+(sp>=100?'pg':sp>=60?'pa':'pr')+'">'+sp+'%</span></td>'+
+      '<td style="font-family:var(--mono);font-size:11px;color:var(--text2)">'+r.targetDate+'</td>'+
+    '</tr>';
+  });
+  var gA=Math.round(tot.atk/tot.total*100);var gS=Math.round(tot.sop/tot.total*100);
+  html+='<tr style="background:var(--navy);color:#fff;font-weight:700"><td style="color:#fff">Grand Total — All Towers</td><td style="font-family:var(--mono);color:#fff">'+tot.total+'</td><td style="font-family:var(--mono);color:#4ade80">'+tot.atk+'</td><td style="font-family:var(--mono);color:#34d399">'+tot.sop+'</td><td style="font-family:var(--mono);color:#60a5fa">'+tot.nat+'</td><td><span style="background:rgba(74,222,128,.25);color:#4ade80;padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:700">'+gA+'%</span></td><td><span style="background:rgba(74,222,128,.25);color:#4ade80;padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:700">'+gS+'%</span></td><td style="color:rgba(255,255,255,.6);font-family:var(--mono);font-size:11px">FY-2025</td></tr>';
+  html+='</tbody></table></div></div>';
+
+  // Section 3 — SOP Status Summary
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Section 3 — SOP Status Summary by Tower</div></div>'+
+    '<div style="padding:16px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">';
+  var towerSOP={};
+  SOP_TRACKER_DATA.forEach(function(r){if(!towerSOP[r.tower])towerSOP[r.tower]={complete:0,inprog:0,notstart:0,total:0};towerSOP[r.tower].total++;if(r.sopStatus==='Complete')towerSOP[r.tower].complete++;else if(r.sopStatus==='In Progress')towerSOP[r.tower].inprog++;else towerSOP[r.tower].notstart++});
+  Object.entries(towerSOP).forEach(function(e){
+    var pct=e[1].total?Math.round(e[1].complete/e[1].total*100):0;
+    html+='<div style="background:var(--surface);border-radius:var(--r);padding:14px;border:1px solid var(--border)">'+
+      '<div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px">'+esc(e[0].replace(' Services','').replace('Campus Network','Campus Net.'))+'</div>'+
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="bar-track" style="flex:1;height:9px"><div class="bar-fill" style="width:'+pct+'%;background:'+(pct===100?'var(--green)':pct>=60?'var(--teal)':'var(--amber)')+'"></div></div><span style="font-family:var(--mono);font-size:12px;font-weight:700;color:'+(pct===100?'var(--green)':'var(--amber)')+'">'+pct+'%</span></div>'+
+      '<div style="display:flex;gap:6px;flex-wrap:wrap">'+
+        '<span style="font-size:10px;background:var(--green-lt);color:var(--green);padding:2px 8px;border-radius:9999px;font-weight:600">✓ '+e[1].complete+'</span>'+
+        (e[1].inprog?'<span style="font-size:10px;background:var(--amber-lt);color:#b45309;padding:2px 8px;border-radius:9999px;font-weight:600">~ '+e[1].inprog+'</span>':'')+
+        (e[1].notstart?'<span style="font-size:10px;background:var(--red-lt);color:var(--red);padding:2px 8px;border-radius:9999px;font-weight:600">✗ '+e[1].notstart+'</span>':'')+
+      '</div></div>';
+  });
+  html+='</div></div>';
+
+  con.innerHTML=html;
+}
+
+// ── SOP TRACKER ──
+function renderSOPTracker(){
+  var con=document.getElementById('sop-tracker-con');if(!con)return;
+  var total=SOP_TRACKER_DATA.length;
+  var complete=SOP_TRACKER_DATA.filter(function(r){return r.sopStatus==='Complete'}).length;
+  var inprog=SOP_TRACKER_DATA.filter(function(r){return r.sopStatus==='In Progress'}).length;
+  var notstart=SOP_TRACKER_DATA.filter(function(r){return r.sopStatus==='Not Started'}).length;
+  var overallPct=Math.round(complete/total*100);
+
+  var html='<div class="sec-hd"><div><div class="sec-title">SOP Tracker</div><div class="sec-sub">Track SOP documentation progress per use case · '+complete+'/'+total+' complete</div></div>'+
+    '<div style="display:flex;gap:8px"><button class="btn btn-o btn-sm" onclick="expSOPTracker(\'csv\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>CSV</button>'+
+    '<button class="btn btn-o btn-sm" onclick="expSOPTracker(\'word\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button></div></div>';
+
+  // Overall progress card
+  html+='<div class="card" style="margin-bottom:20px"><div style="padding:18px 22px">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span style="font-size:13px;font-weight:700">Overall SOP Completion</span><span style="font-family:var(--mono);font-weight:700;font-size:20px;color:'+(overallPct===100?'var(--green)':'var(--amber)')+'">'+overallPct+'%</span></div>'+
+    '<div style="height:14px;background:var(--bg);border-radius:7px;overflow:hidden;border:1px solid var(--border)"><div style="height:100%;width:'+overallPct+'%;background:linear-gradient(90deg,var(--teal),var(--green));border-radius:7px"></div></div>'+
+    '<div style="display:flex;gap:16px;margin-top:12px"><span style="font-size:11px;color:var(--green);font-weight:600">✓ Complete: '+complete+'</span><span style="font-size:11px;color:var(--amber);font-weight:600">~ In Progress: '+inprog+'</span><span style="font-size:11px;color:var(--red);font-weight:600">✗ Not Started: '+notstart+'</span></div>'+
+  '</div></div>';
+
+  // Table card
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>SOP Progress by Use Case</div></div>'+
+    '<div class="toolbar">'+
+      '<div class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+
+        '<input type="text" class="srch-in" id="sopt-q" placeholder="Search..." oninput="renderSOPTrackerTable()"></div>'+
+      '<select class="f-sel" id="sopt-tw" onchange="renderSOPTrackerTable()"><option value="">All towers</option>'+[...new Set(SOP_TRACKER_DATA.map(function(r){return r.tower}))].map(function(t){return'<option>'+t+'</option>'}).join('')+'</select>'+
+      '<select class="f-sel" id="sopt-st" onchange="renderSOPTrackerTable()"><option value="">All status</option><option>Complete</option><option>In Progress</option><option>Not Started</option></select>'+
+    '</div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col style="width:36px"><col style="width:110px"><col style="width:95px"><col><col style="width:88px"><col style="width:88px"><col style="width:72px"><col style="width:72px"><col style="width:120px"><col style="width:80px"><col style="width:78px"></colgroup>'+
+      '<thead><tr><th>#</th><th>Tower</th><th>Sub-tower</th><th>Use Case</th><th>SOP Ref</th><th>SOP Status</th><th>ATK</th><th>Native</th><th>Progress</th><th>Owner</th><th>Last Review</th></tr></thead>'+
+      '<tbody id="sopt-body"></tbody>'+
+    '</table></div></div>';
+  con.innerHTML=html;
+  renderSOPTrackerTable();
+}
+
+function renderSOPTrackerTable(){
+  var q=(document.getElementById('sopt-q')||{}).value.toLowerCase();
+  var tw=(document.getElementById('sopt-tw')||{}).value;
+  var st=(document.getElementById('sopt-st')||{}).value;
+  var rows=SOP_TRACKER_DATA.filter(function(r){
+    if(q&&(r.usecase+r.tower+r.sopRef+r.owner).toLowerCase().indexOf(q)<0)return false;
+    if(tw&&r.tower!==tw)return false;
+    if(st&&r.sopStatus!==st)return false;
+    return true;
+  });
+  var b=document.getElementById('sopt-body');if(!b)return;
+  var stC={'Complete':'pg','In Progress':'pa','Not Started':'pr'};
+  if(!rows.length){b.innerHTML='<tr><td colspan="11" class="tbl-empty">No records.</td></tr>';return}
+  b.innerHTML=rows.map(function(r,i){
+    var pc=r.progress===100?'var(--green)':r.progress>=50?'var(--teal)':'var(--amber)';
+    return'<tr>'+
+      '<td style="color:var(--text3);font-family:var(--mono);font-size:11px">'+(i+1)+'</td>'+
+      '<td style="font-size:11px;color:var(--text2)">'+esc(r.tower.replace(' Services',''))+'</td>'+
+      '<td><span class="pill pz">'+esc(r.subtower)+'</span></td>'+
+      '<td style="font-weight:500;font-size:12px;line-height:1.4">'+esc(r.usecase)+'</td>'+
+      '<td style="font-family:var(--mono);font-size:11px;color:var(--blue)">'+esc(r.sopRef)+'</td>'+
+      '<td><span class="pill '+stC[r.sopStatus]+'">'+r.sopStatus+'</span></td>'+
+      '<td style="text-align:center">'+(r.atkElig?'<span style="color:var(--green);font-weight:700;font-size:14px">✓</span>':'<span style="color:var(--red);font-size:14px">✗</span>')+'</td>'+
+      '<td style="text-align:center">'+(r.native?'<span style="color:var(--green);font-weight:700;font-size:14px">✓</span>':'<span style="color:var(--text3);font-size:14px">–</span>')+'</td>'+
+      '<td><div style="display:flex;align-items:center;gap:6px"><div class="bar-track" style="flex:1;height:7px"><div class="bar-fill" style="width:'+r.progress+'%;background:'+pc+'"></div></div><span style="font-family:var(--mono);font-size:10px;font-weight:700;color:'+pc+'">'+r.progress+'%</span></div></td>'+
+      '<td style="font-size:11px;color:var(--text2)">'+esc(r.owner)+'</td>'+
+      '<td style="font-family:var(--mono);font-size:10px;color:var(--text3)">'+esc(r.lastReview)+'</td>'+
+    '</tr>';
+  }).join('');
+}
+
+// ── ATK / SOP CALCULATOR ──
+function renderATKCalc(){
+  var con=document.getElementById('atk-calc-con');if(!con)return;
+  var html='<div class="sec-hd"><div><div class="sec-title">ATK / SOP Calculator — All Towers</div><div class="sec-sub">Automated template to track and calculate ATK eligibility &amp; SOP completion across all GNS towers</div></div>'+
+    '<div style="display:flex;gap:8px"><button class="btn btn-o btn-sm" onclick="expATK(\'csv\')"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>CSV</button>'+
+    '<button class="btn btn-o btn-sm" onclick="expATK(\'word\')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Word</button>'+
+    '<button class="btn btn-p btn-sm" onclick="addATKRow()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Tower</button></div></div>';
+
+  var tot={total:0,atk:0,sop:0,nat:0,inDev:0};
+  ATK_TOWERS.forEach(function(r){tot.total+=r.totalUC;tot.atk+=r.atkElig;tot.sop+=r.sopAvail;tot.nat+=r.native;tot.inDev+=r.inDev});
+  var gA=tot.total?Math.round(tot.atk/tot.total*100):0;
+  var gS=tot.total?Math.round(tot.sop/tot.total*100):0;
+  var gN=tot.total?Math.round(tot.nat/tot.total*100):0;
+
+  html+='<div class="metrics" style="grid-template-columns:repeat(6,1fr);margin-bottom:22px">'+
+    '<div class="met"><div class="met-bar" style="background:var(--blue)"></div><div class="met-val" style="color:var(--blue);font-size:22px">'+ATK_TOWERS.length+'</div><div class="met-lbl">Towers</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--navy)"></div><div class="met-val" style="color:var(--navy);font-size:22px">'+tot.total+'</div><div class="met-lbl">Total Use Cases</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--green)"></div><div class="met-val" style="color:var(--green);font-size:22px">'+tot.atk+'</div><div class="met-lbl">ATK Eligible ('+gA+'%)</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--teal)"></div><div class="met-val" style="color:var(--teal);font-size:22px">'+tot.sop+'</div><div class="met-lbl">SOP Avail ('+gS+'%)</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--purple)"></div><div class="met-val" style="color:var(--purple);font-size:22px">'+tot.nat+'</div><div class="met-lbl">Native ('+gN+'%)</div></div>'+
+    '<div class="met"><div class="met-bar" style="background:var(--amber)"></div><div class="met-val" style="color:var(--amber);font-size:22px">'+tot.inDev+'</div><div class="met-lbl">In Dev</div></div>'+
+  '</div>';
+
+  // ATK readiness bars
+  html+='<div class="card" style="margin-bottom:22px"><div class="card-hd"><div class="card-title">ATK Readiness — visual breakdown by tower</div></div><div style="padding:16px 20px">';
+  ATK_TOWERS.forEach(function(r){
+    var atkP=r.totalUC?Math.round(r.atkElig/r.totalUC*100):0;
+    var natP=r.totalUC?Math.round(r.native/r.totalUC*100):0;
+    var sopP=r.totalUC?Math.round(r.sopAvail/r.totalUC*100):0;
+    html+='<div style="margin-bottom:11px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;font-weight:600">'+esc(r.tower.replace(' Services',''))+' › '+esc(r.subtower)+'</span>'+
+      '<div style="display:flex;gap:10px;font-size:10px"><span style="color:var(--green)">ATK '+atkP+'%</span><span style="color:var(--teal)">SOP '+sopP+'%</span><span style="color:var(--purple)">Native '+natP+'%</span></div></div>'+
+      '<div style="height:12px;background:var(--bg);border-radius:6px;overflow:hidden;border:1px solid var(--border);position:relative">'+
+        '<div style="position:absolute;left:0;top:0;height:100%;width:'+atkP+'%;background:var(--green);opacity:.85"></div>'+
+        '<div style="position:absolute;left:0;top:0;height:100%;width:'+natP+'%;background:var(--teal);opacity:.85"></div>'+
+      '</div></div>';
+  });
+  html+='<div style="display:flex;gap:16px;margin-top:8px;font-size:10px"><span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:var(--green);border-radius:2px"></span>ATK Eligible</span><span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:var(--teal);border-radius:2px"></span>Native Automation</span></div></div></div>';
+
+  // Editable table
+  html+='<div class="card"><div class="card-hd"><div class="card-title"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/></svg>ATK / SOP Calculator — click cells to edit</div></div>'+
+    '<div class="tbl-wrap"><table>'+
+      '<colgroup><col><col style="width:90px"><col style="width:78px"><col style="width:78px"><col style="width:88px"><col style="width:78px"><col style="width:78px"><col style="width:78px"><col style="width:78px"><col style="width:80px"><col style="width:90px"><col style="width:44px"></colgroup>'+
+      '<thead><tr><th>Tower / Sub-tower</th><th>Total UCs</th><th>ATK Elig</th><th>ATK %</th><th>SOP Avail</th><th>SOP %</th><th>Native</th><th>Nat %</th><th>In Dev</th><th>Planned</th><th>Target</th><th></th></tr></thead>'+
+      '<tbody id="atk-body"></tbody>'+
+      '<tfoot id="atk-foot"></tfoot>'+
+    '</table></div></div>';
+  con.innerHTML=html;
+  renderATKTable();
+}
+
+function renderATKTable(){
+  var b=document.getElementById('atk-body'),f=document.getElementById('atk-foot');if(!b)return;
+  var pc=function(p){return p>=80?'pg':p>=50?'pa':'pr'};
+  var tot={total:0,atk:0,sop:0,nat:0,inDev:0,planned:0};
+  b.innerHTML=ATK_TOWERS.map(function(r,i){
+    tot.total+=r.totalUC;tot.atk+=r.atkElig;tot.sop+=r.sopAvail;tot.nat+=r.native;tot.inDev+=r.inDev;tot.planned+=r.planned;
+    var ap=r.totalUC?Math.round(r.atkElig/r.totalUC*100):0;
+    var sp=r.totalUC?Math.round(r.sopAvail/r.totalUC*100):0;
+    var np=r.totalUC?Math.round(r.native/r.totalUC*100):0;
+    var ed=function(field){return'contenteditable="true" onblur="editATK('+i+',\''+field+'\',this)"'};
+    return'<tr>'+
+      '<td style="font-weight:500">'+esc(r.tower)+'<div style="font-size:10px;color:var(--text3)">'+esc(r.subtower)+'</div></td>'+
+      '<td class="ed" style="font-family:var(--mono);font-weight:700;text-align:center" '+ed('totalUC')+'>'+r.totalUC+'</td>'+
+      '<td class="ed" style="font-family:var(--mono);color:var(--green);text-align:center" '+ed('atkElig')+'>'+r.atkElig+'</td>'+
+      '<td><span class="pill '+pc(ap)+'">'+ap+'%</span></td>'+
+      '<td class="ed" style="font-family:var(--mono);color:var(--teal);text-align:center" '+ed('sopAvail')+'>'+r.sopAvail+'</td>'+
+      '<td><span class="pill '+pc(sp)+'">'+sp+'%</span></td>'+
+      '<td class="ed" style="font-family:var(--mono);color:var(--purple);text-align:center" '+ed('native')+'>'+r.native+'</td>'+
+      '<td><span class="pill '+pc(np)+'">'+np+'%</span></td>'+
+      '<td class="ed" style="font-family:var(--mono);color:var(--amber);text-align:center" '+ed('inDev')+'>'+r.inDev+'</td>'+
+      '<td class="ed" style="font-family:var(--mono);color:var(--text3);text-align:center" '+ed('planned')+'>'+r.planned+'</td>'+
+      '<td class="ed" style="font-family:var(--mono);font-size:11px" '+ed('targetDate')+'>'+esc(r.targetDate)+'</td>'+
+      '<td><button class="ab ad btn-sm" onclick="delATKRow('+i+')"><svg viewBox="0 0 24 24" width="12" height="12"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg></button></td>'+
+    '</tr>';
+  }).join('');
+  var gA=tot.total?Math.round(tot.atk/tot.total*100):0;
+  var gS=tot.total?Math.round(tot.sop/tot.total*100):0;
+  var gN=tot.total?Math.round(tot.nat/tot.total*100):0;
+  f.innerHTML='<tr style="background:var(--navy);color:#fff;font-weight:700"><td style="color:#fff">Grand Total</td><td style="font-family:var(--mono);color:#fff;text-align:center">'+tot.total+'</td><td style="font-family:var(--mono);color:#4ade80;text-align:center">'+tot.atk+'</td><td><span style="background:rgba(74,222,128,.25);color:#4ade80;padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:700">'+gA+'%</span></td><td style="font-family:var(--mono);color:#34d399;text-align:center">'+tot.sop+'</td><td><span style="background:rgba(74,222,128,.25);color:#34d399;padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:700">'+gS+'%</span></td><td style="font-family:var(--mono);color:#a78bfa;text-align:center">'+tot.nat+'</td><td><span style="background:rgba(167,139,250,.25);color:#a78bfa;padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:700">'+gN+'%</span></td><td style="font-family:var(--mono);color:#fbbf24;text-align:center">'+tot.inDev+'</td><td style="font-family:var(--mono);color:rgba(255,255,255,.5);text-align:center">'+tot.planned+'</td><td colspan="2" style="color:rgba(255,255,255,.5);font-family:var(--mono);font-size:11px">FY-2025</td></tr>';
+}
+
+function editATK(idx,field,el){var val=el.innerText.trim();ATK_TOWERS[idx][field]=isNaN(val)?val:Number(val);clearTimeout(window._atkT);window._atkT=setTimeout(renderATKCalc,500)}
+function delATKRow(idx){if(confirm('Remove this tower?')){ATK_TOWERS.splice(idx,1);renderATKCalc();toast('Removed','warn')}}
+function addATKRow(){ATK_TOWERS.push({tower:'New Tower',subtower:'Sub-tower',totalUC:0,atkElig:0,sopAvail:0,native:0,inDev:0,planned:0,targetDate:'TBD'});renderATKCalc();toast('Row added — click cells to edit')}
+
+function exportLeadershipCSV(){
+  var lines=[['Tower','Total Vol','Automated','Manual','Auto Rate%'].join(',')];
+  DATA.vol.forEach(function(r){var pct=r.total?Math.round(Number(r.auto)/Number(r.total)*100):0;lines.push([r.cat,r.total,r.auto,r.manual,pct+'%'].join(','))});
+  lines.push(['','']);
+  lines.push(['Tower','Sub-tower','Total UCs','ATK Elig','ATK%','SOP Avail','SOP%','Native','Target'].join(','));
+  ATK_TOWERS.forEach(function(r){var ap=r.totalUC?Math.round(r.atkElig/r.totalUC*100):0;var sp=r.totalUC?Math.round(r.sopAvail/r.totalUC*100):0;lines.push([r.tower,r.subtower,r.totalUC,r.atkElig,ap+'%',r.sopAvail,sp+'%',r.native,r.targetDate].join(','))});
+  var blob=new Blob([lines.join('\n')],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GNS_Leadership_'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('Leadership CSV exported');
+}
+function exportSOPTrackerCSV(){
+  var cols=['tower','subtower','usecase','sopRef','sopStatus','atkElig','native','progress','owner','lastReview','notes'];
+  var lines=[cols.join(',')];SOP_TRACKER_DATA.forEach(function(r){lines.push(cols.map(function(c){return'"'+(r[c]||'')+'\"'}).join(','))});
+  var blob=new Blob([lines.join('\n')],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GNS_SOP_Tracker_'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('SOP Tracker exported');
+}
+function exportATKCSV(){
+  var lines=[['Tower','Sub-tower','Total UCs','ATK Elig','ATK %','SOP Avail','SOP %','Native','Native %','In Dev','Planned','Target'].join(',')];
+  ATK_TOWERS.forEach(function(r){var ap=r.totalUC?Math.round(r.atkElig/r.totalUC*100):0;var sp=r.totalUC?Math.round(r.sopAvail/r.totalUC*100):0;var np=r.totalUC?Math.round(r.native/r.totalUC*100):0;lines.push([r.tower,r.subtower,r.totalUC,r.atkElig,ap+'%',r.sopAvail,sp+'%',r.native,np+'%',r.inDev,r.planned,r.targetDate].join(','))});
+  var blob=new Blob([lines.join('\n')],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GNS_ATK_Calc_'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('ATK CSV exported');
+}
+
+// ── UPGRADE PATH ──
+function renderUpgrade(){
+  var con=document.getElementById('upgrade-con');if(!con)return;
+  var html='<div class="sec-hd"><div><div class="sec-title">Upgrade Path — v3 → v4 → v5</div><div class="sec-sub">What changed across versions, and the Phase 2 roadmap</div></div></div>';
+  html+='<div style="background:linear-gradient(135deg,var(--navy),#1a3a6b);border-radius:var(--r-lg);padding:22px 26px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden">'+
+    '<span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:9999px;background:rgba(29,110,245,.3);color:rgba(255,255,255,.9);display:inline-block;margin-bottom:10px">v5.0 · MAY 2026</span>'+
+    '<div style="font-size:17px;font-weight:700;margin-bottom:6px">You are now on GNS AIOps Portal v5</div>'+
+    '<div style="font-size:12px;color:rgba(255,255,255,.7);line-height:1.7">v5 keeps the clean v3 structure intact and adds Switch/Wi-Fi/LAN analysis, full Service Catalogue (SR/INC/CR/TSK), SOP/RBA Scenarios, Leadership Summary, SOP Tracker, and ATK/SOP Calculator — all aligned to the existing design language.</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px">'+
+    [['v3 → v4','View action','View / Edit / Delete on every row. View shows read-only modal.'],['v3 → v5','Incident analysis','Switch (27), Wi-Fi (41), LAN (43) with automation flags and RBA plan.'],['v3 → v5','Service Catalogue','SR, INC, CR, TSK with ATK / SOP / Native Auto readiness.'],['v3 → v5','Leadership','Summary + SOP Tracker + ATK Calculator for executive review.']].map(function(k){
+      return'<div style="background:rgba(255,255,255,.08);border-radius:var(--r);padding:11px 13px"><div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:4px;font-family:var(--mono)">'+k[0]+'</div><div style="font-size:11px;font-weight:600;color:#fff;margin-bottom:3px">'+k[1]+'</div><div style="font-size:10px;color:rgba(255,255,255,.55);line-height:1.5">'+k[2]+'</div></div>';
+    }).join('')+'</div></div>';
+
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">'+
+    '<div class="card" style="margin:0"><div class="card-hd"><div class="card-title">v3 → v5 What changed (cumulative)</div></div><div style="padding:14px 20px;display:flex;flex-direction:column;gap:8px;font-size:12px">'+
+      ['View button on every use case row (read-only modal with Edit access)','Switch Issues tab — 27 categories with automation flags','Wi-Fi Issues tab — 41 categories with RBA approach','LAN Issues tab — 43 categories with automation plan','Service Catalogue — SR, INC, CR, Tasks with ATK / SOP / Native readiness','SOP / RBA Scenarios — 4-layer model (Input / Enrichment / Logic / Execution)','Leadership Summary — Tickets + ATK + SOP for executive review','SOP Tracker — Progress monitoring per use case','ATK / SOP Calculator — Automated template across all towers','Upgrade Path — version roadmap (this page)'].map(function(t){return'<div style="display:flex;align-items:flex-start;gap:7px"><span style="color:var(--green);font-size:14px;flex-shrink:0">+</span>'+t+'</div>'}).join('')+
+      '<div style="display:flex;align-items:flex-start;gap:7px;margin-top:6px;padding-top:8px;border-top:1px solid var(--border)"><span style="color:var(--blue);font-size:14px;flex-shrink:0">=</span><span>JSONBin sync preserved — same bin, same data</span></div>'+
+      '<div style="display:flex;align-items:flex-start;gap:7px"><span style="color:var(--blue);font-size:14px;flex-shrink:0">=</span><span>All 23 use cases, volume data, activity list preserved</span></div>'+
+      '<div style="display:flex;align-items:flex-start;gap:7px"><span style="color:var(--blue);font-size:14px;flex-shrink:0">=</span><span>v3 design language and structure kept intact</span></div>'+
+    '</div></div>'+
+
+    '<div class="card" style="margin:0"><div class="card-hd"><div class="card-title">Phase 2 roadmap — v6 target</div></div><div style="padding:14px 20px;display:flex;flex-direction:column;gap:9px;font-size:12px">'+
+      [['Azure AD SSO','var(--blue)','Replace shared login with Microsoft account. MSAL.js + Azure AD app registration.'],['FastAPI + PostgreSQL on AKS','var(--teal)','Replace JSONBin with Cognizant-owned backend. Real-time sync, full audit, Intel Agent native.'],['Live data from DNAC + ISE','var(--amber)','Replace sample volumes with live ServiceNow + DNAC API data pulled by Intel Agent.'],['RBA execution console','var(--purple)','Phase 2 write ops — human-in-the-loop approval for RBA workflows via Tech Assist.']].map(function(k){
+        return'<div style="padding:11px 13px;background:var(--surface);border-radius:var(--r);border-left:3px solid '+k[1]+'"><div style="font-weight:600;color:var(--text);margin-bottom:3px">'+k[0]+'</div><div style="color:var(--text2);font-size:11px;line-height:1.6">'+k[2]+'</div></div>';
+      }).join('')+
+    '</div></div>'+
+  '</div>';
+
+  con.innerHTML=html;
 }
 
 // ── Init ──
