@@ -1,0 +1,51 @@
+Copyright (c) 2026 Cognizant Technology Solutions
+
+INTERNAL USE LICENSE
+
+This software and its associated documentation are the proprietary and
+confidential property of Cognizant Technology Solutions and the Global
+Network Services (GNS) AIOps team.
+
+Permission is granted to authorised Cognizant employees and contractors
+to use, copy, and modify this software solely for internal Cognizant
+business purposes related to the GNS AIOps Portal initiative.
+
+The following restrictions apply:
+
+1. NO REDISTRIBUTION
+   This software may not be redistributed, sublicensed, sold, or
+   transferred outside Cognizant Technology Solutions without prior
+   written consent from the Portfolio Owner or designated authority.
+
+2. NO EXTERNAL DEPLOYMENT
+   This software is intended for internal Cognizant infrastructure only.
+   Deployment to external client environments, public cloud accounts
+   outside Cognizant tenancy, or third-party platforms is prohibited
+   without explicit approval.
+
+3. CONFIDENTIALITY
+   The data contained within (use cases, network configurations, SOPs,
+   tower architectures, automation strategies) is confidential Cognizant
+   intellectual property. Users must not share screenshots, exports, or
+   data extracts outside the GNS AIOps team or authorised stakeholders
+   without approval.
+
+4. ATTRIBUTION
+   Any modifications or derivative works must retain this license notice
+   and credit the original GNS AIOps team.
+
+5. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+   CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+   TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE
+   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For questions regarding licensing or usage, contact:
+  - Programme Lead: Samrat Paul
+  - Technical Lead: Prathap
+  - Portfolio Owner: Sanjeev Ramakrishnan
+
+GNS AIOps Portal · Cognizant Technology Solutions · 2026

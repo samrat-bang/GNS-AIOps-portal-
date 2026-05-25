@@ -1,0 +1,59 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Node (in case anyone tries `npm install` here later)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+
+# Python (build scripts may live in /scripts/ later)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Logs and runtime
+*.log
+.cache/
+
+# Local test files
+test/
+tmp/
+*.tmp
+*.bak
+
+# Sensitive — never commit
+.env
+.env.local
+*.key
+secrets.json
+credentials.json
+config.local.*
+
+# Build artifacts
+dist/
+build/
+
+# Backups of large files
+*_backup_*
+*_old_*
+*.orig
